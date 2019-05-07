@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h1>test</h1>
+    <div >
+        <ul v-for="(a, i) in carousel ">
+            <li>{{a.title}}</li>
+        </ul>
+    </div>
+</div>
+<script src="jquery/jquery-2.1.1.min.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            carousel:[]
+        },
+        mounted:function () {
+            $.ajax({
+                type:"post",
+                url:"/main/carousel",
+                beforeSend:function () {
+                    index = layer.load(0, {shade: false});
+                },
+                success:function (object) {
+                    layer.close(index)
+                    this.carousel = object;
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

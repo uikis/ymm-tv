@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css"/>
+    <style>
+    </style>
+
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <div><a class="navbar-brand" href="#" style="font-size:32px;">找回密码</a></div>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h1 class="page-header">请输入你注册时的唯一邮箱</h1>
+            <form class="bs-example bs-example-form" role="form" id="resetForm" action="sendCode" method="post">
+                <div class="form-group">
+                    <div class="input-group input-group-lg col-md-12 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="email" id="email">
+                    </div>
+                    <span class="help-block text-center">请输入正确的邮箱格式</span>
+                </div>
+                <br>
+                <div class="form-group">
+                <div class="text-right">
+                    <button id="sub" type="submit" class="btn btn-success btn-lg">下一步</button>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container-fluid" style="margin-top: 350px">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+                <h3 class="lead text-left">Desiged By
+                    <small>&nbsp;&nbsp;&nbsp;YMM</small>
+                </h3>
+            </div>
+            <div class="col-md-3 col-md-offset-4">
+                <h3 class="text-left text-muted"><strong>将小站分享给你的朋友 :</strong>
+                    <a href=""><img src="img/icon/PY.jpg" height="50" width="50"/></a>
+                    <a href=""><img src="img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+                <h4 class="text-left text-muted">联系我们：<kbd>964106443@qq.com</kbd></h4>
+            </div>
+            <div class="col-md-3 col-md-offset-4">
+                <strong>本网站提供新影视资源均系收集各大网站，本网站只提供web页面浏览服务，并不提供影片资源存储，也不参与任何视频录制、上传</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h4 class="text-center text-warning">Copyright © 2016-2019 MMM.Tv. All Rights Reserved .</h4>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="jquery/jquery-2.1.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="js/plugins/jquery-validation/jquery.validate.js"></script>
+<script src="js/plugins/jquery.form.js"></script>
+<script>
+    $(function () {
+        $("#resetForm").validate({//加载插件
+            rules: {
+                email: {
+                    required: true,
+                    email: "#email"
+                }
+            },
+            messages: {
+                email: {
+                    required: "请输入邮箱!",
+                    email: "请输入正确的邮箱格式!"
+                }
+            },
+            submitHandler: function (form) {//提交表单以ajax形式jason格式提交
+                $("#resetForm").ajaxSubmit({
+                    dataType: "json",
+                    beforeSend:function(){
+                        index = layer.load(0, {shade: false});
+                    },
+                    success: function (ajaxResult) {
+                        if (ajaxResult.success) {
+                            layer.msg('我们已经向您的邮箱发送了重置链接请注意查收!', {icon:1, time:2000},function(){
+                                layer.close(index)
+                            })
+                        } else {
+                            layer.alert("操作失败！", {icon:2})
+                        }
+                    }
+                });
+            },
+            errorClass: "text-danger",//错误的格式
+            highlight: function (element) {//配置错误之后怎么处理元素
+                $(element).closest("div.form-group").addClass("has-error");//设置错误格式的边框颜色
+            },//选择离样式为form-group的div最近的div
+            unhighlight: function (element) {
+                $(element).closest("div.form-group").removeClass("has-error");//恢复正常后移除
+            }
+        })
+    })
+</script>
+</body>
+</html>

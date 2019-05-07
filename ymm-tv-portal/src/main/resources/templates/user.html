@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+
+</head>
+<body>
+<!--个人中心导航-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="nav nav-pills">
+                <li><a class="glyphicon glyphicon-cog lead disabled text-success">个人中心</a></li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <ul class="nav nav-pills">
+                <li style="padding-right: 50px"><a href="" class="lead text-primary"><span
+                        class="glyphicon glyphicon-play-circle"></span>网站首页</a>
+                </li>
+                <li style="padding-right: 50px"><a href="" class="lead text-warning"><span
+                        class="glyphicon glyphicon-tag"></span>我的资料</a>
+                </li>
+                <li style="padding-right: 50px"><a href="" class="lead text-primary"><span
+                        class="glyphicon glyphicon-thumbs-up"></span>我的评论</a>
+                </li>
+                <li style="float: right"><a href="" class="lead text-danger"><span
+                        class="glyphicon glyphicon-triangle-left"></span>登出</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid" style="margin-top: -60px">
+        <h1 class="page-header"></h1>
+    </div>
+</div>
+<!--中间部分-->
+<div class="container">
+    <!--提示-->
+    <div class="row">
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <strong>提示!</strong> <h4 class=" text-center">在下方可以编辑你的个人信息</h4>
+        </div>
+    </div>
+    <div class="row">
+        <!--头像展示栏-->
+        <div class="col-md-3 panel panel-primary">
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <img src="/img/lyh.jpg" alt="" class="center-block img-circle" height="140px"
+                             width="140px" style="margin-top: 20px">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row" style="margin-top: 30px">
+                    <h4 class="text-muted">昵称:<strong class="text-primary">test</strong></h4>
+
+                </div>
+                <div class="row">
+                    <h4 class="text-muted">注册时间:<strong class="text-primary">1997.09.25</strong></h4>
+
+                </div>
+                <div class="row">
+                    <h4 class="text-muted">注册邮箱:<strong class="text-primary">964106443@qq.com</strong></h4>
+                </div>
+                <div class="row">
+                    <h4 class="text-muted">最后登录:<strong class="text-primary">1997.09.25</strong></h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 panel-info col-md-offset-1 ">
+            <div class="row">
+                <div>
+                    <ul id="myTab" class="nav nav-tabs" style="padding-right: 20px">
+                        <li style="padding-left: 30px" class="active">
+                            <a href="#data" data-toggle="tab" class="text-warning">基本资料</a></li>
+                        <li style="padding-left: 30px"><a href="#collect" data-toggle="tab" class="text-warning">收藏设置</a>
+                        </li>
+                        <li style="padding-left: 30px"><a href="#head" data-toggle="tab" class="text-warning">头像设置</a>
+                        </li>
+                        <li style="padding-left: 30px"><a href="#password" data-toggle="tab" class="text-warning">密码修改</a>
+                        </li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade in active" id="data" style="margin-top: 30px;">
+                            <form role="form">
+                                <fieldset disabled>
+                                    <div class="form-group has-warning">
+                                        <span class="text-muted " style="font-size: 30px">账号</span>
+                                        <input class="form-control " type="text" placeholder="请输入账号">
+                                    </div>
+                                </fieldset>
+                                <div class="form-group has-warning">
+                                    <fieldset disabled>
+                                        <span class="text-muted" style="font-size: 30px">密码</span>
+                                        <input class="form-control" type="text" placeholder="请输入密码">
+                                    </fieldset>
+                                </div>
+                                <div class="form-group">
+                                    <span class="text-muted" style="font-size: 30px">昵称</span>
+                                    <input class="form-control" type="text" placeholder="请输入昵称">
+                                </div>
+                                <div class="form-group">
+                                    <span class="text-muted" style="font-size: 30px">所在省份</span>
+                                    <input class="form-control" type="text" placeholder="请输入省份">
+                                </div>
+                                <div class="form-group">
+                                    <span class="text-muted" style="font-size: 30px">出生日期</span>
+                                    <input class="form-control" id="date" type="text" placeholder="请选择出生日期">
+                                </div>
+                                <div class="form-group">
+                                    <span class="text-muted" style="font-size: 30px">性别</span>
+                                    <select class="form-control">
+                                        <option value="">男</option>
+                                        <option value="">女</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <span class="text-muted" style="font-size: 30px">个性签名</span>
+                                    <textarea class="form-control" rows="4"></textarea>
+                                </div>
+                                <div>
+                                    <button class="btn btn-default"><span class="text-success">确定 &Sqrt;</span></button>
+                                    <button class="btn btn-default"><span class="text-warning">重置 &times;</span></button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="collect">
+                            <div style="margin-top: 30px">
+                                <!--新番推荐-->
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
+                                                <div class="panel-body">
+                                                    <a href="" class="thumbnail"><img src="/img/yq.jpg" style="height: 220px"></a>
+                                                    <button type="button" class="btn btn-danger" style="float: right"><span
+                                                            class="glyphicon glyphicon-star-empty"></span>取消收藏
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading"><h3 class="panel-title">龙与虎</h3></div>
+                                                <div class="panel-body">
+                                                    <a href="" class="thumbnail"><img src="/img/lyh.jpg" style="height: 220px"/></a>
+                                                    <button type="button" class="btn btn-danger" style="float: right"><span
+                                                            class="glyphicon glyphicon-star-empty"></span>取消收藏
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
+                                                <div class="panel-body">
+                                                    <a href="" class="thumbnail"><img src="/img/yq.jpg" style="height: 220px"/></a>
+                                                    <button type="button" class="btn btn-danger" style="float: right"><span
+                                                            class="glyphicon glyphicon-star-empty"></span>取消收藏
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
+                                                <div class="panel-body">
+                                                    <a href="" class="thumbnail"><img src="/img/yq.jpg" style="height: 220px"/></a>
+                                                    <button type="button" class="btn btn-danger" style="float: right"><span
+                                                            class="glyphicon glyphicon-star-empty"></span>取消收藏
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
+                                                <div class="panel-body">
+                                                    <a href="" class="thumbnail"><img src="/img/yq.jpg" style="height: 220px"/></a>
+                                                    <button type="button" class="btn btn-danger" style="float: right"><span
+                                                            class="glyphicon glyphicon-star-empty"></span>取消收藏
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
+                                                <div class="panel-body">
+                                                    <a href="" class="thumbnail"><img src="/img/yq.jpg" style="height: 220px"/></a>
+                                                    <button type="button" class="btn btn-danger" style="float: right"><span
+                                                            class="glyphicon glyphicon-star-empty"></span>取消收藏
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="head">
+                           <div>
+                               <div class="alert alert-info alert-dismissible" role="alert" style="margin-top: 10px">
+                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                           aria-hidden="true">&times;</span></button>
+                                   <strong>提示!</strong> <h4 class=" text-center">请上传140*140的图片</h4>
+                               </div>
+                               <img src="/img/icon/timg.jpg" height="140" width="140" class="img-circle"/>
+                               <div class="form-group" style="margin-top: 10px">
+                                   <label class="btn btn-default" for="inputfile"><span class="glyphicon glyphicon-cloud"></span>更换头像</label>
+                                   <input type="file" id="inputfile" style="display: none">
+                               </div>
+                               <div>
+                                   <button class="btn btn-default"><span class="text-success">确定 &Sqrt;</span></button>
+                               </div>
+                           </div>
+                        </div>
+                        <div class="tab-pane fade" id="password">
+                            <form role="form">
+                                <div class="alert alert-success alert-dismissible" role="alert" style="margin-top: 10px">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>提示!</strong> <h4 class=" text-center">我们将向您的邮箱发送验证码，请注意查收！</h4>
+                                </div>
+                                <div class="form-group">
+                                    <span class="text-muted" style="font-size: 30px">验证码</span>
+                                    <input class="form-control" type="text" placeholder="请输入验证码">
+                                </div>
+                                <div class="form-group">
+                                        <span class="text-muted" style="font-size: 30px">新密码</span>
+                                        <input class="form-control" type="text" placeholder="请输入新密码">
+                                </div>
+                                <div class="form-group">
+                                    <span class="text-muted" style="font-size: 30px">再次输入密码</span>
+                                    <input class="form-control" type="text" placeholder="请在再次输入新密码">
+                                </div>
+                                <div>
+                                    <button class="btn btn-default"><span class="text-success">确定 &Sqrt;</span></button>
+                                    <button class="btn btn-default"><span class="text-warning">重置 &times;</span></button>
+                                </div>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<script src="/js/laydate/laydate.js"></script>
+<script src="/jquery/jquery-2.1.1.min.js"></script>
+<script src="/bootstrap/js/bootstrap.js"></script>
+
+</body>
+<footer>
+    <div class="container-fluid bg-info" style="margin-top: 160px">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+                <h3 class="lead text-left">Desiged By
+                    <small>&nbsp;&nbsp;&nbsp;YMM</small>
+                </h3>
+            </div>
+            <div class="col-md-3 col-md-offset-4">
+                <h3 class="text-left text-muted"><strong>将小站分享给你的朋友 :</strong>
+                    <a href=""><img src="/img/icon/PY.jpg" height="50" width="50"/></a>
+                    <a href=""><img src="/img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+                <h4 class="text-left text-muted">联系我们：<kbd>964106443@qq.com</kbd></h4>
+            </div>
+            <div class="col-md-3 col-md-offset-4">
+                <strong>本网站提供新影视资源均系收集各大网站，本网站只提供web页面浏览服务，并不提供影片资源存储，也不参与任何视频录制、上传</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h4 class="text-center text-warning bg-primary">Copyright © 2016-2019 MMM.Tv. All Rights Reserved .</h4>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    //常规用法
+    laydate.render({
+        elem: '#date'
+    });
+
+</script>
+</html>

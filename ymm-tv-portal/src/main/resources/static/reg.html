@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css"/>
+    <style>
+    </style>
+
+</head>
+
+<button id="test" class="btn btn-default">
+点击我
+</button>
+<button id="test1" class="btn btn-default">
+    点击我
+</button>
+
+<script src="jquery/jquery-2.1.1.min.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+<script src="js/plugins/jquery-validation/jquery.validate.js"></script>
+<script src="js/plugins/jquery.form.js"></script>
+<script>
+    $("#test").click(function(){
+        var index = layer.load(0, {shade: false});
+        layer.msg('注册成功!', {icon:1, time:2000},function(){
+            layer.close(index)
+            window.location.href = "http://localhost:8080/login";
+        })
+    });
+    $("#test1").click(function(){
+        var index1 = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+        layer.confirm('is not?', function(index){
+            //do something
+
+
+        }, function () {
+            layer.close(index1);
+        });
+    });
+</script>
+</body>
+</html>

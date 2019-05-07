@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body style="background-image: url('img/22.jpg')">
+<nav class="navbar  navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <div><a class="navbar-brand" href="index.html" style="font-size:32px;">欢迎</a></div>
+        </div>
+    </div>
+</nav>
+<div class="container" style="margin-top: 180px">
+    <form class="form-signin" role="form">
+        <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> 用户登录</h2>
+        <div class="form-group has-success has-feedback" style="margin-top: 20px">
+            <input type="text" class="form-control" id="loginaccount" name="loginaccount" placeholder="请输入登录账号"
+                   autofocus>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+        <div class="form-group has-success has-feedback" style="margin-top: 20px">
+            <input type="password" class="form-control" id="password" name="password" placeholder="请输入登录密码"
+                   style="margin-top:10px;">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="0" name="rmbUser" id="rmbUser"> 自动登录
+            </label>
+            <br>
+            <label>
+                <a href="sendCode"><p class="text-info">忘记密码</p></a>
+            </label>
+            <label style="float:right">
+                <a href="regist"><p >我要注册</p></a>
+            </label>
+        </div>
+        <a class="btn btn-lg btn-success btn-block" onclick="dologin()"> 登录</a>
+    </form>
+</div>
+<footer>
+    <div class="container-fluid" style="margin-top: 300px">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+                <h3 class="lead text-left">Desiged By
+                    <small>&nbsp;&nbsp;&nbsp;YMM</small>
+                </h3>
+            </div>
+            <div class="col-md-3 col-md-offset-4">
+                <h3 class="text-left text-muted"><strong>将小站分享给你的朋友 :</strong>
+                    <a href=""><img src="/img/icon/PY.jpg" height="50" width="50"/></a>
+                    <a href=""><img src="/img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+                <h4 class="text-left text-muted">联系我们：<kbd>964106443@qq.com</kbd></h4>
+            </div>
+            <div class="col-md-3 col-md-offset-4">
+                <strong>本网站提供新影视资源均系收集各大网站，本网站只提供web页面浏览服务，并不提供影片资源存储，也不参与任何视频录制、上传</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h4 class="text-center text-warning">Copyright © 2016-2019 MMM.Tv. All Rights Reserved .</h4>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/jquery/jquery-2.1.1.min.js"></script>
+<script src="/bootstrap/js/bootstrap.js"></script>
+<script src="/js/layer/layer.js"></script>
+<script src="/js/layui.all.js"></script>
+<script>
+    function dologin() {
+        // var type = $(":selected").val();//下拉框的选项
+        var loginaccount = $("#loginaccount").val();//获得用户名的值
+        var password = $("#password").val();
+        var flag = $("#rmbUser").val()
+        if ($("#rmbUser")[0].checked) {
+            flag = 1
+        }//判断是否勾选记住我
+        if (loginaccount == "") {
+            layer.msg("用户名不能为空，请重新输入！", {time: 2000, icon: 5, shift: 6}, function () {
+            });
+            return;
+        }
+        if (password == "") {
+            layer.msg("密码不能为空，请重新输入！", {time: 2000, icon: 5, shift: 6}, function () {
+            });
+            return;//运行异常直接终止程序
+        }//页面的请求不可能为null。空值用""，来表示
+        // $("#loginform").submit();
+        var loadingIndex = null;
+        var rememeber
+        $.ajax({//通过jquery调用ajax来传输数据
+            type: "post",
+            url: "login",
+            data: {
+                "loginaccount": loginaccount,
+                "password": password,
+                "flag": flag
+            },
+            beforeSend: function () {
+                loadingIndex = layer.msg('处理中', {icon: 16});
+            },
+            success: function (ajaxResult) {
+                layer.close(loadingIndex);//接收到返回结果关闭窗口
+                var user = ajaxResult.object;
+                if (ajaxResult.success) {//直接ajaxResult.success就行，【千万不要只打一个  =  】
+                    window.location.href = "/";//通过控制台跳转到主页面
+                }
+                else {
+                    layer.msg("用户名或者密码错误，请重新输入！", {time: 2000, icon: 5, shift: 6}, function () {
+                    });
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>
