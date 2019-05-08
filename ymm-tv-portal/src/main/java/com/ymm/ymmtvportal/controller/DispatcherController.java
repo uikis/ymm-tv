@@ -30,6 +30,11 @@ public class DispatcherController {
     public String resetPwd(){
         return "forget-password";
     }
+
+    @GetMapping("user")
+    public String user(){
+        return "user";
+    }
 //    @RequestMapping("test")
 //    public ResponseEntity<String> test(){
 //        return ResponseEntity.ok("ok");

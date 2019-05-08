@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 @Data
@@ -16,7 +17,7 @@ import java.io.Serializable;
 public class NormalShow implements Serializable {
 
     @Id
-    private Integer id;
+    private Integer animeId;
 
     private String thpath;
 
@@ -24,12 +25,9 @@ public class NormalShow implements Serializable {
 
     private String title;
 
-    @JsonIgnore
-    private Integer animeId;
-
     private String update;
 
-    private String collecte;
+    private String collect;
 
     private String detail;
 
@@ -39,6 +37,10 @@ public class NormalShow implements Serializable {
 
     private String wpath;
 
+    @JsonIgnore
     private String weight;
+
+    @Transient
+    private String updateTime;
 
 }

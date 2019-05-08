@@ -8,7 +8,6 @@ import com.ymm.ymmtvcommon.result.AjaxResult;
 import com.ymm.ymmtvportal.config.Email;
 import com.ymm.ymmtvportal.dao.UserDao;
 import com.ymm.ymmtvportal.dao.UserinfoDao;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,13 +64,14 @@ public class UserService {
         //3.更新用户信息
         userLogin.setPassword(newPassword);
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String createTime = dateFormat.format(date);
         userLogin.setCreateTime(createTime);
         userLogin.setState(true);
         //4.建立并存入用户额外信息表
         Userinfo userinfo = new Userinfo();
         userinfo.setLoginAccount(userLogin.getLoginAccount());
+        userinfo.setHeadImg("img/himg/tx.jpg");
         userinfo.setRole("0");
         userinfoDao.insert(userinfo);
         //4.执行存储
@@ -144,7 +144,11 @@ public class UserService {
             throw new YmmException(ExceptionCode.USER_ERRO);
         }
         //3.存入session当中
-        session.setAttribute("user", user);
+        Userinfo userinfo = userinfoDao.selectByPrimaryKey(loginaccount);
+        userinfo.setLastLoginTime(user.getLastLogintime());
+        userinfo.setEmail(user.getEmail());
+        userinfo.setCreateTime(user.getCreateTime());
+        session.setAttribute("userinfo", userinfo);
         //4.判断用户是否选择自动登录
         if (flag == 1) {
             //写入token

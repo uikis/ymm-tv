@@ -16,4 +16,10 @@ public interface NormalShowDao extends tk.mybatis.mapper.common.Mapper<NormalSho
 
     @Select("select * from tb_normal_show order by play_num desc")
     List<NormalShow> hotShowGet();
+
+    @Select("select * from tb_normal_show where anime_id = #{id}")
+    NormalShow selectNormalShowById(Integer id);
+
+    @Select("select * from tb_normal_show order by weight desc limit 12")
+    List<NormalShow> selectAnimeTop15();
 }

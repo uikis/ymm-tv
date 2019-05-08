@@ -3,11 +3,15 @@ package com.ymm.ymmtvcommon.pojo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
+@Table(name = "tb_anime")
 public class Anime implements Serializable {
+    @Id
     private Integer id;
 
     private String name;
@@ -26,11 +30,11 @@ public class Anime implements Serializable {
 
     private Integer collectnum;
 
-    private Integer chapter;
+    private String chapter;
 
     private Integer state;
 
-    private Integer updateChapter;
+    private String updateChapter;
 
     private String thumbnail;
 
