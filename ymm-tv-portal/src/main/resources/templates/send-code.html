@@ -31,9 +31,9 @@
                 </div>
                 <br>
                 <div class="form-group">
-                <div class="text-right">
-                    <button id="sub" type="submit" class="btn btn-success btn-lg">下一步</button>
-                </div>
+                    <div class="text-right">
+                        <button id="sub" type="submit" class="btn btn-success btn-lg">下一步</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -91,18 +91,18 @@
             submitHandler: function (form) {//提交表单以ajax形式jason格式提交
                 $("#resetForm").ajaxSubmit({
                     dataType: "json",
-                    beforeSend:function(){
+                    beforeSend: function () {
                         index = layer.load(0, {shade: false});
                     },
-                    success: function (ajaxResult) {
-                        if (ajaxResult.success) {
-                            layer.msg('我们已经向您的邮箱发送了重置链接请注意查收!', {icon:1, time:2000},function(){
+                    success: function (object) {
+                        if (object) {
+                            layer.msg('已经向您的邮箱发送了重置链接请注意查收!', {icon: 1, time: 2000}, function () {
                                 layer.close(index)
                             })
                         } else {
-                            layer.alert("操作失败！", {icon:2})
+                            layer.alert("操作失败！", {icon: 2})
                         }
-                    }
+                    },
                 });
             },
             errorClass: "text-danger",//错误的格式

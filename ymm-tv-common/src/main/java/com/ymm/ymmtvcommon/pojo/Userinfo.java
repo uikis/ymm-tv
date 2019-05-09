@@ -23,8 +23,6 @@ public class Userinfo implements Serializable {
 
     private String signature;
 
-    private String province;
-
     private String gender;
 
     private String headImg;

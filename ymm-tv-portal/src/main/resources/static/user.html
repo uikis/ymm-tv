@@ -8,7 +8,7 @@
 </head>
 <body>
 <!--个人中心导航-->
-<div class="app">
+<div id="app">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
@@ -95,7 +95,7 @@
                         </ul>
                         <div id="myTabContent" class="tab-content">
                             <div class="tab-pane fade in active" id="data" style="margin-top: 30px;">
-                                <form role="form" id="resetForm">
+                   <!--             <form role="form" id="resetForm">
                                     <fieldset disabled>
                                         <div class="form-group has-warning">
                                             <span class="text-muted " style="font-size: 30px">账号</span>
@@ -134,6 +134,62 @@
                                         <button class="btn btn-default"><span class="text-warning">重置 &times;</span>
                                         </button>
                                     </div>
+                                </form>-->
+                                <form role="form" id="resetForm" action="/user/update" method="post" ref="formline">
+                                    <fieldset disabled>
+                                        <div class="form-group has-warning">
+                                            <span class="text-muted " style="font-size: 30px">账号</span>
+                                            <input class="form-control " type="text" placeholder="请输入账号">
+                                        </div>
+                                    </fieldset>
+                                    <div class="form-group has-warning">
+                                        <fieldset disabled>
+                                            <span class="text-muted" style="font-size: 30px">密码</span>
+                                            <input class="form-control" type="text" placeholder="请输入密码">
+                                        </fieldset>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted" style="font-size: 30px">昵称</span>
+                                        <input class="form-control" type="text" placeholder="请输入昵称" name="userName"
+                                               :value="userinfo.userName">
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted" style="font-size: 30px">出生日期</span>
+                                        <input class="form-control" id="date" type="text" placeholder="请选择出生日期"
+                                               name="date" :value="userinfo.birthday"
+                                        >
+                                    </div>
+                                    <div class="form-group" v-if="userinfo.gender == '男'">
+                                        <span class="text-muted" style="font-size: 30px">性别</span>
+                                        <select class="form-control" name="gender">
+                                            <option value="男" selected="selected">男
+                                            </option>
+                                            <option value="女">女
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" v-if="userinfo.gender == '女'">
+                                        <span class="text-muted" style="font-size: 30px">性别</span>
+                                        <select class="form-control" name="gender">
+                                            <option value="男" >男
+                                            </option>
+                                            <option value="女" selected="selected">女
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="text-muted" style="font-size: 30px">个性签名</span>
+                                        <textarea class="form-control" rows="4"
+                                                  name="signature">{{userinfo.signature}}</textarea>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-default" type="button" @click="submitForm"><span
+                                                class="text-success">确定 &Sqrt;</span>
+                                        </button>
+                                        <button class="btn btn-default" @click="resetForm()" type="button"><span
+                                                class="text-warning">重置 &times;</span>
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="collect">
@@ -147,71 +203,6 @@
                                                     <div class="panel-body">
                                                         <a href="" class="thumbnail"><img src="img/yq.jpg"
                                                                                           style="height: 220px"></a>
-                                                        <button type="button" class="btn btn-danger"
-                                                                style="float: right"><span
-                                                                class="glyphicon glyphicon-star-empty"></span>取消收藏
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-info">
-                                                    <div class="panel-heading"><h3 class="panel-title">龙与虎</h3></div>
-                                                    <div class="panel-body">
-                                                        <a href="" class="thumbnail"><img src="img/lyh.jpg"
-                                                                                          style="height: 220px"/></a>
-                                                        <button type="button" class="btn btn-danger"
-                                                                style="float: right"><span
-                                                                class="glyphicon glyphicon-star-empty"></span>取消收藏
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-info">
-                                                    <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
-                                                    <div class="panel-body">
-                                                        <a href="" class="thumbnail"><img src="img/yq.jpg"
-                                                                                          style="height: 220px"/></a>
-                                                        <button type="button" class="btn btn-danger"
-                                                                style="float: right"><span
-                                                                class="glyphicon glyphicon-star-empty"></span>取消收藏
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-info">
-                                                    <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
-                                                    <div class="panel-body">
-                                                        <a href="" class="thumbnail"><img src="img/yq.jpg"
-                                                                                          style="height: 220px"/></a>
-                                                        <button type="button" class="btn btn-danger"
-                                                                style="float: right"><span
-                                                                class="glyphicon glyphicon-star-empty"></span>取消收藏
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-info">
-                                                    <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
-                                                    <div class="panel-body">
-                                                        <a href="" class="thumbnail"><img src="img/yq.jpg"
-                                                                                          style="height: 220px"/></a>
-                                                        <button type="button" class="btn btn-danger"
-                                                                style="float: right"><span
-                                                                class="glyphicon glyphicon-star-empty"></span>取消收藏
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-info">
-                                                    <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
-                                                    <div class="panel-body">
-                                                        <a href="" class="thumbnail"><img src="img/yq.jpg"
-                                                                                          style="height: 220px"/></a>
                                                         <button type="button" class="btn btn-danger"
                                                                 style="float: right"><span
                                                                 class="glyphicon glyphicon-star-empty"></span>取消收藏
@@ -245,30 +236,26 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="password">
-                                <form role="form">
+                                <form role="form" action="/user/resetPwd" id="resetPwd" method="post">
                                     <div class="alert alert-success alert-dismissible" role="alert"
                                          style="margin-top: 10px">
                                         <button type="button" class="close" data-dismiss="alert"
                                                 aria-label="Close"><span
                                                 aria-hidden="true">&times;</span></button>
-                                        <strong>提示!</strong> <h4 class=" text-center">我们将向您的邮箱发送验证码，请注意查收！</h4>
-                                    </div>
-                                    <div class="form-group">
-                                        <span class="text-muted" style="font-size: 30px">验证码</span>
-                                        <input class="form-control" type="text" placeholder="请输入验证码">
+                                        <strong>提示!</strong> <h4 class=" text-center">请妥善保管您的密码，丢失可通过注册时的唯一邮箱找回！</h4>
                                     </div>
                                     <div class="form-group">
                                         <span class="text-muted" style="font-size: 30px">新密码</span>
-                                        <input class="form-control" type="text" placeholder="请输入新密码">
+                                        <input name="password"  class="form-control" type="text" placeholder="请输入新密码">
                                     </div>
                                     <div class="form-group">
                                         <span class="text-muted" style="font-size: 30px">再次输入密码</span>
-                                        <input class="form-control" type="text" placeholder="请在再次输入新密码">
+                                        <input name="confirmPwd" class="form-control" type="text" placeholder="请在再次输入新密码">
                                     </div>
                                     <div>
-                                        <button class="btn btn-default"><span class="text-success">确定 &Sqrt;</span>
+                                        <button class="btn btn-default" type="button" @click="resetPwd()"><span class="text-success">确定 &Sqrt;</span>
                                         </button>
-                                        <button class="btn btn-default"><span class="text-warning">重置 &times;</span>
+                                        <button class="btn btn-default" type="button" @click="resetForm2()"><span class="text-warning">重置 &times;</span>
                                         </button>
                                     </div>
                                 </form>
@@ -279,8 +266,6 @@
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 <footer>
     <div class="container-fluid bg-info" style="margin-top: 160px">
@@ -353,10 +338,49 @@
                 $(element).closest("div.form-group").removeClass("has-error");//恢复正常后移除
             }
         })
+
     })
+
+    $(function () {
+        $("#resetPwd").validate({//加载插件
+            rules: {
+                password: {
+                    required: true,
+                    rangelength: [8, 12]//当布尔类型返回false时就可以输出提示消息
+                },
+                confirmPwd: {
+                    required: true,
+                    equalTo: "#password"//判断是否两次输入的密码一致
+                },
+            },
+            messages: {
+                password: {
+                    required: "请填写密码!",
+                    rangelength: "用户名长度必须在{0}-{1}之间!",//表示跟上面一样的数据
+                },
+                confirmPwd: {
+                    required: "请填写密码!",
+                    equalTo:"两次输入的密码不一致！"
+                },
+
+            },
+            errorClass: "text-danger",//错误的格式
+            highlight: function (element) {//配置错误之后怎么处理元素
+                $(element).closest("div.form-group").addClass("has-error");//设置错误格式的边框颜色
+            },//选择离样式为form-group的div最近的div
+            unhighlight: function (element) {
+                $(element).closest("div.form-group").removeClass("has-error");//恢复正常后移除
+            }
+
+        })
+    })
+
     new Vue({
         el: "#app",
-        data: {},
+        data: {
+            collectGet: [],
+            userinfo: []
+        },
 
     })
 </script>

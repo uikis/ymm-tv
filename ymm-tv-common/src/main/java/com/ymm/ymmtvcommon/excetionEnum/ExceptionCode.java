@@ -18,7 +18,8 @@ public enum ExceptionCode {
     USER_NULL("用户参数为空！", 404),
     HANDLE_FALIED("操作失败！", 500),
     USER_EXIST("用户已经存在！", 500),
-    USER_ERRO("用户名或者密码错误", 500)
+    USER_ERROR("用户名或者密码错误", 500),
+    IMG_ERROR("文件类型异常", 500)
     ;
     private String msg;
     private Integer code;

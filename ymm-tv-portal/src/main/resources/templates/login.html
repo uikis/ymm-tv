@@ -35,7 +35,7 @@
                 <a href="sendCode"><p class="text-info">忘记密码</p></a>
             </label>
             <label style="float:right">
-                <a href="regist"><p >我要注册</p></a>
+                <a href="regist"><p>我要注册</p></a>
             </label>
         </div>
         <a class="btn btn-lg btn-success btn-block" onclick="dologin()"> 登录</a>
@@ -108,16 +108,13 @@
             beforeSend: function () {
                 loadingIndex = layer.msg('处理中', {icon: 16});
             },
-            success: function (ajaxResult) {
+            success: function () {
                 layer.close(loadingIndex);//接收到返回结果关闭窗口
-                var user = ajaxResult.object;
-                if (ajaxResult.success) {//直接ajaxResult.success就行，【千万不要只打一个  =  】
-                    window.location.href = "/";//通过控制台跳转到主页面
-                }
-                else {
-                    layer.msg("用户名或者密码错误，请重新输入！", {time: 2000, icon: 5, shift: 6}, function () {
-                    });
-                }
+                layer.msg("登录成功！", {icon: 1})
+                window.location.href = "/";//通过控制台跳转到主页面
+            },
+            error: function () {
+                layer.msg("用户名或者密码错误，请重新输入！", {time: 2000, icon: 5, shift: 6})
             }
         })
     }

@@ -8,7 +8,7 @@
 </head>
 <body>
 <!--个人中心导航-->
-<div class="app">
+<div id="app">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
@@ -53,7 +53,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div>
-                            <img src="img/lyh.jpg" alt="" class="center-block img-circle" height="140px"
+                            <img :src="userinfo.headImg" alt="" class="center-block img-circle" height="140px"
                                  width="140px" style="margin-top: 20px">
                         </div>
                     </div>
@@ -61,20 +61,20 @@
                 <div class="container">
                     <div class="row" style="margin-top: 30px">
                         <h4 class="text-muted">昵称:<strong
-                                class="text-primary">[[${session.userinfo.getUserName()}]]</strong></h4>
+                                class="text-primary">{{userinfo.userName}}</strong></h4>
 
                     </div>
                     <div class="row">
                         <h4 class="text-muted">注册时间:<strong
-                                class="text-primary">[[${session.userinfo.getCreateTime()}]]</strong></h4>
+                                class="text-primary">{{userinfo.createTime}}</strong></h4>
 
                     </div>
                     <div class="row">
                         <h4 class="text-muted">注册邮箱:<strong
-                                class="text-primary">[[${session.userinfo.getEmail()}]]</strong></h4>
+                                class="text-primary">{{userinfo.email}}</strong></h4>
                     </div>
                     <div class="row">
-                        <h4 class="text-muted">最后登录:<strong class="text-primary">[[${session.userinfo.getLastLoginTime()}]]</strong>
+                        <h4 class="text-muted">最后登录:<strong class="text-primary">{{userinfo.lastLoginTime}}</strong>
                         </h4>
                     </div>
                 </div>
@@ -90,12 +90,12 @@
                             <li style="padding-left: 30px"><a href="#head" data-toggle="tab"
                                                               class="text-warning">头像设置</a>
                             </li>
-                            <li style="padding-left: 30px"><a href="#password" data-toggle="tab" class="text-warning">密码修改</a>
+                            <li style="padding-left: 30px"><a href="#password1" data-toggle="tab" class="text-warning">密码修改</a>
                             </li>
                         </ul>
                         <div id="myTabContent" class="tab-content">
                             <div class="tab-pane fade in active" id="data" style="margin-top: 30px;">
-                                <form role="form" id="resetForm">
+                                <form role="form" id="resetForm" action="/user/update" method="post">
                                     <fieldset disabled>
                                         <div class="form-group has-warning">
                                             <span class="text-muted " style="font-size: 30px">账号</span>
@@ -110,28 +110,44 @@
                                     </div>
                                     <div class="form-group">
                                         <span class="text-muted" style="font-size: 30px">昵称</span>
-                                        <input class="form-control" type="text" placeholder="请输入昵称" name="userName">
+                                        <input class="form-control" type="text" placeholder="请输入昵称" name="userName"
+                                               :value="userinfo.userName">
                                     </div>
                                     <div class="form-group">
                                         <span class="text-muted" style="font-size: 30px">出生日期</span>
                                         <input class="form-control" id="date" type="text" placeholder="请选择出生日期"
-                                               name="date">
+                                               name="date" :value="userinfo.birthday"
+                                        >
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" v-if="userinfo.gender == '男'">
                                         <span class="text-muted" style="font-size: 30px">性别</span>
-                                        <select class="form-control">
-                                            <option value="">男</option>
-                                            <option value="">女</option>
+                                        <select class="form-control" name="gender">
+                                            <option value="男" selected="selected">男
+                                            </option>
+                                            <option value="女">女
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" v-if="userinfo.gender == '女'">
+                                        <span class="text-muted" style="font-size: 30px">性别</span>
+                                        <select class="form-control" name="gender">
+                                            <option value="男">男
+                                            </option>
+                                            <option value="女" selected="selected">女
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <span class="text-muted" style="font-size: 30px">个性签名</span>
-                                        <textarea class="form-control" rows="4"></textarea>
+                                        <textarea class="form-control" rows="4"
+                                                  name="signature">{{userinfo.signature}}</textarea>
                                     </div>
                                     <div>
-                                        <button class="btn btn-default"><span class="text-success">确定 &Sqrt;</span>
+                                        <button class="btn btn-default" type="submit"><span
+                                                class="text-success">确定 &Sqrt;</span>
                                         </button>
-                                        <button class="btn btn-default"><span class="text-warning">重置 &times;</span>
+                                        <button class="btn btn-default" @click="resetForm()" type="button"><span
+                                                class="text-warning">重置 &times;</span>
                                         </button>
                                     </div>
                                 </form>
@@ -141,77 +157,13 @@
                                     <!--新番推荐-->
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-4" v-for="(item, index) in collectGet">
                                                 <div class="panel panel-info">
-                                                    <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
+                                                    <div class="panel-heading"><h3 class="panel-title">
+                                                        {{item.title}}</h3></div>
                                                     <div class="panel-body">
-                                                        <a href="" class="thumbnail"><img src="img/yq.jpg"
+                                                        <a href="" class="thumbnail"><img :src="item.path"
                                                                                           style="height: 220px"></a>
-                                                        <button type="button" class="btn btn-danger"
-                                                                style="float: right"><span
-                                                                class="glyphicon glyphicon-star-empty"></span>取消收藏
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-info">
-                                                    <div class="panel-heading"><h3 class="panel-title">龙与虎</h3></div>
-                                                    <div class="panel-body">
-                                                        <a href="" class="thumbnail"><img src="img/lyh.jpg"
-                                                                                          style="height: 220px"/></a>
-                                                        <button type="button" class="btn btn-danger"
-                                                                style="float: right"><span
-                                                                class="glyphicon glyphicon-star-empty"></span>取消收藏
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-info">
-                                                    <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
-                                                    <div class="panel-body">
-                                                        <a href="" class="thumbnail"><img src="img/yq.jpg"
-                                                                                          style="height: 220px"/></a>
-                                                        <button type="button" class="btn btn-danger"
-                                                                style="float: right"><span
-                                                                class="glyphicon glyphicon-star-empty"></span>取消收藏
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-info">
-                                                    <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
-                                                    <div class="panel-body">
-                                                        <a href="" class="thumbnail"><img src="img/yq.jpg"
-                                                                                          style="height: 220px"/></a>
-                                                        <button type="button" class="btn btn-danger"
-                                                                style="float: right"><span
-                                                                class="glyphicon glyphicon-star-empty"></span>取消收藏
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-info">
-                                                    <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
-                                                    <div class="panel-body">
-                                                        <a href="" class="thumbnail"><img src="img/yq.jpg"
-                                                                                          style="height: 220px"/></a>
-                                                        <button type="button" class="btn btn-danger"
-                                                                style="float: right"><span
-                                                                class="glyphicon glyphicon-star-empty"></span>取消收藏
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-info">
-                                                    <div class="panel-heading"><h3 class="panel-title">一拳超人</h3></div>
-                                                    <div class="panel-body">
-                                                        <a href="" class="thumbnail"><img src="img/yq.jpg"
-                                                                                          style="height: 220px"/></a>
                                                         <button type="button" class="btn btn-danger"
                                                                 style="float: right"><span
                                                                 class="glyphicon glyphicon-star-empty"></span>取消收藏
@@ -230,45 +182,46 @@
                                         <button type="button" class="close" data-dismiss="alert"
                                                 aria-label="Close"><span
                                                 aria-hidden="true">&times;</span></button>
-                                        <strong>提示!</strong> <h4 class=" text-center">请上传140*140的图片</h4>
+                                        <strong>提示!</strong> <h4 class=" text-center">选择图片后请直接点击上传！</h4>
                                     </div>
-                                    <img src="img/icon/timg.jpg" height="140" width="140" class="img-circle"/>
-                                    <div class="form-group" style="margin-top: 10px">
-                                        <label class="btn btn-default" for="inputfile"><span
-                                                class="glyphicon glyphicon-cloud"></span>更换头像</label>
-                                        <input type="file" id="inputfile" style="display: none">
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-default"><span class="text-success">确定 &Sqrt;</span>
-                                        </button>
-                                    </div>
+                                    <form enctype="multipart/form-data" id="imgForm">
+                                        <div class="form-group" style="margin-top: 10px">
+                                            <label class="btn btn-default" for="inputfile"><span
+                                                    class="glyphicon glyphicon-cloud"></span>更换头像</label>
+                                            <input type="file" id="inputfile" style="display: none" name="file">
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-default" @click="updateImg()" type="button"><span
+                                                    class="text-success">上传 &Sqrt;</span>
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="password">
-                                <form role="form">
+                            <div class="tab-pane fade" id="password1">
+                                <form role="form" action="/user/resetPwd" id="resetPwd" method="post">
                                     <div class="alert alert-success alert-dismissible" role="alert"
                                          style="margin-top: 10px">
                                         <button type="button" class="close" data-dismiss="alert"
                                                 aria-label="Close"><span
                                                 aria-hidden="true">&times;</span></button>
-                                        <strong>提示!</strong> <h4 class=" text-center">我们将向您的邮箱发送验证码，请注意查收！</h4>
-                                    </div>
-                                    <div class="form-group">
-                                        <span class="text-muted" style="font-size: 30px">验证码</span>
-                                        <input class="form-control" type="text" placeholder="请输入验证码">
+                                        <strong>提示!</strong> <h4 class=" text-center">请妥善保管您的密码，丢失可通过注册时的唯一邮箱找回！</h4>
                                     </div>
                                     <div class="form-group">
                                         <span class="text-muted" style="font-size: 30px">新密码</span>
-                                        <input class="form-control" type="text" placeholder="请输入新密码">
+                                        <input name="password" class="form-control" type="password" id="password"
+                                               placeholder="请输入新密码">
                                     </div>
                                     <div class="form-group">
                                         <span class="text-muted" style="font-size: 30px">再次输入密码</span>
-                                        <input class="form-control" type="text" placeholder="请在再次输入新密码">
+                                        <input name="password2" class="form-control" type="password"
+                                               placeholder="请在再次输入新密码">
                                     </div>
                                     <div>
-                                        <button class="btn btn-default"><span class="text-success">确定 &Sqrt;</span>
+                                        <button class="btn btn-default" type="submit"><span class="text-success">确定 &Sqrt;</span>
                                         </button>
-                                        <button class="btn btn-default"><span class="text-warning">重置 &times;</span>
+                                        <button class="btn btn-default" type="button" @click="resetForm2()"><span
+                                                class="text-warning">重置 &times;</span>
                                         </button>
                                     </div>
                                 </form>
@@ -279,38 +232,36 @@
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
-<footer>
-    <div class="container-fluid bg-info" style="margin-top: 160px">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-1">
-                <h3 class="lead text-left">Desiged By
-                    <small>&nbsp;&nbsp;&nbsp;YMM</small>
-                </h3>
+    <footer>
+        <div class="container-fluid bg-info" style="margin-top: 160px">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1">
+                    <h3 class="lead text-left">Desiged By
+                        <small>&nbsp;&nbsp;&nbsp;YMM</small>
+                    </h3>
+                </div>
+                <div class="col-md-3 col-md-offset-4">
+                    <h3 class="text-left text-muted"><strong>将小站分享给你的朋友 :</strong>
+                        <a href=""><img src="img/icon/PY.jpg" height="50" width="50"/></a>
+                        <a href=""><img src="img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
+                </div>
             </div>
-            <div class="col-md-3 col-md-offset-4">
-                <h3 class="text-left text-muted"><strong>将小站分享给你的朋友 :</strong>
-                    <a href=""><img src="img/icon/PY.jpg" height="50" width="50"/></a>
-                    <a href=""><img src="img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1">
+                    <h4 class="text-left text-muted">联系我们：<kbd>964106443@qq.com</kbd></h4>
+                </div>
+                <div class="col-md-3 col-md-offset-4">
+                    <strong>本网站提供新影视资源均系收集各大网站，本网站只提供web页面浏览服务，并不提供影片资源存储，也不参与任何视频录制、上传</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h4 class="text-center text-warning bg-primary">Copyright © 2016-2019 MMM.Tv. All Rights Reserved
+                        .</h4>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-1">
-                <h4 class="text-left text-muted">联系我们：<kbd>964106443@qq.com</kbd></h4>
-            </div>
-            <div class="col-md-3 col-md-offset-4">
-                <strong>本网站提供新影视资源均系收集各大网站，本网站只提供web页面浏览服务，并不提供影片资源存储，也不参与任何视频录制、上传</strong>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <h4 class="text-center text-warning bg-primary">Copyright © 2016-2019 MMM.Tv. All Rights Reserved .</h4>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
 </div>
 <script src="js/laydate/laydate.js"></script>
 <script src="jquery/jquery-2.1.1.min.js"></script>
@@ -345,6 +296,24 @@
                     date: "请输入正确的日期格式！"
                 },
             },
+            submitHandler: function (form) {
+                $("#resetForm").ajaxSubmit({
+                    type:"post",
+                    dataType: "json",
+                    beforeSend: function () {
+                        index = layer.load(0, {shade: false});
+                    },
+                    success: function (object) {
+                        if (object) {
+                            layer.msg('修改成功!', {icon: 1, time: 2000}, function () {
+                                layer.close(index)
+                            })
+                        } else {
+                            layer.alert("修改失败！", {icon: 2})
+                        }
+                    },
+                })
+            },
             errorClass: "text-danger",//错误的格式
             highlight: function (element) {//配置错误之后怎么处理元素
                 $(element).closest("div.form-group").addClass("has-error");//设置错误格式的边框颜色
@@ -353,11 +322,123 @@
                 $(element).closest("div.form-group").removeClass("has-error");//恢复正常后移除
             }
         })
+
+    })
+    $(function () {
+        $("#resetPwd").validate({//加载插件
+            rules: {
+                password: {
+                    required: true,//判断值是否为空
+                    rangelength: [8, 12],
+                },//
+                password2: {
+                    required: true,
+                    rangelength: [8, 12],
+                    equalTo: "#password"//判断是否两次输入的密码一致
+                },
+            },
+            messages: {
+                password: {
+                    required: "请填写密码!",
+                    rangelength: "用户名长度必须在{0}-{1}之间!",//表示跟上面一样的数据
+                },
+                password2: {
+                    required: "请填写密码!",
+                    rangelength: "用户名长度必须在{0}-{1}之间!",//表示跟上面一样的数据
+                    equalTo: "两次输入的密码不一致！"
+                },
+
+            },
+            submitHandler: function (form) {
+                $("#resetPwd").ajaxSubmit({
+                    type: "post",
+                    dataType: "json",
+                    beforeSend: function () {
+                        index = layer.load(0, {shade: false});
+                    },
+                    success: function (object) {
+                        if (object) {
+                            layer.msg('修改成功!', {icon: 1, time: 2000}, function () {
+                                layer.close(index)
+                            })
+                        } else {
+                            layer.alert("修改失败！", {icon: 2})
+                        }
+                    },
+                });
+            },
+            //提交表单以ajax形式jason格式提交
+            errorClass: "text-danger",//错误的格式
+            highlight: function (element) {//配置错误之后怎么处理元素
+                $(element).closest("div.form-group").addClass("has-error");//设置错误格式的边框颜色
+            },//选择离样式为form-group的div最近的div
+            unhighlight: function (element) {
+                $(element).closest("div.form-group").removeClass("has-error");//恢复正常后移除
+            }
+
+        })
     })
     new Vue({
         el: "#app",
-        data: {},
+        data: {
+            collectGet: [],
+            userinfo: [],
+        },
+        methods: {
+            resetForm() {
+                $("#resetForm")[0].reset();
+            },
+            resetForm2() {
+                $("#resetPwd")[0].reset();
+            },
+            updateImg() {
+                var ym = this
+                $.ajax({
+                    type: "post",
+                    url: "user/updateImg",
+                    data: new FormData($("#imgForm")[0]),
+                    cache: false,
+                    processData: false,//不需要处理和编码********
+                    contentType: false,
+                    beforeSend: function () {
+                        index = layer.load(0, {shade: false});
+                    },
+                    success: function (object) {
+                        if (object != null) {
+                            ym.userinfo.headImg = object
+                            layer.close(index)
+                            layer.msg("上传成功！", {icon: 1})
+                        }
 
+                    },
+                    error: function () {
+                        layer.msg("上传失败！", {icon: 2})
+                    }
+                })
+            },
+        },
+        created() {
+            var ym = this
+            $.ajax({
+                type: "get",
+                url: "user/collectGet",
+                beforeSend: function () {
+                    index = layer.load(0, {shade: false});
+                },
+                success: function (object) {
+                    layer.close(index)
+                    ym.collectGet = object;
+                },
+            })
+            $.ajax({
+                type: "get",
+                url: "user/userinfoGet",
+                success: function (object) {
+                    layer.close(index)
+                    ym.userinfo = object;
+                },
+            })
+        }
     })
 </script>
 </body>

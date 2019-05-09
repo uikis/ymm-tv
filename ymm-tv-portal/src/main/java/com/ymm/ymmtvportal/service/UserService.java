@@ -2,26 +2,22 @@ package com.ymm.ymmtvportal.service;
 
 import com.ymm.ymmtvcommon.exception.YmmException;
 import com.ymm.ymmtvcommon.excetionEnum.ExceptionCode;
+import com.ymm.ymmtvcommon.pojo.NormalShow;
 import com.ymm.ymmtvcommon.pojo.UserLogin;
 import com.ymm.ymmtvcommon.pojo.Userinfo;
-import com.ymm.ymmtvcommon.result.AjaxResult;
-import com.ymm.ymmtvportal.config.Email;
+import com.ymm.ymmtvportal.dao.NormalShowDao;
 import com.ymm.ymmtvportal.dao.UserDao;
 import com.ymm.ymmtvportal.dao.UserinfoDao;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-import org.thymeleaf.util.ListUtils;
-import tk.mybatis.mapper.entity.Example;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.util.ClassUtils;
+import org.springframework.web.multipart.MultipartFile;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,198 +26,121 @@ import java.util.UUID;
 public class UserService {
 
     @Autowired
-    private UserDao userDao;
-
-    @Autowired
     private UserinfoDao userinfoDao;
 
     @Autowired
-    private Email email1;
+    private NormalShowDao normalShowDao;
+
+    @Autowired
+    private UserDao userDao;
 
     /**
-     * 注册
-     *
-     * @param userLogin
+     * 修改用户额外信息
+     * @param userName
+     * @param date
+     * @param gender
+     * @param signature
      * @return
      */
-    public AjaxResult registUser(UserLogin userLogin) {
-        //1.判断用户传入来参入是否为空
-        if (StringUtils.isEmpty(userLogin)) {
+    public Boolean updateUserInfo(String userName, String date, String gender, String signature,
+                                  HttpServletRequest request) {
+
+        //1.获取用户信息
+        HttpSession session = request.getSession();
+        Userinfo userinfo = (Userinfo)session.getAttribute("userinfo");
+        if (userinfo == null){
             throw new YmmException(ExceptionCode.USER_NULL);
         }
-        //2.执行用户注册逻辑
-        String loginAccount = userLogin.getLoginAccount();
-        String email = userLogin.getEmail();
-        Example example = new Example(UserLogin.class);
-        example.createCriteria().andEqualTo("loginAccount", loginAccount).orEqualTo("email", email);
-        List<UserLogin> userLogins = userDao.selectByExample(example);
-        if (!ListUtils.isEmpty(userLogins)) {
-            throw new YmmException(ExceptionCode.USER_EXIST);
+        userinfo.setUserName(userName);
+        userinfo.setGender(gender);
+        userinfo.setSignature(signature);
+        userinfo.setBirthday(date);
+        userinfoDao.updateByPrimaryKey(userinfo);
+        //再更新seesion
+        session.setAttribute("userinfo", userinfo);
+
+        return true;
+    }
+
+    /**
+     * 获取收藏信息
+     * @return
+     */
+    public List<NormalShow> collectGet(HttpServletRequest request) {
+        //1取得用户信息
+        Userinfo userinfo = (Userinfo)request.getSession().getAttribute("userinfo");
+        if (userinfo == null){
+            throw new YmmException(ExceptionCode.USER_NULL);
         }
-        String password = userLogin.getPassword();
-        SimpleHash simpleHash = new SimpleHash("md5", password, loginAccount, 3);
-        String newPassword = simpleHash.toHex();
-        //3.更新用户信息
-        userLogin.setPassword(newPassword);
-        Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String createTime = dateFormat.format(date);
-        userLogin.setCreateTime(createTime);
-        userLogin.setState(true);
-        //4.建立并存入用户额外信息表
-        Userinfo userinfo = new Userinfo();
-        userinfo.setLoginAccount(userLogin.getLoginAccount());
-        userinfo.setHeadImg("img/himg/tx.jpg");
-        userinfo.setRole("0");
-        userinfoDao.insert(userinfo);
-        //4.执行存储
-        int insert = userDao.insert(userLogin);
-        if (insert == 0) {
+        String loginAccount = userinfo.getLoginAccount();
+        List<NormalShow> normalShows = normalShowDao.selectCollectAnime(loginAccount);
+
+        return normalShows;
+    }
+
+    /**
+     * 上传用户头像
+     * @param file
+     */
+    public String updateHeadImg(MultipartFile file, HttpServletRequest request) throws IOException {
+        //1取得用户信息
+        Userinfo userinfo = (Userinfo)request.getSession().getAttribute("userinfo");
+        if (userinfo == null){
+            throw new YmmException(ExceptionCode.USER_NULL);
+        }
+        //2.上传文件
+        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+        String path1 = path.replace("target/classes/", "src/main/resources/");
+        String string = UUID.randomUUID().toString();
+        int i = file.getOriginalFilename().lastIndexOf(".");
+        String substring = file.getOriginalFilename().substring(i);
+
+        if (!(".jpg".equals(substring)) && !(".png".equals(substring))){
+            throw new YmmException(ExceptionCode.IMG_ERROR);
+        }
+        File file1 = new File(path1 + "/static/img/himg/" + string + substring);
+        file.transferTo(file1);
+        String newPath = "img/himg/"+ string + substring;
+        userinfo.setHeadImg(newPath);
+        request.getSession().setAttribute("userinfo", userinfo);
+        userinfoDao.updateByPrimaryKey(userinfo);
+
+        return newPath;
+    }
+
+    /**
+     * 返回用户的展示信息
+     * @return
+     */
+    public Userinfo userinfoGet(HttpServletRequest request) {
+        //1取得用户信息
+        Userinfo userinfo = (Userinfo)request.getSession().getAttribute("userinfo");
+        if (userinfo == null){
+            throw new YmmException(ExceptionCode.USER_NULL);
+        }
+
+        return userinfo;
+    }
+
+    /**
+     * 个人页面重置密码
+     * @param password
+     * @return
+     */
+    public Boolean resetPwd(HttpServletRequest request, String password) {
+        //1取得用户信息
+        Userinfo userinfo = (Userinfo)request.getSession().getAttribute("userinfo");
+        UserLogin userLogin = new UserLogin();
+        userLogin.setLoginAccount(userinfo.getLoginAccount());
+        List<UserLogin> select = userDao.select(userLogin);
+        if (select == null){
             throw new YmmException(ExceptionCode.HANDLE_FALIED);
         }
+        UserLogin userLogin1 = select.get(0);
+        String md5 = new SimpleHash("md5", password, userinfo.getLoginAccount(), 3).toHex();
+        userLogin1.setPassword(md5);
+        userDao.updateByPrimaryKey(userLogin1);
 
-        return new AjaxResult(true, null);
-    }
-
-    /**
-     * 远程校验邮箱是否存在
-     *
-     * @param email
-     * @return
-     */
-    public Boolean remoteEmail(String email) {
-        if (StringUtils.isEmpty(email)) {
-            throw new YmmException(ExceptionCode.PARAM_NULL);
-        }
-        Example example = new Example(UserLogin.class);
-        example.createCriteria().andEqualTo("email", email);
-        List<UserLogin> userLogins = userDao.selectByExample(example);
-        if (!ListUtils.isEmpty(userLogins)) {
-            return false;
-        }
         return true;
-    }
-
-    /**
-     * 远程校验账号是否存在
-     *
-     * @param loginaccount
-     * @return
-     */
-    public Boolean remoteAccount(String loginaccount) {
-        if (StringUtils.isEmpty(loginaccount)) {
-            throw new YmmException(ExceptionCode.PARAM_NULL);
-        }
-        Example example = new Example(UserLogin.class);
-        example.createCriteria().andEqualTo("loginAccount", loginaccount);
-        List<UserLogin> userLogins = userDao.selectByExample(example);
-        if (!ListUtils.isEmpty(userLogins)) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 登录操作完成
-     *
-     * @param loginaccount
-     * @param password
-     * @param session
-     * @param response
-     * @param flag
-     * @return
-     */
-    public AjaxResult login(String loginaccount, String password, HttpSession session, HttpServletResponse response, Integer flag) {
-        //1.创建登录对象
-        UserLogin userLogin = new UserLogin();
-        userLogin.setLoginAccount(loginaccount);
-        //得到加密后的密码
-        String newPassword = new SimpleHash("md5", password, loginaccount, 3).toHex();
-        userLogin.setPassword(newPassword);
-        //2.进行比对
-        UserLogin user = userDao.select(userLogin).get(0);
-        if (StringUtils.isEmpty(user)) {
-            throw new YmmException(ExceptionCode.USER_ERRO);
-        }
-        //3.存入session当中
-        Userinfo userinfo = userinfoDao.selectByPrimaryKey(loginaccount);
-        userinfo.setLastLoginTime(user.getLastLogintime());
-        userinfo.setEmail(user.getEmail());
-        userinfo.setCreateTime(user.getCreateTime());
-        session.setAttribute("userinfo", userinfo);
-        //4.判断用户是否选择自动登录
-        if (flag == 1) {
-            //写入token
-            String string = UUID.randomUUID().toString();
-            String encode = Md5Hash.toString(string.getBytes());
-            ;
-            Cookie cookie = new Cookie("token", encode);
-            cookie.setMaxAge(60 * 24 * 3);
-            response.addCookie(cookie);
-            //存入数据库
-            userLogin.setToken(encode);
-            //***一定要先创建，连续写返回的是实例对象
-            Example example = new Example(UserLogin.class);
-            example.createCriteria().andEqualTo("loginAccount", loginaccount);
-            userDao.updateByExampleSelective(userLogin, example);
-        }
-
-        return new AjaxResult(true, null);
-    }
-
-    /**
-     * 发送邮箱验证码
-     *
-     * @param email
-     * @return
-     */
-    public AjaxResult sendCode(String email) {
-        if (StringUtils.isEmpty(email)) {
-            throw new YmmException(ExceptionCode.PARAM_NULL);
-        }
-        //1.查询找回密码的对应用户
-        Example example = new Example(UserLogin.class);
-        example.createCriteria().andEqualTo("email", email);
-        List<UserLogin> userLogins = userDao.selectByExample(example);
-        UserLogin userLogin = userLogins.get(0);
-        if (userLogin == null){
-            throw new YmmException(ExceptionCode.USER_NULL);
-        }
-        //2.给用户创建PWD令牌并且发送重置连接
-        String string = Md5Hash.toString(UUID.randomUUID().toString().getBytes());
-        userLogin.setPwdToken(string);
-        userDao.updateByExampleSelective(userLogin, example);
-        email1.sendSimpleMail(userLogin);
-
-        return new AjaxResult(true, null);
-    }
-
-    /**
-     * 重置密码操作
-     * @param token
-     * @param password
-     * @return
-     */
-    public AjaxResult resetPwd(String token, String password) {
-        //1.查询需要重置密码的用户
-        if (StringUtils.isEmpty(token)){
-            throw new YmmException(ExceptionCode.PARAM_NULL);
-        }
-        Example example = new Example(UserLogin.class);
-        example.createCriteria().andEqualTo("pwdToken", token);
-        List<UserLogin> userLogins = userDao.selectByExample(example);
-        UserLogin userLogin = userLogins.get(0);
-        if (userLogin == null){
-            throw new YmmException(ExceptionCode.USER_NULL);
-        }
-        //2.重置密码
-        String newPassword = new SimpleHash("md5", password, userLogin.getLoginAccount(), 3).toHex();
-        userLogin.setPassword(newPassword);
-        userDao.updateByExampleSelective(userLogin, example);
-        //3.删除token防止利用token无限修改密码
-        userLogin.setPwdToken(null);
-        userDao.updateByExample(userLogin, example);
-
-        return new AjaxResult(true, null);
     }
 }

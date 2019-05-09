@@ -22,4 +22,7 @@ public interface NormalShowDao extends tk.mybatis.mapper.common.Mapper<NormalSho
 
     @Select("select * from tb_normal_show order by weight desc limit 12")
     List<NormalShow> selectAnimeTop15();
+
+    @Select("select * from tb_normal_show a join tb_collect_user b on a.anime_id = b.anime_id and login_account = #{loginAccount}")
+    List<NormalShow> selectCollectAnime(String loginAccount);
 }
