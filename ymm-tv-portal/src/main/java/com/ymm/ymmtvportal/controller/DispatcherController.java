@@ -35,6 +35,16 @@ public class DispatcherController {
     public String user(){
         return "user";
     }
+
+    @GetMapping("user/comment")
+    public String comment(){
+        return "comment";
+    }
+
+    @GetMapping("search/detail")
+    public String searchDetail(){
+        return "search";
+    }
 //    @RequestMapping("test")
 //    public ResponseEntity<String> test(){
 //        return ResponseEntity.ok("ok");

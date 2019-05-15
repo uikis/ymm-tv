@@ -9,6 +9,7 @@
 <style>
 </style>
 <body>
+<div id="app">
 <!--个人中心导航-->
 <div class="container-fluid">
     <div class="row">
@@ -53,45 +54,50 @@
             </div>
             <div class="container">
                 <div class="row" style="margin-top: 30px">
-                    <h4 class="text-muted">昵称:<strong class="text-primary">test</strong></h4>
+                    <h4 class="text-muted">昵称:<strong
+                            class="text-primary">{{userinfo.userName}}</strong></h4>
 
                 </div>
                 <div class="row">
-                    <h4 class="text-muted">注册时间:<strong class="text-primary">1997.09.25</strong></h4>
+                    <h4 class="text-muted">注册时间:<strong
+                            class="text-primary">{{userinfo.createTime}}</strong></h4>
 
                 </div>
                 <div class="row">
-                    <h4 class="text-muted">注册邮箱:<strong class="text-primary">964106443@qq.com</strong></h4>
+                    <h4 class="text-muted">注册邮箱:<strong
+                            class="text-primary">{{userinfo.email}}</strong></h4>
                 </div>
                 <div class="row">
-                    <h4 class="text-muted">最后登录:<strong class="text-primary">1997.09.25</strong></h4>
+                    <h4 class="text-muted">最后登录:<strong class="text-primary">{{userinfo.lastLoginTime}}</strong>
+                    </h4>
                 </div>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-1 panel panel-default">
             <div class="table-responsive ">
-                <table class="table table-hover">
+                <table class="table table-hover table-condensed table-bordered" style="table-layout:fixed">
                     <caption><span class="help-block">共<span>4</span>条</span></caption>
                     <thead>
                     <tr>
-                        <th>
-                            <input type="checkbox">
+                        <th style="width: 10%">
+                            <input type="checkbox" >全选
                         </th>
                         <th>评论</th>
                         <th>评论日期</th>
                         <th>番剧</th>
-                        <th>操作</th>
+                        <th style="width: 15%">操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td><input type="checkbox"></td>
-                        <td>产品1</td>
+                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis">敖德萨所大所大所大所大所大所大所多</td>
                         <td>23/11/2013</td>
                         <td>待发货</td>
                         <td>
                             <button class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button>
-                            <button class="btn btn-danger" onclick="xu()"><span class="glyphicon glyphicon-remove-sign"></span></button>
+                            <button class="btn btn-danger" onclick="xu()"><span
+                                    class="glyphicon glyphicon-remove-sign"></span></button>
                         </td>
                     </tr>
                     <tr>
@@ -101,7 +107,8 @@
                         <td>待发货</td>
                         <td>
                             <button class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button>
-                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
+                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span>
+                            </button>
                         </td>
                     </tr>
                     <tr>
@@ -111,7 +118,8 @@
                         <td>待发货</td>
                         <td>
                             <button class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button>
-                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
+                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span>
+                            </button>
                         </td>
                     </tr>
                     <tr>
@@ -121,7 +129,8 @@
                         <td>待发货</td>
                         <td>
                             <button class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button>
-                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
+                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span>
+                            </button>
                         </td>
                     </tr>
                     </tbody>
@@ -132,39 +141,34 @@
                         <td>待发货</td>
                         <td>
                             <button class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button>
-                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
+                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span>
+                            </button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
                 <div class="text-center">
-                <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                    <span class="help-block text-center">共<span>3</span>页</span><br>
-                </ul>
+                    <ul class="pagination">
+
+                        <li class="disabled"><a href="#">&laquo;</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li  @click="pageTo(ds-2)"><a href="#"  >{{ds}}</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                        <span class="help-block text-center">共<span>3</span>页</span><br>
+                    </ul>
                 </div>
                 <div class="text-center" style="margin-top: -20px; padding-bottom: 20px">
                     <button class="btn btn-danger">批量删除</button>
                 </div>
-                </div>
             </div>
         </div>
     </div>
-
 </div>
-<script src="jquery/jquery-2.1.1.min.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
-<script src="js/layer/layer.js"></script>
-</body>
-
 <footer>
-    <div class="container-fluid bg-info" style="margin-top: 175px">
+    <div class="container-fluid bg-info" style="margin-top: 170px">
         <div class="row">
             <div class="col-md-4 col-md-offset-1">
                 <h3 class="lead text-left">Desiged By
@@ -192,9 +196,52 @@
         </div>
     </div>
 </footer>
+</div>
+</div>
+<script src="jquery/jquery-2.1.1.min.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script>
-    function xu(){
+    function xu() {
         layer.alert('见到你真的很高兴', {icon: 6});
     }
+    new Vue({
+        el: "#app",
+        data: {
+            userinfo: [],
+            comments: [],
+            pageNum: '',
+            totalPage: '',
+            total: '',
+            ds:'2'
+        },
+        methods: {
+            pageTo(e){
+                var ym = this
+                $.ajax({
+                    type: "post",
+                    url: "/user/commentGet",
+                    data:{
+                        pageNum: e
+                    },
+                    beforeSend: function () {
+                        index = layer.load(0, {shade: false});
+                    },
+                    success: function (object) {
+                        layer.close(index)
+                        ym.comments = object.item;
+                        ym.total = object.total;
+                        ym.pageNum = object.pageNum;
+                        ym.totalPage = object.totalPage;
+                    },
+                })
+            }
+        },
+
+
+
+    })
 </script>
+</body>
 </html>

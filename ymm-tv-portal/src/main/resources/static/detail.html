@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 </head>
 <body style="overflow-x: hidden">
+<div id="app">
 <!--第一导航-->
 <div class="container-fluid" style="background-color: #fff9ec ;opacity:0.9;background-image: url('img/yemei3.png');
 background-size:100% ">
@@ -34,7 +35,7 @@ background-size:100% ">
             <div class="input-group" style="opacity:0.8">
                 <input type="text" class="form-control font-size:50px " placeholder="Search for...">
                 <span class="input-group-btn">
-        <button class="btn btn-default" type="button"><img src="" alt=""
+        <button class="btn btn-default" type="button" @click="queryItem()"><img src="" alt=""
                                                            class="glyphicon glyphicon-zoom-in">Go!</button>
       </span>
             </div>
@@ -280,7 +281,26 @@ background-size:100% ">
         </div>
     </div>
 </footer>
+</div>
 <script src="jquery/jquery-2.1.1.min.js"></script>
+<script src="js/layer/layer.js"></script>
 <script src="bootstrap/js/bootstrap.js"></script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            key:''
+        },
+        methods:{
+            queryItem(){
+                alert("dasd")
+            }
+        },
+        created(){
+            console.log(this.$route.query.key)
+        }
+    })
+</script>
 </body>
 </html>

@@ -1,11 +1,14 @@
 package com.ymm.ymmtvcommon.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,11 +23,14 @@ public class Anime implements Serializable {
 
     private String region;
 
-    private String creatTime;
+    private String createTime;
 
     private String intro;
 
     private String type;
+
+    @Transient
+    private List<String> typeList;
 
     private String path;
 
@@ -36,6 +42,7 @@ public class Anime implements Serializable {
 
     private String updateChapter;
 
+    @JsonIgnore
     private String thumbnail;
 
     private Integer commentId;

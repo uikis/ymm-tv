@@ -1,7 +1,13 @@
 package com.ymm.ymmtvportal;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.ymm.ymmtvcommon.pojo.Carousel;
+import com.ymm.ymmtvcommon.pojo.Comment;
 import com.ymm.ymmtvportal.dao.CarouselDao;
+import com.ymm.ymmtvportal.dao.CommentDao;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.tomcat.util.security.MD5Encoder;
@@ -21,6 +27,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +38,10 @@ public class YmmTvPortalApplicationTests {
 
     @Autowired
     private CarouselDao carouselDao;
+
+    @Autowired
+    private CommentDao commentDao;
+
     @Test
     public void contextLoads() throws FileNotFoundException {
 
@@ -61,6 +72,25 @@ public class YmmTvPortalApplicationTests {
 //        if(!upload.exists()) upload.mkdirs();
 //        System.out.println("upload url:"+upload.getAbsolutePath());
 
-        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
-        System.out.println(path);
-    }}
+//        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+//        System.out.println(path);
+//
+//        List<Integer> list = new ArrayList<>();
+//        list.add(1);
+//        list.add(2);
+//        list.add(3);
+//        System.out.println(list);
+//        commentDao.deleteByIdList(list);
+//        String ids = "[5,6]";
+//        List<Integer> integerList1 = JSON.parseArray(ids, Integer.class);
+
+        List<String> list = new ArrayList<>();
+        list.add("战斗");
+        list.add("热血");
+        String type = "[\"战斗\",\"热血\",\"催泪\"]";
+//        List<String> integerList2 = JSONObject.parseArray(type, String.class);
+        String str = "[\"战斗\",\"热血\"]";
+        List<String> students = JSON.parseArray(str,String.class);
+        System.out.println(students);
+    }
+}

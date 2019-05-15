@@ -1,19 +1,19 @@
 package com.ymm.ymmtvportal.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ymm.ymmtvcommon.exception.YmmException;
 import com.ymm.ymmtvcommon.excetionEnum.ExceptionCode;
-import com.ymm.ymmtvcommon.pojo.NormalShow;
-import com.ymm.ymmtvcommon.pojo.UserLogin;
-import com.ymm.ymmtvcommon.pojo.Userinfo;
-import com.ymm.ymmtvportal.dao.NormalShowDao;
-import com.ymm.ymmtvportal.dao.UserDao;
-import com.ymm.ymmtvportal.dao.UserinfoDao;
+import com.ymm.ymmtvcommon.pojo.*;
+import com.ymm.ymmtvcommon.result.PageResult;
+import com.ymm.ymmtvportal.dao.*;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.util.ListUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -34,6 +34,11 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private CommentDao commentDao;
+
+    @Autowired
+    private AnimeDao animeDao;
     /**
      * 修改用户额外信息
      * @param userName
@@ -142,5 +147,53 @@ public class UserService {
         userDao.updateByPrimaryKey(userLogin1);
 
         return true;
+    }
+
+    /**
+     * 分页查询评论
+     * @param pageNum
+     * @param rows
+     * @param request
+     * @return
+     */
+    public PageResult<Comment> pageQueryComment(int pageNum, int rows, HttpServletRequest request) {
+        //1取得用户信息
+        Userinfo userinfo = (Userinfo)request.getSession().getAttribute("userinfo");
+        //2.取得评论
+        PageHelper.startPage(pageNum, rows);
+        Comment comment = new Comment();
+        comment.setLoginAccount(userinfo.getLoginAccount());
+//        comment.setLoginAccount("964106443");
+        List<Comment> comments = commentDao.select(comment);
+        //获得评论的番剧名称
+        for (Comment comment1 : comments) {
+            Anime anime = animeDao.selectByPrimaryKey(comment1.getAnimeId());
+            comment1.setAnimeName(anime.getName());
+        }
+        PageInfo<Comment> pageInfo = new PageInfo<>(comments);
+        List<Comment> items = pageInfo.getList();
+        int cPageNum = pageInfo.getPageNum();
+        int pagesNum = pageInfo.getPages();
+        long totalNum = pageInfo.getTotal();
+        return new PageResult<Comment>(items, cPageNum, pagesNum, totalNum);
+    }
+
+    /**
+     * 批量删除评论
+     * @param ids
+     */
+    public void commentsDelete(List<Integer> ids) {
+        if (ListUtils.isEmpty(ids)){
+            throw new YmmException(ExceptionCode.PARAM_NULL);
+        }
+        commentDao.deleteByIdList(ids);
+    }
+
+    /**
+     * 退出登录
+     */
+    public void loginOut(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("userinfo");
     }
 }

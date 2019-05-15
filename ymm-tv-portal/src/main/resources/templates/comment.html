@@ -3,198 +3,365 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
 </head>
 <style>
 </style>
+
+
 <body>
 <!--个人中心导航-->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4">
-            <ul class="nav nav-pills">
-                <li><a class="glyphicon glyphicon-cog lead disabled text-success">个人中心</a></li>
-            </ul>
+<div id="app">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <ul class="nav nav-pills">
+                    <li><a class="glyphicon glyphicon-cog lead disabled text-success">个人中心</a></li>
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <ul class="nav nav-pills">
+                    <li style="padding-right: 50px"><a href="" class="lead text-primary"><span
+                            class="glyphicon glyphicon-play-circle"></span>网站首页</a>
+                    </li>
+                    <li style="padding-right: 50px"><a href="" class="lead text-primary"><span
+                            class="glyphicon glyphicon-tag"></span>我的资料</a>
+                    </li>
+                    <li style="padding-right: 50px"><a href="" class="lead text-warning"><span
+                            class="glyphicon glyphicon-thumbs-up "></span>我的评论</a>
+                    </li>
+                    <li style="float: right" @click="loginOut()"><a href="#" class="lead text-danger"><span
+                            class="glyphicon glyphicon-triangle-left"></span>登出</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-8">
-            <ul class="nav nav-pills">
-                <li style="padding-right: 50px"><a href="" class="lead text-primary"><span
-                        class="glyphicon glyphicon-play-circle"></span>网站首页</a>
-                </li>
-                <li style="padding-right: 50px"><a href="" class="lead text-primary"><span
-                        class="glyphicon glyphicon-tag"></span>我的资料</a>
-                </li>
-                <li style="padding-right: 50px"><a href="" class="lead text-warning"><span
-                        class="glyphicon glyphicon-thumbs-up "></span>我的评论</a>
-                </li>
-                <li style="float: right"><a href="" class="lead text-danger"><span
-                        class="glyphicon glyphicon-triangle-left"></span>登出</a>
-                </li>
-            </ul>
+        <div class="container-fluid" style="margin-top: -60px">
+            <h1 class="page-header"></h1>
         </div>
     </div>
-    <div class="container-fluid" style="margin-top: -60px">
-        <h1 class="page-header"></h1>
-    </div>
-</div>
-<!--中间部分-->
-<div class="container">
-    <div class="row">
-        <!--头像展示栏-->
-        <div class="col-md-3 panel panel-primary">
-            <div class="row">
-                <div class="col-md-12">
-                    <div>
-                        <img src="img/lyh.jpg" alt="" class="center-block img-circle" height="140px"
-                             width="140px" style="margin-top: 20px">
+    <!--中间部分-->
+    <div class="container">
+        <div class="row">
+            <!--头像展示栏-->
+            <div class="col-md-3 panel panel-primary">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <img :src="userinfo.headImg" alt="" class="center-block img-circle" height="140px"
+                                 width="140px" style="margin-top: 20px">
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row" style="margin-top: 30px">
+                        <h4 class="text-muted">昵称:<strong
+                                class="text-primary">{{userinfo.userName}}</strong></h4>
+
+                    </div>
+                    <div class="row">
+                        <h4 class="text-muted">注册时间:<strong
+                                class="text-primary">{{userinfo.createTime}}</strong></h4>
+
+                    </div>
+                    <div class="row">
+                        <h4 class="text-muted">注册邮箱:<strong
+                                class="text-primary">{{userinfo.email}}</strong></h4>
+                    </div>
+                    <div class="row">
+                        <h4 class="text-muted">最后登录:<strong class="text-primary">{{userinfo.lastLoginTime}}</strong>
+                        </h4>
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <div class="row" style="margin-top: 30px">
-                    <h4 class="text-muted">昵称:<strong class="text-primary">test</strong></h4>
-
-                </div>
-                <div class="row">
-                    <h4 class="text-muted">注册时间:<strong class="text-primary">1997.09.25</strong></h4>
-
-                </div>
-                <div class="row">
-                    <h4 class="text-muted">注册邮箱:<strong class="text-primary">964106443@qq.com</strong></h4>
-                </div>
-                <div class="row">
-                    <h4 class="text-muted">最后登录:<strong class="text-primary">1997.09.25</strong></h4>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8 col-md-offset-1 panel panel-default">
-            <div class="table-responsive ">
-                <table class="table table-hover">
-                    <caption><span class="help-block">共<span>4</span>条</span></caption>
-                    <thead>
-                    <tr>
-                        <th>
-                            <input type="checkbox">
-                        </th>
-                        <th>评论</th>
-                        <th>评论日期</th>
-                        <th>番剧</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>产品1</td>
-                        <td>23/11/2013</td>
-                        <td>待发货</td>
-                        <td>
-                            <button class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button>
-                            <button class="btn btn-danger" onclick="xu()"><span class="glyphicon glyphicon-remove-sign"></span></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>产品1</td>
-                        <td>23/11/2013</td>
-                        <td>待发货</td>
-                        <td>
-                            <button class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button>
-                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>产品1</td>
-                        <td>23/11/2013</td>
-                        <td>待发货</td>
-                        <td>
-                            <button class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button>
-                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>产品1</td>
-                        <td>23/11/2013</td>
-                        <td>待发货</td>
-                        <td>
-                            <button class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button>
-                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
-                        </td>
-                    </tr>
-                    </tbody>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>产品1</td>
-                        <td>23/11/2013</td>
-                        <td>待发货</td>
-                        <td>
-                            <button class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button>
-                            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="text-center">
-                <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                    <span class="help-block text-center">共<span>3</span>页</span><br>
-                </ul>
-                </div>
-                <div class="text-center" style="margin-top: -20px; padding-bottom: 20px">
-                    <button class="btn btn-danger">批量删除</button>
-                </div>
+            <div class="col-md-8 col-md-offset-1 panel panel-default">
+                <div class="table-responsive" style="height: 560px">
+                    <table class="table table-hover table-bordered" style="table-layout:fixed">
+                        <caption><span class="help-block">共<span>{{total}}</span>条</span></caption>
+                        <thead>
+                        <tr>
+                            <th style="width: 10%">
+                                <input type="checkbox" v-model="checked" @click="checkAll()">全选
+                            </th>
+                            <th>评论</th>
+                            <th>评论日期</th>
+                            <th>番剧</th>
+                            <th style="width: 15%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(item, index) in comments">
+                            <td><input type="checkbox" v-model="checkModel" :value="item.id"></td>
+                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis">{{item.comment}}</td>
+                            <td>{{item.commentTime}}</td>
+                            <td>{{item.animeName}}</td>
+                            <td>
+                                <button class="btn btn-primary"
+                                        @click="commentShow(item.animeName, item.comment, item.agree)"><span
+                                        class="glyphicon glyphicon-eye-open"></span></button>
+                                <button class="btn btn-danger" @click="deleteC(item.id)"><span
+                                        class="glyphicon glyphicon-remove-sign"></span></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <ul class="pagination" v-if="totalPage <= 5">
+                            <li v-if="pageNum > 1" @click="pageTo(pageNum-1)"><a
+                                    href="#">&laquo;</a></li>
+                            <li v-if="pageNum == 1" class="disabled"><a
+                                    href="#">&laquo;</a></li>
+                            <li v-for="index in totalPage" :class="{'active' : pageNum == index}"
+                                @click="pageTo(index)">
+                                <a href="#">{{index}}</a>
+                            </li>
+                            <li v-if="pageNum < totalPage" @click="pageTo(pageNum+1)"><a href="#">&raquo;</a>
+                            </li>
+                            <li v-if="pageNum == totalPage" class="disabled"><a href="#">&raquo;</a>
+                            </li>
+                            <span class="help-block text-center">共<span>{{totalPage}}</span>页</span><br>
+                        </ul>
+                        <ul class="pagination" v-if="totalPage > 5">
+                            <li v-if="pageNum > 1" @click="pageTo(pageNum-1)"><a
+                                    href="#">&laquo;</a></li>
+                            <li v-if="pageNum == 1" class="disabled"><a
+                                    href="#">&laquo;</a></li>
+                            <li v-if="pageNum-2 > 0" @click="pageTo(pageNum-2)"><a href="#">{{pageNum-2}}</a></li>
+                            <li v-if="pageNum-1 > 0" @click="pageTo(pageNum-1)"><a href="#">{{pageNum-1}}</a></li>
+                            <li class="active"><a href="#">{{pageNum}}</a></li>
+                            <li v-if="pageNum+1 <= totalPage" @click="pageTo(pageNum+1)"><a href="#">{{pageNum+1}}</a>
+                            </li>
+                            <li v-if="pageNum+2 <= totalPage" @click="pageTo(pageNum+2)"><a href="#">{{pageNum+2}}</a>
+                            </li>
+                            <li v-if="pageNum < totalPage" @click="pageTo(pageNum+1)"><a href="#">&raquo;</a>
+                            </li>
+                            <li v-if="pageNum == totalPage" class="disabled"><a href="#">&raquo;</a>
+                            </li>
+                            <span class="help-block text-center">共<span>{{totalPage}}</span>页</span><br>
+                        </ul>
+                    </div>
+                    <div class="text-center" style="margin-top: -20px; padding-bottom: 20px">
+                        <button class="btn btn-danger" @click="deleteAll()">批量删除</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <footer>
+        <div class="container-fluid bg-info" style="margin-top: 180px">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1">
+                    <h3 class="lead text-left">Desiged By
+                        <small>&nbsp;&nbsp;&nbsp;YMM</small>
+                    </h3>
+                </div>
+                <div class="col-md-3 col-md-offset-4">
+                    <h3 class="text-left text-muted"><strong>将小站分享给你的朋友 :</strong>
+                        <a href=""><img src="/img/icon/PY.jpg" height="50" width="50"/></a>
+                        <a href=""><img src="/img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1">
+                    <h4 class="text-left text-muted">联系我们：<kbd>964106443@qq.com</kbd></h4>
+                </div>
+                <div class="col-md-3 col-md-offset-4">
+                    <strong>本网站提供新影视资源均系收集各大网站，本网站只提供web页面浏览服务，并不提供影片资源存储，也不参与任何视频录制、上传</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h4 class="text-center text-warning bg-primary">Copyright © 2016-2019 MMM.Tv. All Rights Reserved
+                        .</h4>
+                </div>
+            </div>
 
+        </div>
+    </footer>
 </div>
-<script src="jquery/jquery-2.1.1.min.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
-<script src="js/layer/layer.js"></script>
-</body>
-
-<footer>
-    <div class="container-fluid bg-info" style="margin-top: 175px">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-1">
-                <h3 class="lead text-left">Desiged By
-                    <small>&nbsp;&nbsp;&nbsp;YMM</small>
-                </h3>
-            </div>
-            <div class="col-md-3 col-md-offset-4">
-                <h3 class="text-left text-muted"><strong>将小站分享给你的朋友 :</strong>
-                    <a href=""><img src="img/icon/PY.jpg" height="50" width="50"/></a>
-                    <a href=""><img src="img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-1">
-                <h4 class="text-left text-muted">联系我们：<kbd>964106443@qq.com</kbd></h4>
-            </div>
-            <div class="col-md-3 col-md-offset-4">
-                <strong>本网站提供新影视资源均系收集各大网站，本网站只提供web页面浏览服务，并不提供影片资源存储，也不参与任何视频录制、上传</strong>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <h4 class="text-center text-warning bg-primary">Copyright © 2016-2019 MMM.Tv. All Rights Reserved .</h4>
-            </div>
-        </div>
-    </div>
-</footer>
+<script src="/jquery/jquery-2.1.1.min.js"></script>
+<script src="/js/layer/layer.js"></script>
+<script src="/bootstrap/js/bootstrap.js"></script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script>
-    function xu(){
-        layer.alert('见到你真的很高兴', {icon: 6});
-    }
+    new Vue({
+        el: "#app",
+        data: {
+            userinfo: [],
+            comments: [],
+            pageNum: '',
+            totalPage: '',
+            total: '',
+            checked: false,
+            checkModel: [],
+            flag: 1
+        },
+        methods: {
+            pageTo(e) {
+                var ym = this
+                $.ajax({
+                    type: "post",
+                    url: "/user/commentGet",
+                    data: {
+                        pageNum: e
+                    },
+                    beforeSend: function () {
+                        index = layer.load(0, {shade: false});
+                    },
+                    success: function (object) {
+                        layer.close(index)
+                        ym.comments = object.item;
+                        ym.total = object.total;
+                        ym.pageNum = object.pageNum;
+                        ym.totalPage = object.totalPage;
+                    },
+                    error: function () {
+                        layer.close(index)
+                        layer.msg("跳转失败！", {icon: 2})
+                    }
+                })
+            },
+            deleteAll() {
+                var ym = this
+                var ids = JSON.stringify(this.checkModel)
+                $.ajax({
+                    type: "delete",
+                    url: "/user/commentDelete",
+                    dataType: "json",
+                    data: {
+                        ids: ids
+                    },
+                    beforeSend: function () {
+                        index = layer.load(0, {shade: false});
+                    },
+                    success: function () {
+                        layer.close(index)
+                        layer.msg("删除成功！", {icon: 1})
+                        // ym.$options.methods.pageTo(ym.pageNum)
+                        ym.flag = ym.flag + 1
+                    },
+                    error: function () {
+                        layer.close(index)
+                        layer.msg("删除失败！", {icon: 2})
+                    }
+                })
+                //在方法中调用另一个方法
+            },
+            commentShow(name, content, num) {
+                layer.open({
+                    type: 1,
+                    skin: 'layui-layer-molv', //加上边框
+                    area: ['420px', '240px'], //宽高
+                    content: '    <h3 class="page-header text-center">' + name + '<small class="text-danger">点赞&nbsp;+' + num + '</small></h3>\n' +
+                        '    <p class="lead">' + content + '</p>'
+                });
+            },
+            deleteC(id) {
+                var ym = this
+                ym.checkModel.push(id)
+                var ids = JSON.stringify(this.checkModel)
+                $.ajax({
+                    type: "delete",
+                    url: "/user/commentDelete",
+                    dataType: "json",
+                    data: {
+                        ids: ids
+                    },
+                    beforeSend: function () {
+                        index = layer.load(0, {shade: false});
+                    },
+                    success: function () {
+                        layer.close(index)
+                        layer.msg("删除成功！", {icon: 1})
+                        // ym.$options.methods.pageTo(ym.pageNum)
+                        ym.flag = ym.flag + 1
+                    },
+                    error: function () {
+                        layer.close(index)
+                        layer.msg("删除失败！", {icon: 2})
+                    }
+                })
+                //在方法中调用另一个方法
+            },
+            loginOut() {
+                layer.confirm('您确定要退出登录吗？', {
+                    btn: ['确定', '取消'] //按钮
+                }, function () {
+                    $.ajax({
+                        url: "/user/loginOut",
+                        type: "post",
+                        success: function () {
+                            layer.msg('退出成功', {icon: 1});
+                            window.location.href = "/login"
+                        },
+                        error: function () {
+                            layer.msg('退出失败', {icon: 2});
+                        }
+                    })
+                },
+            )
+            },
+            checkAll() {
+                var ym = this
+                if (ym.checked) {
+                    ym.checkModel = [];
+                } else {
+                    ym.comments.forEach((ch) => {
+                            if (ym.checkModel.indexOf(ch.id) == -1) {
+                                ym.checkModel.push(ch.id)
+                            }
+                        }
+                    )
+                }
+            }
+        },
+        watch: {
+            checkModel() {
+                if (this.comments.length == this.checkModel.length) {
+                    this.checked = true
+                } else {
+                    this.checked = false
+                }
+            },
+            flag: {
+                deep: true,
+                handler() {
+                    this.pageTo(this.pageNum)
+                }
+            }
+            // total(){
+            //     this.pageTo(this.pageNum)
+            // }
+        },
+        created() {
+            var ym = this
+            $.ajax({
+                type: "get",
+                url: "/user/userinfoGet",
+                beforeSend: function () {
+                    index = layer.load(0, {shade: false});
+                },
+                success: function (object) {
+                    layer.close(index)
+                    ym.userinfo = object;
+                },
+            })
+            $.ajax({
+                type: "post",
+                url: "/user/commentGet",
+                beforeSend: function () {
+                    index = layer.load(0, {shade: false});
+                },
+                success: function (object) {
+                    layer.close(index)
+                    ym.comments = object.item;
+                    ym.total = object.total;
+                    ym.pageNum = object.pageNum;
+                    ym.totalPage = object.totalPage;
+                },
+            })
+        }
+    })
 </script>
+</body>
 </html>

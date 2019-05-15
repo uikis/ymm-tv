@@ -53,9 +53,9 @@ background-size:100% ">
             </div>
             <div class="col-md-3 col-xs-12 col-md-offset-5" style="margin-top: 50px">
                 <div class="input-group" style="opacity:0.8">
-                    <input type="text" class="form-control font-size:50px " placeholder="Search for...">
+                    <input type="text" class="form-control font-size:50px " placeholder="Search for..." v-model="key">
                     <span class="input-group-btn">
-        <button class="btn btn-default" type="button"><img src="" alt=""
+        <button class="btn btn-default" type="button" @click="queyItem(key)"><img src="" alt=""
                                                            class="glyphicon glyphicon-zoom-in">Go!</button>
       </span>
                 </div>
@@ -354,6 +354,7 @@ background-size:100% ">
             updateShow:[],
             rankShow:[],
             animeShow:[],
+            key:''
         },
         created: function () {
             var ym = this
@@ -423,6 +424,11 @@ background-size:100% ">
                     ym.animeShow = object;
                 },
             });
+        },
+        methods:{
+            queyItem(key){
+                window.location.href="/search/detail?key="+key;
+            }
         },
         updated:function () {
             if (Modernizr.touch) {
