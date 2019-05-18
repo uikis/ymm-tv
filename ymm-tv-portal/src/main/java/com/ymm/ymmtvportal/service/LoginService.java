@@ -71,6 +71,7 @@ public class LoginService {
         //4.建立并存入用户额外信息表
         Userinfo userinfo = new Userinfo();
         userinfo.setLoginAccount(userLogin.getLoginAccount());
+        userinfo.setUserName("用户 "+loginAccount);
         userinfo.setHeadImg("img/himg/tx.jpg");
         userinfo.setRole("0");
         userinfoDao.insert(userinfo);

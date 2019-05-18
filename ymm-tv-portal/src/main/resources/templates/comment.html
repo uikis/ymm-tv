@@ -199,11 +199,15 @@
         methods: {
             pageTo(e) {
                 var ym = this
+                if (e > ym.totalPage) {
+                    layer.msg("请输入正确的页数！")
+                    return
+                }
                 $.ajax({
                     type: "post",
                     url: "/user/commentGet",
                     data: {
-                        pageNum: e
+                        pageNum: e,
                     },
                     beforeSend: function () {
                         index = layer.load(0, {shade: false});

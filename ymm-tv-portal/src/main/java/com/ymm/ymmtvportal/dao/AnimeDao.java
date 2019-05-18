@@ -17,4 +17,6 @@ public interface AnimeDao extends tk.mybatis.mapper.common.Mapper<Anime> {
     @Select("select * from tb_anime order by total_pnum desc limit 10")
     List<Anime> selectTop10();
 
+    @Select("select * from tb_anime")
+    List<Anime> selectAllAnime();
 }

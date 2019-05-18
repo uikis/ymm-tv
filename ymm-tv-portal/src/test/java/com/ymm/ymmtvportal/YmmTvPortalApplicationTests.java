@@ -6,8 +6,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.ymm.ymmtvcommon.pojo.Carousel;
 import com.ymm.ymmtvcommon.pojo.Comment;
+import com.ymm.ymmtvcommon.pojo.NormalShow;
 import com.ymm.ymmtvportal.dao.CarouselDao;
 import com.ymm.ymmtvportal.dao.CommentDao;
+import com.ymm.ymmtvportal.dao.NormalShowDao;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.tomcat.util.security.MD5Encoder;
@@ -42,6 +44,8 @@ public class YmmTvPortalApplicationTests {
     @Autowired
     private CommentDao commentDao;
 
+    @Autowired
+    private NormalShowDao normalShowDao;
     @Test
     public void contextLoads() throws FileNotFoundException {
 
@@ -84,13 +88,29 @@ public class YmmTvPortalApplicationTests {
 //        String ids = "[5,6]";
 //        List<Integer> integerList1 = JSON.parseArray(ids, Integer.class);
 
-        List<String> list = new ArrayList<>();
-        list.add("战斗");
-        list.add("热血");
-        String type = "[\"战斗\",\"热血\",\"催泪\"]";
-//        List<String> integerList2 = JSONObject.parseArray(type, String.class);
-        String str = "[\"战斗\",\"热血\"]";
-        List<String> students = JSON.parseArray(str,String.class);
-        System.out.println(students);
+//        List<String> list = new ArrayList<>();
+//        list.add("战斗");
+//        list.add("热血");
+//        String type = "[\"战斗\",\"热血\",\"催泪\"]";
+////        List<String> integerList2 = JSONObject.parseArray(type, String.class);
+//        String str = "[\"战斗\",\"热血\"]";
+//        List<String> students = JSON.parseArray(str,String.class);
+//        System.out.println(students);
+
+//        List<Integer> list = new ArrayList<>();
+//        list.add(12);
+//        list.add(13);
+//        List<NormalShow> list1 = normalShowDao.selectByIdList(list);
+//        System.out.println(list1);
+
+        String str = "2018-17";
+        String substring = str.substring(0, 4);
+        System.out.println(substring);
+
+        Example example = new Example(Comment.class);
+        example.setOrderByClause("comment_time desc");
+        example.createCriteria().andEqualTo("animeId", 11);
+        List<Comment> comments = commentDao.selectByExample(example);
+        System.out.println(comments);
     }
 }

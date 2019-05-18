@@ -6,9 +6,13 @@ import com.github.pagehelper.PageInfo;
 import com.ymm.ymmtvcommon.exception.YmmException;
 import com.ymm.ymmtvcommon.excetionEnum.ExceptionCode;
 import com.ymm.ymmtvcommon.pojo.Anime;
+import com.ymm.ymmtvcommon.pojo.NormalShow;
+import com.ymm.ymmtvcommon.pojo.SearchRequest;
+import com.ymm.ymmtvcommon.pojo.Type;
 import com.ymm.ymmtvcommon.result.PageResult;
 import com.ymm.ymmtvportal.dao.AnimeDao;
 import com.ymm.ymmtvportal.dao.NormalShowDao;
+import com.ymm.ymmtvportal.dao.TypeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +20,7 @@ import org.springframework.util.StringUtils;
 import org.thymeleaf.util.ListUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -26,6 +31,9 @@ public class SearchService {
 
     @Autowired
     private AnimeDao animeDao;
+
+    @Autowired
+    private TypeDao typeDao;
 
     /**
      * 分页搜索
@@ -55,5 +63,89 @@ public class SearchService {
 
         return new PageResult<Anime>(items, cPageNum, pagesNum, totalNum);
 
+    }
+
+    /**
+     * 番剧门户页面
+     * @param request
+     * @return
+     */
+    public PageResult<NormalShow> animeGet(SearchRequest request) {
+        if (StringUtils.isEmpty(request.getPageNum())){
+            request.setPageNum(1);
+        }
+        if (StringUtils.isEmpty(request.getRows())){
+            request.setRows(12);
+        }
+        //1.先分页
+        List<NormalShow> list = new ArrayList<>();
+        List<Integer> ids = new ArrayList<>();
+        List<Anime> animes = new ArrayList<>();
+        Example example = new Example(Anime.class);
+
+        //2.分类过滤
+        //地区过滤
+        if (!StringUtils.isEmpty(request.getRegion()) && StringUtils.isEmpty(request.getYear())){
+            example.createCriteria().andEqualTo("region", request.getRegion());
+        }
+        //年份过滤
+        if (!StringUtils.isEmpty(request.getYear()) && StringUtils.isEmpty(request.getRegion())){
+            String year = request.getYear();
+            example.createCriteria().andEqualTo("year", year);
+        }
+        if (!StringUtils.isEmpty(request.getYear()) && !StringUtils.isEmpty(request.getRegion())){
+            String year = request.getYear();
+            example.createCriteria().andEqualTo("year", year).andEqualTo("region", request.getRegion());
+        }
+        //类型过滤
+        if (!StringUtils.isEmpty(request.getType())){
+            String type = request.getType();
+            if (StringUtils.isEmpty(request.getYear()) && StringUtils.isEmpty(request.getRegion())){
+                animes = animeDao.selectAll();
+            }else {
+                animes = animeDao.selectByExample(example);
+            }
+            for (Anime anime : animes) {
+                List<String> types = JSON.parseArray(anime.getType(), String.class);
+                if (!ListUtils.isEmpty(types)){
+                    if (types.contains(type)){
+                        Integer id = anime.getId();
+                        ids.add(id);
+                    }
+                }
+            }
+        }else {
+            animes = animeDao.selectByExample(example);
+            for (Anime anime : animes) {
+                Integer id = anime.getId();
+                ids.add(id);
+            }
+        }
+        PageHelper.startPage(request.getPageNum(), request.getRows());
+        if (ListUtils.isEmpty(ids)){
+            list = null;
+        }else {
+            list = normalShowDao.selectByIdList(ids);
+        }
+        //排序过滤
+
+        //2.先判断是否有筛选条件
+        //返回结果
+        PageInfo<NormalShow> pageInfo = new PageInfo<>(list);
+        long totalNum = pageInfo.getTotal();
+        int pagesNum = pageInfo.getPages();
+        int cPageNum = pageInfo.getPageNum();
+        List<NormalShow> items = pageInfo.getList();
+
+        return new PageResult<>(items, cPageNum, pagesNum, totalNum);
+    }
+
+    /**
+     * 查询分类列表
+     * @return
+     */
+    public List<Type> typeGet() {
+        List<Type> types = typeDao.selectAll();
+        return types;
     }
 }

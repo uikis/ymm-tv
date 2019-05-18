@@ -18,7 +18,7 @@ public class SearchController {
 
     @PostMapping("detail")
     public ResponseEntity<PageResult<Anime>> queryItems(@RequestParam(defaultValue = "1") int pageNum,
-                                                              @RequestParam(defaultValue = "5") int rows, String key) {
+                                                              @RequestParam(defaultValue = "4") int rows, String key) {
         return ResponseEntity.ok(searchService.queryItems(pageNum, rows, key));
     }
 }

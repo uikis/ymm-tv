@@ -196,7 +196,9 @@ background-size:100% ">
             <div class="media-body">
                 <p class="lead">这部动漫特别好看的</p>
             </div>
+            <p style="float: left" class="text-warning"><strong>评论于:</strong></p>
             <div style="float: right">
+
                 <a href="#" class="lead"><span class="glyphicon glyphicon-thumbs-up"></span></a>
             </div>
             <h5 class="page-header"></h5>
@@ -239,15 +241,19 @@ background-size:100% ">
         </div>
     </div>
 </div>
+    <div v-if="[1, 2, 3].indexOf(1)">
+        dsada
+    </div>
 <div class="container-fluid">
     <div class="row col-md-10 col-md-offset-1">
         <form role="form">
             <div class="form-group">
                 <label for="comment">说些什么吧~</label>
-                <textarea class="form-control" rows="5" id="comment"></textarea>
+                <textarea class="form-control" rows="5" id="comment" placeholder="字数请在100以内~" v-model="test"></textarea>
             </div>
             <div>
-                <button class="btn btn-primary"><img src="" alt="" class="glyphicon glyphicon-send"></button>
+                <button class="btn btn-primary" type="button"><img src="" alt="" class="glyphicon glyphicon-send" @click="commentAdd()"></button> &nbsp;
+                <span class="text-muted">{{test.length}} / 100</span>
             </div>
         </form>
     </div>
@@ -290,12 +296,22 @@ background-size:100% ">
     new Vue({
         el:"#app",
         data:{
-            key:''
+            key:'',
+            test:''
         },
         methods:{
             queryItem(){
                 alert("dasd")
+            },
+            add(e){
+                alert(e)
+            },
+            commentAdd(){
+                if (this.test.length > 100) {
+                    layer.msg("超出了规定字数,请重新输入！", {icon:2})
+                }
             }
+
         },
         created(){
             console.log(this.$route.query.key)

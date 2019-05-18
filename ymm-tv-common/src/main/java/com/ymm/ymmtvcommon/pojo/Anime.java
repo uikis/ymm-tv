@@ -53,4 +53,6 @@ public class Anime implements Serializable {
 
     private String updateTime;
 
+    @JsonIgnore
+    private String year;
 }

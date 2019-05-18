@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,6 +7,7 @@
 </head>
 <body style="overflow-x: hidden">
 <div id="app">
+    <input type="hidden" th:value="${#httpServletRequest.getParameter('key')}" ref="param">
 <!--第一导航-->
 <div class="container-fluid" style="background-color: #fff9ec ;opacity:0.9;background-image: url('/img/yemei3.png');
 background-size:100% ">
@@ -96,31 +97,28 @@ background-size:100% ">
     <ul class="breadcrumb" style="opacity:0.8" >
         <li><a href="#">首页</a></li>
         <li><a href="#">动漫</a></li>
-        <li class="active">龙与虎</li>
+        <li class="active">{{anime.name}}</li>
     </ul>
     </div>
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
         <div class="row">
             <div class="col-md-3">
-                <img src="/img/lyh2.jpg" class="media-object" style="width:280px;height: 400px">
+                <img :src="anime.path" class="media-object" style="width:280px;height: 400px">
             </div>
             <div class="media-body">
-                <h3 class="media-heading">龙与虎</h3>
-                <span class="help-block">更新至24集</span>
-                <br>
+                <h3 class="media-heading">{{anime.name}}</h3>
+                <span class="help-block">更新至{{anime.updateChapter}}集</span>
+                <p class="lead">共{{anime.chapter}}集</p>
                     <h3>类型:</h3>
-                <a href=""><span class="text-muted" style="font-size: 20px">青春</span></a>
-                    <a href=""><span class="text-muted" style="font-size: 20px">校园</span></a>
-                    <a href=""><span class="text-muted" style="font-size: 20px">催泪</span></a>
+                <a href="" v-for="(item, index) in anime.typeList"><span class="text-muted" style="font-size: 20px">{{item}} &nbsp;</span></a>
                 <br>
                 <h3>年份：</h3>
-                <h4>1997-9-25</h4>
+                <h4>{{anime.createdTime}}</h4>
                 <h3>地区：</h3>
-                <h4><a href="">日本</a></h4>
+                <h4><a href="">{{anime.region}}</a></h4>
                 <h3>简介：</h3>
-                <h4>眼神凶恶，看起来像不良少年的高须龙儿，事实上连跟别人吵架都没有吵过，是个很普通的少年。如今，他正要升上高中二年级，
-                    并幸运地跟暗恋一年的栉枝实乃梨和高一时的好友北村祐作同班。担心自己再度被新班级的同学误会的龙儿，却意外地因为与被称为“掌中老虎”的逢坂大河邂逅而解开大家对他的误解。</h4>
+                <h4>{{anime.intro}}</h4>
             </div>
             <div style="height: 50px"></div>
         </div>
@@ -136,42 +134,8 @@ background-size:100% ">
     <br>
     <div class="container-fluid">
     <div class="row col-md-10 col-md-offset-1">
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
-        </div>
-
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-default"><a href=""><strong>第一集</strong></a></button>
+        <div class="col-md-1" v-for="(item, index) in chapter" style="margin-top: 20px">
+            <button class="btn btn-default" style="; width: 70px"><a href=""><strong>第{{item}}集</strong></a></button>
         </div>
     </div>
     </div>
@@ -181,61 +145,71 @@ background-size:100% ">
     <div class="row col-md-10 col-md-offset-1">
     <h2 class="page-header">
         <span class="glyphicon glyphicon-tags"></span>&nbsp;评论区
-        <small>当前共2条评论</small>
+        <small>当前共{{total}}条评论</small>
     </h2>
     <span class="help-block" style="float: left">发表你的评论吧！</span>
     </div>
 </div>
 <div class="container-fluid">
-    <div class="row col-md-10 col-md-offset-1">
+    <div class="row col-md-10 col-md-offset-1" v-for="(item, index) in comment">
         <div class="media">
             <div class="media-left" >
-                <a href=""><img src="/img/lm.jpg" class="media-object img-circle" style="width:100px;height: 100px ;margin-top: 20px"></a>
-                <p class="text-center lead">uikis</p>
+                <a href=""><img :src="item.userHeadImg" class="media-object img-circle" style="width:100px;height: 100px ;margin-top: 20px"></a>
+                <p class="text-center lead">{{item.userName}}</p>
             </div>
             <div class="media-body">
-                <p class="lead">这部动漫特别好看的</p>
+                <p class="lead">{{item.comment}}</p>
             </div>
-            <div style="float: right">
-                <a href="#" class="lead"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+            <p style="float: left" class="text-warning"><strong>评论于: &nbsp;{{item.commentTime}}</strong></p>
+            <div style="float: right" v-if="agreed.indexOf(item.id) != -1">
+                <button class="lead btn btn-link btn-lg" @click="addAgree(item.id)"><span class="glyphicon glyphicon-thumbs-up text-danger">{{item.agree}}</span></button>
             </div>
-            <h5 class="page-header"></h5>
-        </div>
-    </div>
-    <div class="row col-md-10 col-md-offset-1">
-        <div class="media">
-            <div class="media-left" >
-                <a href=""><img src="/img/icon1.png" class="media-object img-circle" style="width:100px;height: 100px ;margin-top: 20px"></a>
-                <p class="text-center lead">uikis</p>
-            </div>
-            <div class="media-body">
-                <p class="lead">这部动漫特别好看的</p>
-            </div>
-            <div style="float: right">
-                <a href="#" class="lead"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-                &nbsp;<p style="float: right" class="text-muted">3</p>
+            <div style="float: right" v-if="agreed.indexOf(item.id) == -1">
+                <button class="lead btn btn-link btn-lg" @click="addAgree(item.id)"><span class="glyphicon glyphicon-thumbs-up" ref="item.id">{{item.agree}}</span></button>
             </div>
             <h5 class="page-header"></h5>
         </div>
     </div>
 </div>
 <div class="container">
-    <div class="row col-md-6 col-md-offset-3 text-center">
-        <ul class="pagination pagination-lg">
-            <li class="previous disabled"><a href="#">&larr; Older</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li class="next"><a href="#">Newer &rarr;</a></li>
-        </ul>
-        &nbsp;
-        <div class="input-group col-md-2 col-md-offset-5">
-            <input type="text" class="form-control">
-            <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Go!</button>
+    <div v-if="comment != null">
+        <div class="row col-md-6 col-md-offset-3 text-center">
+            <ul class="pagination pagination-lg" v-if="totalPage <= 5">
+                <li v-if="pageNum > 1" class="previous" @click="pageTo(pageNum-1)"><a href="#">&larr; Older</a></li>
+                <li v-if="pageNum == 1" class="previous disabled"><a href="#">&larr; Older</a></li>
+                <li v-for="index in totalPage" :class="{'active' : pageNum == index}"
+                    @click="pageTo(index)">
+                    <a href="#">{{index}}</a>
+                </li>
+                <li v-if="pageNum < totalPage" class="next" @click="pageTo(pageNum+1)"><a href="#">Newer &rarr;</a>
+                </li>
+                <li v-if="pageNum == totalPage" class="next disabled"><a href="#">Newer &rarr;</a>
+                </li>
+                <span class="help-block text-center">共<span>{{totalPage}}</span>页</span><br>
+            </ul>
+            <ul class="pagination pagination-lg" v-if="totalPage > 5">
+                <li v-if="pageNum > 1" class="previous" @click="pageTo(pageNum-1)"><a href="#">&larr; Older</a></li>
+                <li v-if="pageNum == 1" class="previous disabled"><a href="#">&larr; Older</a></li>
+                <li v-if="pageNum-2 > 0" @click="pageTo(pageNum-2)"><a href="#">{{pageNum-2}}</a></li>
+                <li v-if="pageNum-1 > 0" @click="pageTo(pageNum-1)"><a href="#">{{pageNum-1}}</a></li>
+                <li class="active"><a href="#">{{pageNum}}</a></li>
+                <li v-if="pageNum+1 <= totalPage" @click="pageTo(pageNum+1)"><a href="#">{{pageNum+1}}</a>
+                </li>
+                <li v-if="pageNum+2 <= totalPage" @click="pageTo(pageNum+2)"><a href="#">{{pageNum+2}}</a>
+                </li>
+                <li v-if="pageNum < totalPage" class="next" @click="pageTo(pageNum+1)"><a href="#">Newer &rarr;</a>
+                </li>
+                <li v-if="pageNum == totalPage" class="next disabled"><a href="#">Newer &rarr;</a>
+                </li>
+                <span class="help-block text-center">共<span>{{totalPage}}</span>页</span><br>
+            </ul>
+            &nbsp;
+            <div class="input-group col-md-2 col-md-offset-5">
+                <input type="text" class="form-control" v-model="pageJump">
+                <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" @click="pageTo(pageJump)">Go!</button>
                     </span>
+            </div>
         </div>
     </div>
 </div>
@@ -244,10 +218,11 @@ background-size:100% ">
         <form role="form">
             <div class="form-group">
                 <label for="comment">说些什么吧~</label>
-                <textarea class="form-control" rows="5" id="comment"></textarea>
+                <textarea class="form-control" rows="5" id="comment" placeholder="字数请在100以内~" v-model="acomment"></textarea>
             </div>
             <div>
-                <button class="btn btn-primary"><img src="" alt="" class="glyphicon glyphicon-send"></button>
+                <button class="btn btn-primary" type="button" @click="commentAdd()"><span class="glyphicon glyphicon-send"></span></button> &nbsp;
+                <span class="text-muted">{{acomment.length}} / 100</span>
             </div>
         </form>
     </div>
@@ -282,23 +257,162 @@ background-size:100% ">
     </div>
 </footer>
 </div>
-<script src="jquery/jquery-2.1.1.min.js"></script>
-<script src="js/layer/layer.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
+<script src="/jquery/jquery-2.1.1.min.js"></script>
+<script src="/js/layer/layer.js"></script>
+<script src="/bootstrap/js/bootstrap.js"></script>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script>
     new Vue({
         el:"#app",
         data:{
-            key:''
+            key:'',
+            anime:{},
+            chapter:'',
+            comment:[],
+            pageJump: '',
+            pageNum: '',
+            totalPage: '',
+            total: '',
+            acomment:'',
+            flag:'',
+            agreed:[]
         },
         methods:{
-            queryItem(){
-                alert("dasd")
+            pageTo(e) {
+                var ym = this
+                if (e > ym.totalPage) {
+                    layer.msg("请输入正确的页数！")
+                    return
+                }
+                $.ajax({
+                    type: "get",
+                    url: "/portal/commentGet",
+                    data: {
+                        pageNum: e,
+                        id:ym.key,
+                    },
+                    beforeSend: function () {
+                        index = layer.load(0, {shade: false});
+                    },
+                    success: function (object) {
+                        layer.close(index)
+                        ym.comment = object.item;
+                        ym.total = object.total;
+                        ym.pageNum = object.pageNum;
+                        ym.totalPage = object.totalPage;
+                    },
+                    error: function () {
+                        layer.close(index)
+                        layer.msg("跳转失败！", {icon: 2})
+                    }
+                })
+            },
+            commentAdd(){
+                var ym = this
+                if (this.acomment.length > 100) {
+                    layer.msg("超出了规定字数,请重新输入！", {icon:2})
+                    return
+                }
+                $.ajax({
+                    url:"/portal/commentAdd",
+                    type:"post",
+                    data:{
+                        id:ym.key,
+                        comment:ym.acomment
+                    },
+                    success:function (object) {
+                        if(object == false){
+                            layer.msg("请先登录再评论！")
+                        }else {
+                            layer.msg("评论成功", {icon:1})
+                            ym.flag = ym.flag + 1
+                        }
+                    },
+                    error:function () {
+                        layer.msg("评论失败！", {icon:2})
+                    }
+                })
+            },
+            addAgree(id){
+                var ym = this
+                if(ym.agreed.indexOf(id) != -1){
+                    layer.msg("您已经点赞过了！", {icon:2})
+                    return
+                }else {
+                    $.ajax({
+                        url:"/portal/commentAgree",
+                        type:"post",
+                        data:{
+                            id:id
+                        },
+                        success:function (object) {
+                            if (object == true){
+                                layer.msg("点赞成功！");
+                                ym.agreed.push(id)
+                                // ym.$refs[id].className = "glyphicon glyphicon-thumbs-up text-danger"
+                                ym.flag = ym.flag + 1
+                            }else {
+                                layer.msg("操作失败！")
+                            }
+                        },
+                        error:function () {
+                            layer.msg("您还未登录！")
+                        }
+                    })
+                }
             }
         },
         created(){
-            console.log(this.$route.query.key)
+
+        },
+        watch:{
+            flag: {
+                deep: true,
+                handler() {
+                    this.pageTo(this.pageNum)
+                }
+            }
+        },
+        mounted() {
+            var ym = this
+            ym.key = ym.$refs.param.value;
+            $.ajax({
+                url:"/portal/animeDetail",
+                type:"get",
+                data:{
+                    id:ym.key
+                },
+                success:function (object) {
+                    ym.anime = object
+                    ym.chapter = parseInt(object.updateChapter)
+                },
+                error:function () {
+                  layer.msg("数据查询失败！")
+                },
+            })
+            $.ajax({
+                url:"/portal/commentGet",
+                type:"get",
+                data:{
+                    id:ym.key
+                },
+                success:function (object) {
+                    ym.comment = object.item;
+                    ym.total = object.total;
+                    ym.pageNum = object.pageNum;
+                    ym.totalPage = object.totalPage;
+                },
+                error:function () {
+                    layer.msg("数据查询失败！")
+                }
+            })
+            $.ajax({
+                url:"/portal/commentStateCheck",
+                type:"get",
+                success:function(object){
+                    ym.agreed = object;
+                }
+            })
         }
     })
 </script>

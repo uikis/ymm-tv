@@ -101,7 +101,7 @@ public class MainService {
      * @return
      */
     public List<NormalShow> animeShow() {
-        List<NormalShow> normalShows = normalShowDao.selectAnimeTop15();
+        List<NormalShow> normalShows = normalShowDao.selectAnimeTop12();
         return normalShows;
     }
 }

@@ -28,4 +28,10 @@ public class Comment implements Serializable {
 
     @Transient
     private String animeName;
+
+    @Transient
+    private String userName;
+
+    @Transient
+    private String userHeadImg;
 }

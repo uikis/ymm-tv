@@ -45,6 +45,16 @@ public class DispatcherController {
     public String searchDetail(){
         return "search";
     }
+
+    @GetMapping("portal/anime")
+    public String portalAnime(){
+        return "portal";
+    }
+
+    @GetMapping("portal/detail")
+    public String animeDetail(){
+        return "detail";
+    }
 //    @RequestMapping("test")
 //    public ResponseEntity<String> test(){
 //        return ResponseEntity.ok("ok");
