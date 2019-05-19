@@ -26,6 +26,8 @@ public class NormalShow implements Serializable {
 
     private String title;
 
+    private String createTime;
+
     //解决冲突，
     @Column(name = "updated")
     private String update;

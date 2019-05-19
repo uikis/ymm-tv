@@ -104,7 +104,7 @@ background-size:100% ">
         <div class="col-md-10 col-md-offset-1">
         <div class="row">
             <div class="col-md-3">
-                <img :src="anime.path" class="media-object" style="width:280px;height: 400px">
+                <img :src="anime.img" class="media-object" style="width:280px;height: 400px">
             </div>
             <div class="media-body">
                 <h3 class="media-heading">{{anime.name}}</h3>
@@ -162,10 +162,10 @@ background-size:100% ">
             </div>
             <p style="float: left" class="text-warning"><strong>评论于: &nbsp;{{item.commentTime}}</strong></p>
             <div style="float: right" v-if="agreed.indexOf(item.id) != -1">
-                <button class="lead btn btn-link btn-lg" @click="addAgree(item.id)"><span class="glyphicon glyphicon-thumbs-up text-danger">{{item.agree}}</span></button>
+                <a href="javascript:void(0)" class="lead" @click="addAgree(item.id)"><span class="glyphicon glyphicon-thumbs-up text-danger">{{item.agree}}</span></a>
             </div>
             <div style="float: right" v-if="agreed.indexOf(item.id) == -1">
-                <button class="lead btn btn-link btn-lg" @click="addAgree(item.id)"><span class="glyphicon glyphicon-thumbs-up" ref="item.id">{{item.agree}}</span></button>
+                <a href="javascript:void(0)" class="lead" @click="addAgree(item.id)"><span class="glyphicon glyphicon-thumbs-up" ref="item.id">{{item.agree}}</span></a>
             </div>
             <h5 class="page-header"></h5>
         </div>

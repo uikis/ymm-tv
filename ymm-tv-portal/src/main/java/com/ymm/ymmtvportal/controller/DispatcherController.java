@@ -55,6 +55,11 @@ public class DispatcherController {
     public String animeDetail(){
         return "detail";
     }
+
+    @GetMapping("play/anime")
+    public String animePlay(){
+        return "player";
+    }
 //    @RequestMapping("test")
 //    public ResponseEntity<String> test(){
 //        return ResponseEntity.ok("ok");

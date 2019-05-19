@@ -69,6 +69,12 @@ public class UserController {
         userService.loginOut(request);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @DeleteMapping("cancelCollect")
+    public ResponseEntity<Void> cancelCollect(HttpServletRequest request, Integer id){
+        userService.cancelCollect(request, id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 //    public static void main(String[] args) {
 ////        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
 ////        String path1 = path.replace("target/classes/", "src/main/resources/");

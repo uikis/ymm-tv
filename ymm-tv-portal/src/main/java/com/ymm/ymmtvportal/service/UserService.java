@@ -16,8 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.ListUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -193,7 +196,32 @@ public class UserService {
      * 退出登录
      */
     public void loginOut(HttpServletRequest request) {
+        //更新最后登录的时间
         HttpSession session = request.getSession();
+        Userinfo userinfo = (Userinfo)session.getAttribute("userinfo");
+        UserLogin userLogin = new UserLogin();
+        userLogin.setLoginAccount(userinfo.getLoginAccount());
+        UserLogin user = userDao.select(userLogin).get(0);
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = sdf.format(date);
+        user.setLastLogintime(format);
+        userDao.updateByPrimaryKey(user);
         session.removeAttribute("userinfo");
+    }
+
+    /**
+     * 删除收藏
+     * @param request
+     * @param id
+     */
+    public void cancelCollect(HttpServletRequest request, Integer id) {
+        HttpSession session = request.getSession();
+        Userinfo userinfo = (Userinfo)session.getAttribute("userinfo");
+        String loginAccount = userinfo.getLoginAccount();
+        int i = userDao.cancelCollect(loginAccount, id);
+        if (i <= 0){
+            throw new YmmException(ExceptionCode.HANDLE_FALIED);
+        }
     }
 }

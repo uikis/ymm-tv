@@ -32,8 +32,6 @@ public class Anime implements Serializable {
     @Transient
     private List<String> typeList;
 
-    private String path;
-
     private Integer collectnum;
 
     private String chapter;
@@ -42,16 +40,14 @@ public class Anime implements Serializable {
 
     private String updateChapter;
 
-    @JsonIgnore
-    private String thumbnail;
-
-    private Integer commentId;
-
     private Integer playNum;
 
     private Integer totalPnum;
 
     private String updateTime;
+
+    @Transient
+    private String playPath;
 
     @JsonIgnore
     private String year;

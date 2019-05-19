@@ -136,9 +136,11 @@ background-size:100% ">
         </div>
         <div class="row" style="margin-top: 10px">
             <ul class="nav nav-tabs col-md-10 col-md-offset-1">
-                <li class="active"><a href="#"><img src="" alt="" class="glyphicon glyphicon-fire">最热</a></li>
-                <li><a href="#"><img src="" alt="" class="glyphicon glyphicon glyphicon-repeat">最新</a></li>
-                <li><a href="#"><img src="" alt="" class="glyphicon glyphicon-folder-open">收藏</a></li>
+                <li :class="{'active' : oname == 'pl'}" @click="addOrder('play_num desc')"><a href="javascript:void(0)"><img src="" alt="" class="glyphicon glyphicon-fire">最热</a></li>
+                <li :class="{'active' : oname == 'cr'}" @click="addOrder('create_time desc')"><a href="javascript:void(0)"><img src="" alt="" class="glyphicon glyphicon glyphicon-repeat">最新</a></li>
+                <li :class="{'active' : oname == 'co'}" @click="addOrder('collect desc')"><a href="javascript:void(0)"><img src="" alt="" class="glyphicon glyphicon-folder-open">收藏</a></li>
+                <button class="btn btn-default" style="float: right" @click="changeOrder()" type="button">升序 / 降序 &triangle;&triangledown;</button>
+                <!--<button class="btn btn-default" style="float: right" @click="changeOrder()">降序 &triangledown;</button>-->
             </ul>
         </div>
         <!--展示栏-->
@@ -251,13 +253,14 @@ background-size:100% ">
             pageNum: '',
             totalPage: '',
             total: '',
-            order: "",
+            order: "play_num desc",
             type: "",
             region: "",
             rows: 3,
             year: "",
             typeShow: [],
-            flag: 0
+            flag: 0,
+            oname:'pl'
         },
         created: function () {
             var ym = this
@@ -331,6 +334,10 @@ background-size:100% ">
                             ym.totalPage = object.totalPage;
                         }
                     },
+                    error:function () {
+                        layer.msg("没有找到响应内容！", {icon: 2})
+                        layer.close(index)
+                    }
                 })
             },
             addType(name, id) {
@@ -364,6 +371,23 @@ background-size:100% ">
                 }
                 ym.pageNum = 1
                 ym.flag = ym.flag + 1
+            },
+            addOrder(str){
+                var ym = this
+                ym.order = str;
+                ym.oname = str.substring(0, 2)
+                ym.pageNum = 1
+                ym.flag = ym.flag + 1
+            },
+            changeOrder(){
+                var ym = this
+                if (ym.order.indexOf('desc') != -1){
+                    ym.order = ym.order.split(' ')[0] + ' asc'
+                    ym.flag = ym.flag + 1
+                }else {
+                    ym.order = ym.order.split(' ')[0] + ' desc'
+                    ym.flag = ym.flag + 1
+                }
             }
         },
         updated:

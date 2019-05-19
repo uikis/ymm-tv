@@ -5,19 +5,19 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ymm.ymmtvcommon.exception.YmmException;
 import com.ymm.ymmtvcommon.excetionEnum.ExceptionCode;
-import com.ymm.ymmtvcommon.pojo.Anime;
-import com.ymm.ymmtvcommon.pojo.Comment;
-import com.ymm.ymmtvcommon.pojo.Userinfo;
+import com.ymm.ymmtvcommon.pojo.*;
 import com.ymm.ymmtvcommon.result.PageResult;
 import com.ymm.ymmtvportal.dao.AnimeDao;
 import com.ymm.ymmtvportal.dao.CommentDao;
+import com.ymm.ymmtvportal.dao.UserCollectDao;
 import com.ymm.ymmtvportal.dao.UserinfoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.thymeleaf.util.ListUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +33,9 @@ public class AnimeService {
 
     @Autowired
     private UserinfoDao userinfoDao;
+
+    @Autowired
+    private UserCollectDao userCollectDao;
 
     /**
      * 番剧详情页面
@@ -160,5 +163,79 @@ public class AnimeService {
         else {
             return false;
         }
+    }
+
+    /**
+     * 播放对应集
+     * @param id
+     * @param cid
+     * @return
+     */
+    public Anime animePlay(Integer id, Integer cid) {
+        if (id == null || cid == null) {
+            throw new YmmException(ExceptionCode.PARAM_NULL);
+        }
+        Anime anime = animeDao.selectByPrimaryKey(id);
+        if (anime == null) {
+            throw new YmmException(ExceptionCode.ANIME_CANNOT_FIND);
+        }
+
+        String path = animeDao.selectPlayPath(id, cid);
+        if (path == null){
+            throw new YmmException(ExceptionCode.ANIME_CANNOT_FIND);
+        }
+        anime.setPlayPath(path);
+        return anime;
+    }
+
+    /**
+     * 添加收藏
+     *
+     * @param request
+     * @param id
+     * @return
+     */
+    public Boolean addCollect(HttpServletRequest request, Integer id) {
+        //判断是否登录
+        HttpSession session = request.getSession();
+        Userinfo userinfo = (Userinfo)session.getAttribute("userinfo");
+        if (userinfo == null){
+            throw new YmmException(ExceptionCode.HANDLE_FALIED);
+        }
+        String loginAccount = userinfo.getLoginAccount();
+        UserCollect userCollect = new UserCollect();
+        userCollect.setAnimeId(id);
+        userCollect.setLoginAccount(loginAccount);
+        List<UserCollect> select = userCollectDao.select(userCollect);
+        if (!ListUtils.isEmpty(select)){
+            return false;
+        }else {
+            int i = userCollectDao.insert(userCollect);
+            Anime anime = animeDao.selectByPrimaryKey(id);
+            if (anime.getCollectnum() == null){
+                anime.setCollectnum(0);
+            }
+            Integer collectnum = anime.getCollectnum() + 1;
+            anime.setCollectnum(collectnum);
+            animeDao.updateByPrimaryKey(anime);
+            return true;
+        }
+    }
+
+    /**
+     * 增加播放量
+     * @param id
+     */
+    public void animeAddPlay(Integer id) {
+        Anime anime = animeDao.selectByPrimaryKey(id);
+        if (anime.getPlayNum() == null){
+            anime.setPlayNum(0);
+        }
+        anime.setPlayNum(anime.getPlayNum()+1);
+        if (anime.getTotalPnum() == null){
+            anime.setTotalPnum(0);
+        }
+        anime.setTotalPnum(anime.getTotalPnum()+1);
+        animeDao.updateByPrimaryKey(anime);
     }
 }

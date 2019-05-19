@@ -164,7 +164,7 @@
                                                         <a href="" class="thumbnail"><img :src="item.path"
                                                                                           style="height: 220px"></a>
                                                         <button type="button" class="btn btn-danger"
-                                                                style="float: right"><span
+                                                                style="float: right" @click="cancelCollect(item.animeId)"><span
                                                                 class="glyphicon glyphicon-star-empty"></span>取消收藏
                                                         </button>
                                                     </div>
@@ -382,6 +382,7 @@
         data: {
             collectGet: [],
             userinfo: [],
+            flag:0
         },
         methods: {
             resetForm() {
@@ -415,6 +416,47 @@
                     }
                 })
             },
+            cancelCollect(id){
+                var ym = this
+                $.ajax({
+                    type: "delete",
+                    url: "user/cancelCollect",
+                    data:{
+                        id:id
+                    },
+                    beforeSend: function () {
+                        index = layer.load(0, {shade: false});
+                    },
+                    success: function () {
+                        layer.close(index)
+                        layer.msg("取消收藏成功！", {icon: 1})
+                        ym.flag = ym.flag + 1;
+                    },
+                    error: function () {
+                        layer.close(index)
+                        layer.msg("取消收藏失败！", {icon: 2})
+                    }
+                })
+            }
+        },
+        watch: {
+            flag: {
+                deep: true,
+                handler() {
+                    var ym = this
+                    $.ajax({
+                        type: "get",
+                        url: "user/collectGet",
+                        beforeSend: function () {
+                            index = layer.load(0, {shade: false});
+                        },
+                        success: function (object) {
+                            layer.close(index)
+                            ym.collectGet = object;
+                        },
+                    })
+                }
+            }
         },
         created() {
             var ym = this

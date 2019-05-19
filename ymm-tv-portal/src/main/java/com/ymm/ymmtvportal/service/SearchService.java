@@ -77,6 +77,9 @@ public class SearchService {
         if (StringUtils.isEmpty(request.getRows())){
             request.setRows(12);
         }
+        if(StringUtils.isEmpty(request.getOrder())){
+            request.setOrder("play_num desc");
+        }
         //1.先分页
         List<NormalShow> list = new ArrayList<>();
         List<Integer> ids = new ArrayList<>();
@@ -121,7 +124,7 @@ public class SearchService {
                 ids.add(id);
             }
         }
-        PageHelper.startPage(request.getPageNum(), request.getRows());
+        PageHelper.startPage(request.getPageNum(), request.getRows(), request.getOrder());
         if (ListUtils.isEmpty(ids)){
             list = null;
         }else {

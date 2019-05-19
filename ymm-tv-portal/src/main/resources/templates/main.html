@@ -111,6 +111,7 @@ background-size:100% ">
         </div>
     </nav>
     <!--展示栏-->
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-5" style="margin-top: 40px">
@@ -172,7 +173,7 @@ background-size:100% ">
                     <div class="panel-body">
                         <a href="" class="thumbnail"><img :src="item.path" style="height: 340px"></a>
                         更新至{{item.update}}集 &nbsp;
-                        <small>({{item.chapter}}集)</small>
+                        <small>(共{{item.chapter}}集)</small>
                         <button type="button" class="btn btn-success" style="float: right"><span
                                 class="glyphicon glyphicon-play"></span>播放
                         </button>
@@ -345,7 +346,7 @@ background-size:100% ">
 <script src="js/modernizr.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="bootstrap/js/bootstrap.js"></script>
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="/js/vue.js"></script>
 <script>
     new Vue({
         el: "#app",
