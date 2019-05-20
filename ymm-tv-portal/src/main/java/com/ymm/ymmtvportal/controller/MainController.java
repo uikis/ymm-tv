@@ -7,7 +7,6 @@ import com.ymm.ymmtvportal.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,12 +31,12 @@ public class MainController {
     }
 
     @GetMapping("hotShow")
-    public ResponseEntity<List<NormalShow>> hotShowGet(){
+    public ResponseEntity<List<Anime>> hotShowGet(){
         return ResponseEntity.ok(mainService.hostShowGet());
     }
 
     @GetMapping("updateShow")
-    public ResponseEntity<List<NormalShow>> updateShow(){
+    public ResponseEntity<List<Anime>> updateShow(){
         return ResponseEntity.ok(mainService.updateShow());
     }
 
@@ -47,7 +46,7 @@ public class MainController {
     }
 
     @GetMapping("animeShow")
-    public ResponseEntity<List<NormalShow>> animeShow(){
+    public ResponseEntity<List<Anime>> animeShow(){
         return ResponseEntity.ok(mainService.animeShow());
     }
 }

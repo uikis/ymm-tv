@@ -58,33 +58,27 @@ public class MainService {
      * 今日热播取日播放量最大的6个
      * @return
      */
-    public List<NormalShow> hostShowGet() {
-        List<NormalShow> hotShows = normalShowDao.hotShowGet();
-        List<NormalShow> list = hotShows.subList(0, 5);
-        if (ListUtils.isEmpty(list)){
+    public List<Anime> hostShowGet() {
+
+        List<Anime> anime = animeDao.selectTodayTop5();
+        if (ListUtils.isEmpty(anime)){
             throw new YmmException(ExceptionCode.HANDLE_FALIED);
         }
-        return list;
+        return anime;
     }
 
     /**
      * 查询新番更新表
      * @return
      */
-    public List<NormalShow> updateShow() {
+    public List<Anime> updateShow() {
         //1.查询所有还在更新的番剧ID
         List<Anime> animes = animeDao.selectUpdateAnime();
         //2.封装返回的视图信息
-        List<NormalShow> list = new ArrayList<>();
-        for (Anime anime : animes) {
-            NormalShow normalShow = normalShowDao.selectNormalShowById(anime.getId());
-            normalShow.setUpdateTime(anime.getUpdateTime());
-            list.add(normalShow);
-        }
-        if (ListUtils.isEmpty(list)){
+        if (ListUtils.isEmpty(animes)){
             throw new YmmException(ExceptionCode.HANDLE_FALIED);
         }
-        return list;
+        return animes;
     }
 
     /**
@@ -100,8 +94,11 @@ public class MainService {
      * 番剧推荐
      * @return
      */
-    public List<NormalShow> animeShow() {
-        List<NormalShow> normalShows = normalShowDao.selectAnimeTop12();
-        return normalShows;
+    public List<Anime> animeShow() {
+        //1.查询所有还在更新的番剧ID
+        List<Anime> animes = animeDao.selectCommend();
+        //2.封装返回的视图信息
+
+        return animes;
     }
 }

@@ -20,32 +20,16 @@ public class NormalShow implements Serializable {
     @Id
     private Integer animeId;
 
-    private String thpath;
-
-    private String chapter;
-
     private String title;
 
-    private String createTime;
-
-    //解决冲突，
-    @Column(name = "updated")
-    private String update;
-
-    private String collect;
 
     private String detail;
 
-    private Integer playNum;
-
-    private String path;
 
     private String wpath;
 
     @JsonIgnore
     private String weight;
 
-    @Transient
-    private String updateTime;
 
 }

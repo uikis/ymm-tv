@@ -24,7 +24,7 @@ public class PortalController {
     private AnimeService animeService;
 
     @PostMapping("animeGet")
-    public ResponseEntity<PageResult<NormalShow>> animeGet(@RequestBody(required = false) SearchRequest request){
+    public ResponseEntity<PageResult<Anime>> animeGet(@RequestBody(required = false) SearchRequest request){
         return ResponseEntity.ok(searchService.animeGet(request));
     }
 

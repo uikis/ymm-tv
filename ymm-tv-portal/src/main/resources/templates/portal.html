@@ -102,11 +102,11 @@ background-size:100% ">
             <div class="col-md-10 col-md-offset-1">
                 <ul class="nav nav-pills">
                     <li><p class="text-muted"><strong style="font-size: 20px">类型</strong></p></li>
-                    <li :class="{'active': type ==''}" style="padding-left: 20px" @click="seAll()"><a href="#">全部</a>
+                    <li :class="{'active': type ==''}" style="padding-left: 20px" @click="addType()"><a href="javascript:void(0)">全部</a>
                     </li>
-                    <li v-for="(item, index) in typeShow" @click="addType(item.type, item.id)" ref="item.id"
+                    <li v-for="(item, index) in typeShow" @click="addType(item.type)" ref="item.id"
                         :class="{'active': type == item.type}"><a
-                            href="#">{{item.type}}</a></li>
+                            href="javascript:void(0)">{{item.type}}</a></li>
                 </ul>
             </div>
         </div>
@@ -115,9 +115,9 @@ background-size:100% ">
                 <ul class="nav nav-pills">
                     <li><p class="text-muted"><strong style="font-size: 20px">地区</strong></p></li>
                     <li :class="{'active': region ==''}" style="padding-left: 20px" @click="addRegion()"><a href="#">全部</a></li>
-                    <li :class="{'active': region =='大陆'}" @click="addRegion('大陆')"><a href="#">大陆</a></li>
-                    <li :class="{'active': region =='日本'}" @click="addRegion('日本')"><a href="#">日本</a></li>
-                    <li :class="{'active': region =='美国'}" @click="addRegion('美国')"><a href="#">美国</a></li>
+                    <li :class="{'active': region =='大陆'}" @click="addRegion('大陆')"><a href="javascript:void(0)">大陆</a></li>
+                    <li :class="{'active': region =='日本'}" @click="addRegion('日本')"><a href="javascript:void(0)">日本</a></li>
+                    <li :class="{'active': region =='美国'}" @click="addRegion('美国')"><a href="javascript:void(0)">美国</a></li>
                 </ul>
             </div>
         </div>
@@ -125,12 +125,12 @@ background-size:100% ">
             <div class="col-md-10 col-md-offset-1">
                 <ul class="nav nav-pills">
                     <li><p class="text-muted"><strong style="font-size: 20px">年份</strong></p></li>
-                    <li :class="{'active': year ==''}" @click="addYear()" style="padding-left: 20px"><a href="#">全部</a></li>
-                    <li :class="{'active': year =='2019-2016'}" @click="addYear('2019-2016')"><a href="#">2019-2016</a></li>
-                    <li :class="{'active': year =='2015-2012'}" @click="addYear('2015-2012')"><a href="#">2015-2012</a></li>
-                    <li :class="{'active': year =='2011-2008'}" @click="addYear('2011-2008')"><a href="#">2011-2008</a></li>
-                    <li :class="{'active': year =='2007-2004'}" @click="addYear('2007-2004')"><a href="#">2007-2004</a></li>
-                    <li :class="{'active': year =='其他'}" @click="addYear('其他')"><a href="#">其他</a></li>
+                    <li :class="{'active': year ==''}" @click="addYear()" style="padding-left: 20px"><a href="javascript:void(0)">全部</a></li>
+                    <li :class="{'active': year =='2019-2016'}" @click="addYear('2019-2016')"><a href="javascript:void(0)">2019-2016</a></li>
+                    <li :class="{'active': year =='2015-2012'}" @click="addYear('2015-2012')"><a href="javascript:void(0)">2015-2012</a></li>
+                    <li :class="{'active': year =='2011-2008'}" @click="addYear('2011-2008')"><a href="javascript:void(0)">2011-2008</a></li>
+                    <li :class="{'active': year =='2007-2004'}" @click="addYear('2007-2004')"><a href="javascript:void(0)">2007-2004</a></li>
+                    <li :class="{'active': year =='其他'}" @click="addYear('其他')"><a href="javascript:void(0)">其他</a></li>
                 </ul>
             </div>
         </div>
@@ -138,7 +138,7 @@ background-size:100% ">
             <ul class="nav nav-tabs col-md-10 col-md-offset-1">
                 <li :class="{'active' : oname == 'pl'}" @click="addOrder('play_num desc')"><a href="javascript:void(0)"><img src="" alt="" class="glyphicon glyphicon-fire">最热</a></li>
                 <li :class="{'active' : oname == 'cr'}" @click="addOrder('create_time desc')"><a href="javascript:void(0)"><img src="" alt="" class="glyphicon glyphicon glyphicon-repeat">最新</a></li>
-                <li :class="{'active' : oname == 'co'}" @click="addOrder('collect desc')"><a href="javascript:void(0)"><img src="" alt="" class="glyphicon glyphicon-folder-open">收藏</a></li>
+                <li :class="{'active' : oname == 'co'}" @click="addOrder('collectnum desc')"><a href="javascript:void(0)"><img src="" alt="" class="glyphicon glyphicon-folder-open">收藏</a></li>
                 <button class="btn btn-default" style="float: right" @click="changeOrder()" type="button">升序 / 降序 &triangle;&triangledown;</button>
                 <!--<button class="btn btn-default" style="float: right" @click="changeOrder()">降序 &triangledown;</button>-->
             </ul>
@@ -150,15 +150,15 @@ background-size:100% ">
                     <div class="row" id="effect-5">
                         <div class="col-md-2 " style="margin-top: 10px" v-for="(item, index) in animeShow">
                             <div class="img">
-                                <img :src="item.path" style="height: 330px; width: 100%">
+                                <img :src="item.thimg" style="height: 330px; width: 100%">
                                 <div class="overlay">
                                     <a href="#" class="expand">&triangleright;</a>
                                 </div>
                             </div>
-                            <p class="glyphicon glyphicon-star text-danger" style="float: left">{{item.collect}}</p>
-                            <p class="text-right">更新至<strong>{{item.update}}</strong>集</p>
+                            <p class="glyphicon glyphicon-star text-danger" style="float: left">{{item.collectnum}}</p>
+                            <p class="text-right">更新至<strong>{{item.updateChapter}}</strong>集</p>
                             <p style="float: left;" class="text-muted">共{{item.chapter}}集</p>
-                            <p class="text-right text-primary">{{item.title}}</p>
+                            <p class="text-right text-primary">{{item.name}}</p>
                         </div>
                     </div>
                 </div>
@@ -169,31 +169,31 @@ background-size:100% ">
         <div v-if="animeShow != null">
         <div class="row col-md-6 col-md-offset-3 text-center">
             <ul class="pagination pagination-lg" v-if="totalPage <= 5">
-                <li v-if="pageNum > 1" class="previous" @click="pageTo(pageNum-1)"><a href="#">&larr; Older</a></li>
-                <li v-if="pageNum == 1" class="previous disabled"><a href="#">&larr; Older</a></li>
+                <li v-if="pageNum > 1" class="previous" @click="pageTo(pageNum-1)"><a href="javascript:void(0)">&larr; Older</a></li>
+                <li v-if="pageNum == 1" class="previous disabled"><a href="javascript:void(0)">&larr; Older</a></li>
                 <li v-for="index in totalPage" :class="{'active' : pageNum == index}"
                     @click="pageTo(index)">
-                    <a href="#">{{index}}</a>
+                    <a href="javascript:void(0)">{{index}}</a>
                 </li>
-                <li v-if="pageNum < totalPage" class="next" @click="pageTo(pageNum+1)"><a href="#">Newer &rarr;</a>
+                <li v-if="pageNum < totalPage" class="next" @click="pageTo(pageNum+1)"><a href="javascript:void(0)">Newer &rarr;</a>
                 </li>
-                <li v-if="pageNum == totalPage" class="next disabled"><a href="#">Newer &rarr;</a>
+                <li v-if="pageNum == totalPage" class="next disabled"><a href="javascript:void(0)">Newer &rarr;</a>
                 </li>
                 <span class="help-block text-center">共<span>{{totalPage}}</span>页</span><br>
             </ul>
             <ul class="pagination pagination-lg" v-if="totalPage > 5">
                 <li v-if="pageNum > 1" class="previous" @click="pageTo(pageNum-1)"><a href="#">&larr; Older</a></li>
-                <li v-if="pageNum == 1" class="previous disabled"><a href="#">&larr; Older</a></li>
-                <li v-if="pageNum-2 > 0" @click="pageTo(pageNum-2)"><a href="#">{{pageNum-2}}</a></li>
-                <li v-if="pageNum-1 > 0" @click="pageTo(pageNum-1)"><a href="#">{{pageNum-1}}</a></li>
-                <li class="active"><a href="#">{{pageNum}}</a></li>
-                <li v-if="pageNum+1 <= totalPage" @click="pageTo(pageNum+1)"><a href="#">{{pageNum+1}}</a>
+                <li v-if="pageNum == 1" class="previous disabled"><a href="javascript:void(0)">&larr; Older</a></li>
+                <li v-if="pageNum-2 > 0" @click="pageTo(pageNum-2)"><a href="javascript:void(0)">{{pageNum-2}}</a></li>
+                <li v-if="pageNum-1 > 0" @click="pageTo(pageNum-1)"><a href="javascript:void(0)">{{pageNum-1}}</a></li>
+                <li class="active"><a href="javascript:void(0)">{{pageNum}}</a></li>
+                <li v-if="pageNum+1 <= totalPage" @click="pageTo(pageNum+1)"><a href="javascript:void(0)">{{pageNum+1}}</a>
                 </li>
-                <li v-if="pageNum+2 <= totalPage" @click="pageTo(pageNum+2)"><a href="#">{{pageNum+2}}</a>
+                <li v-if="pageNum+2 <= totalPage" @click="pageTo(pageNum+2)"><a href="javascript:void(0)">{{pageNum+2}}</a>
                 </li>
-                <li v-if="pageNum < totalPage" class="next" @click="pageTo(pageNum+1)"><a href="#">Newer &rarr;</a>
+                <li v-if="pageNum < totalPage" class="next" @click="pageTo(pageNum+1)"><a href="javascript:void(0)">Newer &rarr;</a>
                 </li>
-                <li v-if="pageNum == totalPage" class="next disabled"><a href="#">Newer &rarr;</a>
+                <li v-if="pageNum == totalPage" class="next disabled"><a href="javascript:void(0)">Newer &rarr;</a>
                 </li>
                 <span class="help-block text-center">共<span>{{totalPage}}</span>页</span><br>
             </ul>
@@ -242,7 +242,7 @@ background-size:100% ">
 <script src="/js/modernizr.js"></script>
 <script src="/js/layer/layer.js"></script>
 <script src="/bootstrap/js/bootstrap.js"></script>
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="/js/vue.js"></script>
 <script>
     new Vue({
         el: "#app",
@@ -256,7 +256,7 @@ background-size:100% ">
             order: "play_num desc",
             type: "",
             region: "",
-            rows: 3,
+            rows: 12,
             year: "",
             typeShow: [],
             flag: 0,
@@ -340,9 +340,13 @@ background-size:100% ">
                     }
                 })
             },
-            addType(name, id) {
+            addType(name) {
                 var ym = this
-                ym.type = name;
+                if (name==null){
+                    ym.type = '';
+                } else{
+                    ym.type = name;
+                }
                 ym.pageNum = 1
                 ym.flag = ym.flag + 1
             },
@@ -356,12 +360,12 @@ background-size:100% ">
                 ym.pageNum = 1
                 ym.flag = ym.flag + 1
             },
-            seAll() {
-                var ym = this
-                ym.type = "";
-                ym.pageNum = 1
-                ym.flag = ym.flag + 1
-            },
+            // seAll() {
+            //     var ym = this
+            //     ym.type = "";
+            //     ym.pageNum = 1
+            //     ym.flag = ym.flag + 1
+            // },
             addYear(year){
                 var ym = this
                 if (year==null){

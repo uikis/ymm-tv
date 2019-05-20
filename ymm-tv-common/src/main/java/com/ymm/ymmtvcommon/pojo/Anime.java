@@ -29,6 +29,8 @@ public class Anime implements Serializable {
 
     private String type;
 
+    private String thimg;
+
     @Transient
     private List<String> typeList;
 

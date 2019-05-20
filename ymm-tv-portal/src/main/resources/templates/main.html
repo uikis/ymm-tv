@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/style.css">
     <style>
         a:hover {
             color: #238b68;
@@ -19,7 +19,7 @@ background-size:100% ">
         <div class="row">
             <div class="col-md-3">
                 <ul class="nav nav-pills">
-                    <li><a href="" class="glyphicon glyphicon-film lead">首页</a></li>
+                    <li><a href="/" class="glyphicon glyphicon-film lead">首页</a></li>
                     <li style="padding-left: 50px"><a href="" class="lead"><p class="text-success">新产品
                         &trianglerighteq;</p>
                     </a></li>
@@ -27,22 +27,27 @@ background-size:100% ">
             </div>
             <div class="col-md-3 col-md-offset-4"></div>
             <ul class="nav nav-pills">
-                <li class="dropdown" th:if="${session.userinfo} != null"><a href="" class="dropdown-toggle" data-toggle="dropdown">
+                <li class="dropdown" th:if="${session.userinfo} != null"><a href="" class="dropdown-toggle"
+                                                                            data-toggle="dropdown">
                     <img th:src="@{${session.userinfo.getHeadImg()}}"
-                                                                                                    class="img-responsive img-circle"
-                                                                                                    height="40px"
-                                                                                                    width="40px"/></a>
+                         class="img-responsive img-circle"
+                         height="40px"
+                         width="40px"/></a>
                     <ul class="dropdown-menu">
-                        <li class="text-center"><span class="text-primary ">[[${session.userinfo.getLoginAccount()}]]</span></li>
+                        <li class="text-center"><span
+                                class="text-primary ">[[${session.userinfo.getLoginAccount()}]]</span></li>
                         <li class="divider"></li>
-                        <li><a href=""><span class="glyphicon glyphicon-home">个人中心</span></a></li>
-                        <li><a href=""><span class="glyphicon glyphicon-arrow-left">退出登录</span></a></li>
+                        <li><a href="/user"><span class="glyphicon glyphicon-home">个人中心</span></a></li>
+                        <li><a href="#" @click="loginOut()"><span class="glyphicon glyphicon-arrow-left">退出登录</span></a>
+                        </li>
                     </ul>
 
                 </li>
-                <li style="padding-right: 50px" th:if="${session.userinfo} == null"><a href="" class="lead"><span class="glyphicon glyphicon-user"></span>登陆</a>
+                <li style="padding-right: 50px" th:if="${session.userinfo} == null"><a href="/login" class="lead"><span
+                        class="glyphicon glyphicon-user"></span>登陆</a>
                 </li>
-                <li><a href="" class="lead text-danger"><span class="glyphicon glyphicon-circle-arrow-right lead"></span>注册</a>
+                <li><a href="/regist" class="lead text-danger"><span
+                        class="glyphicon glyphicon-circle-arrow-right lead"></span>注册</a>
                 </li>
             </ul>
         </div>
@@ -56,7 +61,7 @@ background-size:100% ">
                     <input type="text" class="form-control font-size:50px " placeholder="Search for..." v-model="key">
                     <span class="input-group-btn">
         <button class="btn btn-default" type="button" @click="queyItem(key)"><img src="" alt=""
-                                                           class="glyphicon glyphicon-zoom-in">Go!</button>
+                                                                                  class="glyphicon glyphicon-zoom-in">Go!</button>
       </span>
                 </div>
             </div>
@@ -71,17 +76,22 @@ background-size:100% ">
                 </div>
                 <div class="col-md-8 col-md-offset-2" style="padding-left: 50px">
                     <ul class="nav navbar-nav ">
-                        <li><a href="#"><img src="img/icon/a8.ico" style="height: 30px;width: 30px"
-                                             alt="">动漫</a></li>
-                        <li><a href="#"><img src="img/icon/a1.ico" style="height: 30px;width: 30px" alt="">TV剧</a>
+                        <li><a href="/portal/anime"><img src="img/icon/a8.ico" style="height: 30px;width: 30px"
+                                                         alt="">动漫</a></li>
+                        <li @click="tips()"><a href="#"><img src="img/icon/a1.ico" style="height: 30px;width: 30px"
+                                                             alt="">TV剧</a>
                         </li>
-                        <li><a href="#"><img src="img/icon/a2.ico" style="height: 30px;width: 30px" alt="">影视</a>
+                        <li @click="tips()"><a href="#"><img src="img/icon/a2.ico" style="height: 30px;width: 30px"
+                                                             alt="">影视</a>
                         </li>
-                        <li><a href="#"><img src="img/icon/a3.ico" style="height: 30px;width: 30px" alt="">综艺</a>
+                        <li @click="tips()"><a href="#"><img src="img/icon/a3.ico" style="height: 30px;width: 30px"
+                                                             alt="">综艺</a>
                         </li>
-                        <li><a href="#"><img src="img/icon/a4.ico" style="height: 30px;width: 30px" alt="">新闻</a>
+                        <li @click="tips()"><a href="#"><img src="img/icon/a4.ico" style="height: 30px;width: 30px"
+                                                             alt="">新闻</a>
                         </li>
-                        <li><a href="#"><img src="img/icon/a5.ico" style="height: 30px;width: 30px" alt="">绝对</a>
+                        <li @click="tips()"><a href="#"><img src="img/icon/a5.ico" style="height: 30px;width: 30px"
+                                                             alt="">未知领域</a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -126,7 +136,7 @@ background-size:100% ">
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
                         <div v-for="(car, index) in carousel" :class="{'item active':index==0, 'item':index!=0}">
-                            <a href="">
+                            <a :href="'/portal/detail?key='+car.animeId+''">
                                 <img :src="car.path" class="img-rounded" alt="...">
                                 <div class="carousel-caption">
                                     {{car.title}}
@@ -150,11 +160,11 @@ background-size:100% ">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-4" v-for="(item, index) in portalShow">
-                            <a href="#" class="thumbnail">
-                            <img :src="item.wpath" alt="" class="img-rounded"
-                                 data-toggle="tooltip" data-placement="right" :title="item.title"
-                                 style="height: 180px;width: 100%">
-                        </a>
+                            <a :href="'/portal/detail?key='+item.animeId+''" class="thumbnail">
+                                <img :src="item.wpath" alt="" class="img-rounded"
+                                     data-toggle="tooltip" data-placement="right" :title="item.title"
+                                     style="height: 180px;width: 100%">
+                            </a>
                             <p class="help-block">{{item.detail}}</p>
                         </div>
                     </div>
@@ -169,15 +179,15 @@ background-size:100% ">
         <div class="row">
             <div :class="{'col-md-2 col-md-offset-1':index==0, 'col-md-2':index!=0}" v-for="(item, index) in hotShow">
                 <div class="panel panel-success">
-                    <div class="panel-heading"><h3 class="panel-title">{{item.title}}</h3></div>
+                    <div class="panel-heading"><h4 class="panel-name">{{item.name}}</h4></div>
                     <div class="panel-body">
-                        <a href="" class="thumbnail"><img :src="item.path" style="height: 340px"></a>
-                        更新至{{item.update}}集 &nbsp;
+                        <a :href="'/portal/detail?key='+item.id+''" class="thumbnail"><img :src="item.thimg" style="height: 340px"></a>
+                        更新至{{item.updateChapter}}集 &nbsp;
                         <small>(共{{item.chapter}}集)</small>
-                        <button type="button" class="btn btn-success" style="float: right"><span
+                        <button type="button" class="btn btn-success" style="float: right" @click="play(item.id)"><span
                                 class="glyphicon glyphicon-play"></span>播放
                         </button>
-                        <p class="text-danger text-left" >
+                        <p class="text-danger text-left">
                             <span class="glyphicon glyphicon-fire">今日播放{{item.playNum}}次</span></p>
                     </div>
                 </div>
@@ -208,72 +218,72 @@ background-size:100% ">
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade in active" id="z1">
                         <div class="col-md-3" v-for="(item, index) in updateShow" v-if="item.updateTime == 1">
-                            <p class="help-block">{{item.title}}</p>
-                            <a href=""><img :src="item.thpath" alt="" class="img-rounded"
-                                            data-toggle="tooltip" data-placement="left" :title="item.title"
+                            <p class="help-block">{{item.name}}</p>
+                            <a :href="'/portal/detail?key='+item.id+''"><img :src="item.thimg" alt="" class="img-rounded"
+                                            data-toggle="tooltip" data-placement="left" :title="item.name"
                                             style="height: 120px;width: 140px">
                             </a>
-                            <p>更新至{{item.update}}集</p>
+                            <p>更新至{{item.updateChapter}}集</p>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="z2">
                         <div class="col-md-3" v-for="(item, index) in updateShow" v-if="item.updateTime == 2">
-                            <p class="help-block">{{item.title}}</p>
-                            <a href=""><img :src="item.thpath" alt="" class="img-rounded"
-                                            data-toggle="tooltip" data-placement="left" :title="item.title"
+                            <p class="help-block">{{item.name}}</p>
+                            <a :href="'/portal/detail?key='+item.id+''"><img :src="item.thimg" alt="" class="img-rounded"
+                                            data-toggle="tooltip" data-placement="left" :title="item.name"
                                             style="height: 120px;width: 140px">
                             </a>
-                            <p>更新至{{item.update}}集</p>
+                            <p>更新至{{item.updateChapter}}集</p>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="z3">
                         <div class="col-md-3" v-for="(item, index) in updateShow" v-if="item.updateTime == 3">
-                            <p class="help-block">{{item.title}}</p>
-                            <a href=""><img :src="item.thpath" alt="" class="img-rounded"
-                                            data-toggle="tooltip" data-placement="left" :title="item.title"
+                            <p class="help-block">{{item.name}}</p>
+                            <a :href="'/portal/detail?key='+item.id+''"><img :src="item.thimg" alt="" class="img-rounded"
+                                            data-toggle="tooltip" data-placement="left" :title="item.name"
                                             style="height: 120px;width: 140px">
                             </a>
-                            <p>更新至{{item.update}}集</p>
+                            <p>更新至{{item.updateChapter}}集</p>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="z4">
                         <div class="col-md-3" v-for="(item, index) in updateShow" v-if="item.updateTime == 4">
-                            <p class="help-block">{{item.title}}</p>
-                            <a href=""><img :src="item.thpath" alt="" class="img-rounded"
-                                            data-toggle="tooltip" data-placement="left" :title="item.title"
+                            <p class="help-block">{{item.name}}</p>
+                            <a :href="'/portal/detail?key='+item.id+''"><img :src="item.thimg" alt="" class="img-rounded"
+                                            data-toggle="tooltip" data-placement="left" :title="item.name"
                                             style="height: 120px;width: 140px">
                             </a>
-                            <p>更新至{{item.update}}集</p>
+                            <p>更新至{{item.updateChapter}}集</p>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="z5">
                         <div class="col-md-3" v-for="(item, index) in updateShow" v-if="item.updateTime == 5">
-                            <p class="help-block">{{item.title}}</p>
-                            <a href=""><img :src="item.thpath" alt="" class="img-rounded"
-                                            data-toggle="tooltip" data-placement="left" :title="item.title"
+                            <p class="help-block">{{item.name}}</p>
+                            <a :href="'/portal/detail?key='+item.id+''"><img :src="item.thimg" alt="" class="img-rounded"
+                                            data-toggle="tooltip" data-placement="left" :title="item.name"
                                             style="height: 120px;width: 140px">
                             </a>
-                            <p>更新至{{item.update}}集</p>
+                            <p>更新至{{item.updateChapter}}集</p>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="z6">
                         <div class="col-md-3" v-for="(item, index) in updateShow" v-if="item.updateTime == 6">
-                            <p class="help-block">{{item.title}}</p>
-                            <a href=""><img :src="item.thpath" alt="" class="img-rounded"
-                                            data-toggle="tooltip" data-placement="left" :title="item.title"
+                            <p class="help-block">{{item.name}}</p>
+                            <a :href="'/portal/detail?key='+item.id+''"><img :src="item.thimg" alt="" class="img-rounded"
+                                            data-toggle="tooltip" data-placement="left" :title="item.name"
                                             style="height: 120px;width: 140px">
                             </a>
-                            <p>更新至{{item.update}}集</p>
+                            <p>更新至{{item.updateChapter}}集</p>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="z7">
                         <div class="col-md-3" v-for="(item, index) in updateShow" v-if="item.updateTime == 7">
-                            <p class="help-block">{{item.title}}</p>
-                            <a href=""><img :src="item.thpath" alt="" class="img-rounded"
-                                            data-toggle="tooltip" data-placement="left" :title="item.title"
+                            <p class="help-block">{{item.name}}</p>
+                            <a :href="'/portal/detail?key='+item.id+''"><img :src="item.thimg" alt="" class="img-rounded"
+                                            data-toggle="tooltip" data-placement="left" :title="item.name"
                                             style="height: 120px;width: 140px">
                             </a>
-                            <p>更新至{{item.update}}集</p>
+                            <p>更新至{{item.updateChapter}}集</p>
                         </div>
                     </div>
                 </div>
@@ -283,9 +293,10 @@ background-size:100% ">
                     <button class="btn btn-primary " type="button" style="margin-left: 290px">More &telrec;</button>
                 </h4>
                 <ul class="list-group">
-                    <li class="list-group-item" style="border: none" v-for="(item, index) in rankShow"><strong>{{index+1}}</strong>&nbsp;&nbsp;&nbsp;<a href=""
-                                                                                                            class="text-muted">
-                       {{item.name}}</a></li>
+                    <li class="list-group-item" style="border: none" v-for="(item, index) in rankShow"><strong>{{index+1}}</strong>&nbsp;&nbsp;&nbsp;<a
+                            :href="'/portal/detail?key='+item.id+''"
+                            class="text-muted">
+                        {{item.name}}</a></li>
                 </ul>
             </div>
         </div>
@@ -293,20 +304,20 @@ background-size:100% ">
     <!--新番推荐-->
     <div class="container-fluid" style="margin-top: -30px">
         <h2 class="page-header" style="padding-left: 50px"><img src="img/icon2/b3.ico"
-                                                                    style="height: 50px;width: 50px"/>番剧推荐</h2>
+                                                                style="height: 50px;width: 50px"/>番剧推荐</h2>
         <div class="row col-md-10 col-md-offset-1" id="effect-5">
 
             <div class="col-md-2 " style="margin-top: 10px" v-for="(item, index) in animeShow">
                 <div class="img">
-                    <img :src="item.path" style="height: 330px; width: 100%">
+                    <img :src="item.thimg" style="height: 330px; width: 100%">
                     <div class="overlay">
-                        <a href="#" class="expand">&triangleright;</a>
+                        <a :href="'/portal/detail?key='+item.id+''" class="expand">&triangleright;</a>
                     </div>
                 </div>
-                <p class="glyphicon glyphicon-star text-danger" style="float: left">{{item.collect}}</p>
-                <p class="text-right">更新至<strong>{{item.update}}</strong>集</p>
+                <p class="glyphicon glyphicon-star text-danger" style="float: left">{{item.collectnum}}</p>
+                <p class="text-right">更新至<strong>{{item.updateChapter}}</strong>集</p>
                 <p style="float: left;" class="text-muted">共{{item.chapter}}集</p>
-                <p class="text-right text-primary">{{item.title}}</p>
+                <p class="text-right text-primary">{{item.name}}</p>
             </div>
         </div>
     </div>
@@ -342,10 +353,10 @@ background-size:100% ">
         </div>
     </footer>
 </div>
-<script src="jquery/jquery-2.1.1.min.js"></script>
-<script src="js/modernizr.js"></script>
-<script src="js/layer/layer.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
+<script src="/jquery/jquery-2.1.1.min.js"></script>
+<script src="/js/modernizr.js"></script>
+<script src="/js/layer/layer.js"></script>
+<script src="/bootstrap/js/bootstrap.js"></script>
 <script src="/js/vue.js"></script>
 <script>
     new Vue({
@@ -353,11 +364,11 @@ background-size:100% ">
         data: {
             carousel: [],
             portalShow: [],
-            hotShow:[],
-            updateShow:[],
-            rankShow:[],
-            animeShow:[],
-            key:''
+            hotShow: [],
+            updateShow: [],
+            rankShow: [],
+            animeShow: [],
+            key: ''
         },
         created: function () {
             var ym = this
@@ -372,7 +383,7 @@ background-size:100% ">
                     ym.carousel = object;
                 }
             }),
-            $.ajax({
+                $.ajax({
                     type: "get",
                     url: "/main/portalShow",
                     beforeSend: function () {
@@ -383,17 +394,17 @@ background-size:100% ">
                         ym.portalShow = object;
                     }
                 }),
-            $.ajax({
-                type: "get",
-                url: "/main/hotShow",
-                beforeSend: function () {
-                    index = layer.load(0, {shade: false});
-                },
-                success: function (object) {
-                    layer.close(index)
-                    ym.hotShow = object;
-                },
-            });
+                $.ajax({
+                    type: "get",
+                    url: "/main/hotShow",
+                    beforeSend: function () {
+                        index = layer.load(0, {shade: false});
+                    },
+                    success: function (object) {
+                        layer.close(index)
+                        ym.hotShow = object;
+                    },
+                });
             $.ajax({
                 type: "get",
                 url: "/main/updateShow",
@@ -428,9 +439,9 @@ background-size:100% ">
                 },
             });
         },
-        methods:{
-            queyItem(key){
-                window.location.href="/search/detail?key="+key;
+        methods: {
+            queyItem(key) {
+                window.location.href = "/search/detail?key=" + key;
             },
             pageTo(e) {
                 var ym = this
@@ -443,7 +454,7 @@ background-size:100% ">
                     url: "/search/detail",
                     data: {
                         pageNum: e,
-                        key:ym.key,
+                        key: ym.key,
                     },
                     beforeSend: function () {
                         index = layer.load(0, {shade: false});
@@ -461,8 +472,42 @@ background-size:100% ">
                     }
                 })
             },
+            tips() {
+                layer.alert('暂时还没开发完成哟~', {
+                    skin: 'layui-layer-molv' //样式类名
+                    , closeBtn: 0
+                }, function () {
+                    layer.alert('请点击动漫吧~', {
+                        skin: 'layui-layer-lan'
+                        , closeBtn: 0
+                        , anim: 4 //动画类型
+                    });
+                });
+            },
+            loginOut() {
+                layer.confirm('您确定要退出登录吗？', {
+                        btn: ['确定', '取消'] //按钮
+                    }, function () {
+                        $.ajax({
+                            url: "/user/loginOut",
+                            type: "post",
+                            success: function () {
+                                layer.msg('退出成功', {icon: 1});
+                                window.location.href = "/login"
+                            },
+                            error: function () {
+                                layer.msg('退出失败', {icon: 2});
+                            }
+                        })
+                    },
+                )
+            },
+            play(id){
+                window.location.href="/portal/detail?key="+id;
+            }
         },
-        updated:function () {
+
+        updated: function () {
             if (Modernizr.touch) {
                 // show the close overlay button
                 $(".close-overlay").removeClass("hidden");

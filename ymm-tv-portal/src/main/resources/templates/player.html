@@ -179,31 +179,31 @@ background-size:100% ">
         <div v-if="comment != null">
             <div class="row col-md-6 col-md-offset-3 text-center">
                 <ul class="pagination pagination-lg" v-if="totalPage <= 5">
-                    <li v-if="pageNum > 1" class="previous" @click="pageTo(pageNum-1)"><a href="#">&larr; Older</a></li>
-                    <li v-if="pageNum == 1" class="previous disabled"><a href="#">&larr; Older</a></li>
+                    <li v-if="pageNum > 1" class="previous" @click="pageTo(pageNum-1)"><a href="javascript:void(0)">&larr; Older</a></li>
+                    <li v-if="pageNum == 1" class="previous disabled"><a href="javascript:void(0)">&larr; Older</a></li>
                     <li v-for="index in totalPage" :class="{'active' : pageNum == index}"
                         @click="pageTo(index)">
-                        <a href="#">{{index}}</a>
+                        <a href="javascript:void(0)">{{index}}</a>
                     </li>
-                    <li v-if="pageNum < totalPage" class="next" @click="pageTo(pageNum+1)"><a href="#">Newer &rarr;</a>
+                    <li v-if="pageNum < totalPage" class="next" @click="pageTo(pageNum+1)"><a href="javascript:void(0)">Newer &rarr;</a>
                     </li>
-                    <li v-if="pageNum == totalPage" class="next disabled"><a href="#">Newer &rarr;</a>
+                    <li v-if="pageNum == totalPage" class="next disabled"><a href="javascript:void(0)">Newer &rarr;</a>
                     </li>
                     <span class="help-block text-center">共<span>{{totalPage}}</span>页</span><br>
                 </ul>
                 <ul class="pagination pagination-lg" v-if="totalPage > 5">
-                    <li v-if="pageNum > 1" class="previous" @click="pageTo(pageNum-1)"><a href="#">&larr; Older</a></li>
-                    <li v-if="pageNum == 1" class="previous disabled"><a href="#">&larr; Older</a></li>
-                    <li v-if="pageNum-2 > 0" @click="pageTo(pageNum-2)"><a href="#">{{pageNum-2}}</a></li>
-                    <li v-if="pageNum-1 > 0" @click="pageTo(pageNum-1)"><a href="#">{{pageNum-1}}</a></li>
-                    <li class="active"><a href="#">{{pageNum}}</a></li>
-                    <li v-if="pageNum+1 <= totalPage" @click="pageTo(pageNum+1)"><a href="#">{{pageNum+1}}</a>
+                    <li v-if="pageNum > 1" class="previous" @click="pageTo(pageNum-1)"><a href="javascript:void(0)">&larr; Older</a></li>
+                    <li v-if="pageNum == 1" class="previous disabled"><a href="javascript:void(0)">&larr; Older</a></li>
+                    <li v-if="pageNum-2 > 0" @click="pageTo(pageNum-2)"><a href="javascript:void(0)">{{pageNum-2}}</a></li>
+                    <li v-if="pageNum-1 > 0" @click="pageTo(pageNum-1)"><a href="javascript:void(0)">{{pageNum-1}}</a></li>
+                    <li class="active"><a href="javascript:void(0)">{{pageNum}}</a></li>
+                    <li v-if="pageNum+1 <= totalPage" @click="pageTo(pageNum+1)"><a href="javascript:void(0)">{{pageNum+1}}</a>
                     </li>
-                    <li v-if="pageNum+2 <= totalPage" @click="pageTo(pageNum+2)"><a href="#">{{pageNum+2}}</a>
+                    <li v-if="pageNum+2 <= totalPage" @click="pageTo(pageNum+2)"><a href="javascript:void(0)">{{pageNum+2}}</a>
                     </li>
-                    <li v-if="pageNum < totalPage" class="next" @click="pageTo(pageNum+1)"><a href="#">Newer &rarr;</a>
+                    <li v-if="pageNum < totalPage" class="next" @click="pageTo(pageNum+1)"><a href="javascript:void(0)">Newer &rarr;</a>
                     </li>
-                    <li v-if="pageNum == totalPage" class="next disabled"><a href="#">Newer &rarr;</a>
+                    <li v-if="pageNum == totalPage" class="next disabled"><a href="javascript:void(0)">Newer &rarr;</a>
                     </li>
                     <span class="help-block text-center">共<span>{{totalPage}}</span>页</span><br>
                 </ul>
