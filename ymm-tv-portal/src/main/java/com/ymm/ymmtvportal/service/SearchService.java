@@ -150,4 +150,5 @@ public class SearchService {
         List<Type> types = typeDao.selectAll();
         return types;
     }
+
 }

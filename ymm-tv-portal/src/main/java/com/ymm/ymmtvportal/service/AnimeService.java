@@ -181,9 +181,6 @@ public class AnimeService {
         }
 
         String path = animeDao.selectPlayPath(id, cid);
-        if (path == null){
-            throw new YmmException(ExceptionCode.ANIME_CANNOT_FIND);
-        }
         anime.setPlayPath(path);
         return anime;
     }

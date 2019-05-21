@@ -2,6 +2,7 @@ package com.ymm.ymmtvportal.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.ymm.ymmtvcommon.pojo.Anime;
 import com.ymm.ymmtvcommon.pojo.Comment;
 import com.ymm.ymmtvcommon.pojo.NormalShow;
 import com.ymm.ymmtvcommon.pojo.Userinfo;
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping("collectGet")
-    public ResponseEntity<List<NormalShow>> collectGet(HttpServletRequest request){
+    public ResponseEntity<List<Anime>> collectGet(HttpServletRequest request){
         return ResponseEntity.ok(userService.collectGet(request));
     }
 

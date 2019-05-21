@@ -68,8 +68,8 @@
         </div>
     </div>
 </div>
-<footer>
-    <div class="container-fluid" style="margin-top: 10px">
+<footer style="margin-top: 70px">
+    <div class="container-fluid" >
         <div class="row">
             <div class="col-md-4 col-md-offset-1">
                 <h3 class="lead text-left">Desiged By
@@ -165,7 +165,7 @@
                         if (object) {
                             layer.msg('注册成功!', {icon: 1, time: 2000}, function () {
                                 layer.close(index)
-                                window.location.href = "login";
+                                window.location.href = "/login";
                             })
                         } else {
                             layer.alert("注册失败！", {icon: 2})

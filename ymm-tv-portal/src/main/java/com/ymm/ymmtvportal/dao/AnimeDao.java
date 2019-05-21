@@ -16,7 +16,7 @@ public interface AnimeDao extends tk.mybatis.mapper.common.Mapper<Anime>, IdList
     @Select("select * from tb_anime where state = 1")
     List<Anime> selectUpdateAnime();
 
-    @Select("select name,id from tb_anime order by total_pnum desc limit 10")
+    @Select("select name,id,total_pnum from tb_anime order by total_pnum desc limit 10")
     List<Anime> selectTop10();
 
     @Select("select * from tb_anime order by play_num desc limit 5")

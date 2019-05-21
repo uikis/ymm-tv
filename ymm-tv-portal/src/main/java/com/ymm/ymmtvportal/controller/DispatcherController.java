@@ -60,6 +60,16 @@ public class DispatcherController {
     public String animePlay(){
         return "player";
     }
+
+    @GetMapping("/tip")
+    public String tip(){
+        return "tip";
+    }
+
+    @GetMapping("/portal/rank")
+    public String rank(){
+        return "rank";
+    }
 //    @RequestMapping("test")
 //    public ResponseEntity<String> test(){
 //        return ResponseEntity.ok("ok");

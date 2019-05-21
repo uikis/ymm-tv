@@ -1,52 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <style>
-        a:hover {
-            color: #238b68;
-        }
+
     </style>
 </head>
 <body style="overflow-x: hidden">
-<div id="app">
 <!--第一导航-->
-<div class="container-fluid" style="background-color: #fff9ec ;opacity:0.9;background-image: url('/img/yemei3.png');
+<div class="container-fluid" style="background-color: #fff9ec ;opacity:0.9;background-image: url('img/yemei3.png');
 background-size:100% ">
     <div class="row">
         <div class="col-md-3">
             <ul class="nav nav-pills">
-                <li><a href="/" class="lead"><span class="glyphicon glyphicon-film">首页</span></a></li>
-                <li style="padding-left: 50px"><a href="#" class="lead"><span class="text-success">新产品
-                        &trianglerighteq;</span>
+                <li><a href="" class="glyphicon glyphicon-film lead">首页</a></li>
+                <li style="padding-left: 50px"><a href="" class="lead"><p class="text-success">新产品 &trianglerighteq;</p>
                 </a></li>
             </ul>
         </div>
         <div class="col-md-3 col-md-offset-4"></div>
         <ul class="nav nav-pills">
-            <li class="dropdown" th:if="${session.userinfo} != null"><a href="" class="dropdown-toggle"
-                                                                        data-toggle="dropdown">
-                <img th:src="@{${session.userinfo.getHeadImg()}}"
-                     class="img-responsive img-circle"
-                     height="40px"
-                     width="40px"/></a>
-                <ul class="dropdown-menu">
-                    <li class="text-center"><span
-                            class="text-primary ">[[${session.userinfo.getLoginAccount()}]]</span></li>
-                    <li class="divider"></li>
-                    <li><a href="/user"><span class="glyphicon glyphicon-home">个人中心</span></a></li>
-                    <li><a href="#" @click="loginOut()"><span class="glyphicon glyphicon-arrow-left">退出登录</span></a>
-                    </li>
-                </ul>
-
+            <li style="padding-right: 50px"><a href="" class="lead"><span class="glyphicon glyphicon-user"></span>登陆</a>
             </li>
-            <li style="padding-right: 50px" th:if="${session.userinfo} == null"><a href="/login" class="lead"><span
-                    class="glyphicon glyphicon-user"></span>登陆</a>
-            </li>
-            <li><a href="/regist" class="lead text-danger"><span
-                    class="glyphicon glyphicon-circle-arrow-right">注册</span></a>
+            <li><a href="" class="lead text-danger"><span class="glyphicon glyphicon-circle-arrow-right lead"></span>注册</a>
             </li>
         </ul>
     </div>
@@ -57,10 +35,10 @@ background-size:100% ">
         </div>
         <div class="col-md-3 col-xs-12 col-md-offset-5" style="margin-top: 50px">
             <div class="input-group" style="opacity:0.8">
-                <input type="text" class="form-control font-size:50px " placeholder="Search for..." v-model="key">
+                <input type="text" class="form-control font-size:50px " placeholder="Search for...">
                 <span class="input-group-btn">
-        <button class="btn btn-default" type="button" @click="queryItem(key)"><img src="" alt=""
-                                                                                   class="glyphicon glyphicon-zoom-in">Go!</button>
+        <button class="btn btn-default" type="button"><img src="" alt=""
+                                                           class="glyphicon glyphicon-zoom-in">Go!</button>
       </span>
             </div>
         </div>
@@ -69,23 +47,50 @@ background-size:100% ">
 <!--第二导航-->
 <!--排行榜-->
 <div class="container-fluid">
-    <h2 class="page-header"><img src="/img/icon2/b5.ico" alt="">全站排行榜</h2>
+    <h2 class="page-header"><img src="img/icon2/b5.ico" alt="">全站排行榜</h2>
     <div class="row col-md-10 col-md-offset-1">
         <div class="col-md-4" style="margin-top: -41px">
             <h4 class="page-header">动漫排行榜
-                <img src="/img/icon3/d3.ico" height="70px" width="70px"/>
+                <img src="img/icon3/d3.ico" height="70px" width="70px"/>
                 <!--<button class="btn btn-primary " type="button" style="margin-left: 290px">More &telrec;</button>-->
             </h4>
             <ul class="list-group">
-                <li class="list-group-item" style="border: none" v-for="(item, index) in anime"><strong>{{index+1}}</strong>&nbsp;&nbsp;&nbsp;<a
-                        :href="'/portal/detail?key='+item.id+''"
-                        class="text-muted"><span class="glyphicon glyphicon-fire text-danger">{{item.totalPnum}}</span>&nbsp;
-                    {{item.name}}</a></li>
+                <li class="list-group-item" style="border: none"><strong>1</strong>&nbsp;&nbsp;&nbsp;<a href=""
+                                                                                                        class="text-muted">Cras
+                    justo odio</a></li>
+                <li class="list-group-item" style="border: none"><strong>2</strong>&nbsp;&nbsp;&nbsp;<a href=""
+                                                                                                        class="text-muted">Dapibus
+                    ac facilisis in</a></li>
+                <li class="list-group-item" style="border: none"><strong>3</strong>&nbsp;&nbsp;&nbsp;<a href=""
+                                                                                                        class="text-muted">Morbi
+                    leo risus</a></li>
+                <li class="list-group-item" style="border: none"><strong>4</strong>&nbsp;&nbsp;&nbsp;<a href=""
+                                                                                                        class="text-muted">Porta
+                    ac consectetur ac</a></li>
+                <li class="list-group-item" style="border: none"><strong>5</strong>&nbsp;&nbsp;&nbsp;<a href=""
+                                                                                                        class="text-muted">Vestibulum
+                    at eros</a></li>
+                <li class="list-group-item" style="border: none"><strong>6</strong>&nbsp;&nbsp;&nbsp;<a href=""
+                                                                                                        class="text-muted">Vestibulum
+                    at eros</a></li>
+                <li class="list-group-item" style="border: none"><strong>7</strong>&nbsp;&nbsp;&nbsp;<a href=""
+                                                                                                        class="text-muted">Vestibulum
+                    at eros</a></li>
+                <li class="list-group-item" style="border: none"><strong>8</strong>&nbsp;&nbsp;&nbsp;<a href=""
+                                                                                                        class="text-muted">Vestibulum
+                    at eros</a></li>
+                <li class="list-group-item" style="border: none"><strong>9</strong>&nbsp;&nbsp;&nbsp;<a href=""
+                                                                                                        class="text-muted">Vestibulum
+                    at eros</a></li>
+                <li class="list-group-item" style="border: none"><strong>10</strong>&nbsp;&nbsp;&nbsp;<a href=""
+                                                                                                        class="text-muted">Vestibulum
+                    at eros</a></li>
+
             </ul>
         </div>
         <div class="col-md-4" style="margin-top: -41px">
-            <h4 class="page-header">影视排行榜
-                <img src="/img/icon3/d2.ico" height="70px" width="70px"/>
+            <h4 class="page-header">影视排行榜(静态)
+                <img src="img/icon3/d2.ico" height="70px" width="70px"/>
                 <!--<button class="btn btn-primary " type="button" style="margin-left: 290px">More &telrec;</button>-->
             </h4>
             <ul class="list-group">
@@ -124,8 +129,8 @@ background-size:100% ">
         </div>
 
         <div class="col-md-4" style="margin-top: -41px">
-            <h4 class="page-header">TV排行榜
-                <img src="/img/icon3/d1.ico" height="70px" width="70px"/>
+            <h4 class="page-header">TV排行榜(静态)
+                <img src="img/icon3/d1.ico" height="70px" width="70px"/>
                 <!--<button class="btn btn-primary " type="button" style="margin-left: 290px">More &telrec;</button>-->
             </h4>
             <ul class="list-group">
@@ -174,8 +179,8 @@ background-size:100% ">
             </div>
             <div class="col-md-3 col-md-offset-4">
                 <h3 class="text-left text-muted"><strong>将小站分享给你的朋友 :</strong>
-                    <a href=""><img src="/img/icon/PY.jpg" height="50" width="50"/></a>
-                    <a href=""><img src="/img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
+                    <a href=""><img src="img/icon/PY.jpg" height="50" width="50"/></a>
+                    <a href=""><img src="img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
             </div>
         </div>
         <div class="row">
@@ -193,56 +198,7 @@ background-size:100% ">
         </div>
     </div>
 </footer>
-</div>
-<script src="/jquery/jquery-2.1.1.min.js"></script>
-<script src="/js/layer/layer.js"></script>
-<script src="/bootstrap/js/bootstrap.js"></script>
-<script src="/js/vue.js"></script>
-<script>
-    new Vue({
-        el: "#app",
-        data: {
-            key: '',
-            anime: [],
-        },
-        methods: {
-            queryItem(key) {
-                var ym = this;
-                if (ym.key == "") {
-                    layer.msg("请输入搜索内容!", {icon: 5})
-                } else {
-                    window.location.href = "/search/detail?key=" + key
-                }
-            },
-            tips() {
-                layer.alert('暂时还没开发完成哟~', {
-                    skin: 'layui-layer-molv' //样式类名
-                    , closeBtn: 0
-                }, function () {
-                    layer.alert('请点击动漫吧~', {
-                        skin: 'layui-layer-lan'
-                        , closeBtn: 0
-                        , anim: 4 //动画类型
-                    });
-                });
-            },
-        },
-        mounted() {
-            var ym = this
-            $.ajax({
-                type: "get",
-                url: "/main/rankShow",
-                beforeSend: function () {
-                    index = layer.load(0, {shade: false});
-                },
-                success: function (object) {
-                    layer.close(index)
-                    ym.anime = object;
-                },
-            });
-        }
-    })
-</script>
-
+<script src="jquery/jquery-2.1.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
 </body>
 </html>

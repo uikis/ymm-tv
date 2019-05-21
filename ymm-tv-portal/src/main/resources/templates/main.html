@@ -13,15 +13,16 @@
 </head>
 <body style="overflow-x: hidden">
 <div id="app">
+
     <!--第一导航-->
-    <div class="container-fluid" style="background-color: #fff9ec ;opacity:0.9;background-image: url('img/yemei3.png');
+    <div class="container-fluid" style="background-color: #fff9ec ;opacity:0.9;background-image: url('/img/yemei3.png');
 background-size:100% ">
         <div class="row">
             <div class="col-md-3">
                 <ul class="nav nav-pills">
-                    <li><a href="/" class="glyphicon glyphicon-film lead">首页</a></li>
-                    <li style="padding-left: 50px"><a href="" class="lead"><p class="text-success">新产品
-                        &trianglerighteq;</p>
+                    <li><a href="/" class="lead"><span class="glyphicon glyphicon-film">首页</span></a></li>
+                    <li style="padding-left: 50px"><a href="#" class="lead"><span class="text-success">新产品
+                        &trianglerighteq;</span>
                     </a></li>
                 </ul>
             </div>
@@ -47,7 +48,7 @@ background-size:100% ">
                         class="glyphicon glyphicon-user"></span>登陆</a>
                 </li>
                 <li><a href="/regist" class="lead text-danger"><span
-                        class="glyphicon glyphicon-circle-arrow-right lead"></span>注册</a>
+                        class="glyphicon glyphicon-circle-arrow-right">注册</span></a>
                 </li>
             </ul>
         </div>
@@ -60,7 +61,7 @@ background-size:100% ">
                 <div class="input-group" style="opacity:0.8">
                     <input type="text" class="form-control font-size:50px " placeholder="Search for..." v-model="key">
                     <span class="input-group-btn">
-        <button class="btn btn-default" type="button" @click="queyItem(key)"><img src="" alt=""
+        <button class="btn btn-default" type="button" @click="queryItem(key)"><img src="" alt=""
                                                                                   class="glyphicon glyphicon-zoom-in">Go!</button>
       </span>
                 </div>
@@ -76,43 +77,43 @@ background-size:100% ">
                 </div>
                 <div class="col-md-8 col-md-offset-2" style="padding-left: 50px">
                     <ul class="nav navbar-nav ">
-                        <li><a href="/portal/anime"><img src="img/icon/a8.ico" style="height: 30px;width: 30px"
+                        <li><a href="/portal/anime"><img src="/img/icon/a8.ico" style="height: 30px;width: 30px"
                                                          alt="">动漫</a></li>
-                        <li @click="tips()"><a href="#"><img src="img/icon/a1.ico" style="height: 30px;width: 30px"
+                        <li @click="tips()"><a href="#"><img src="/img/icon/a1.ico" style="height: 30px;width: 30px"
                                                              alt="">TV剧</a>
                         </li>
-                        <li @click="tips()"><a href="#"><img src="img/icon/a2.ico" style="height: 30px;width: 30px"
+                        <li @click="tips()"><a href="#"><img src="/img/icon/a2.ico" style="height: 30px;width: 30px"
                                                              alt="">影视</a>
                         </li>
-                        <li @click="tips()"><a href="#"><img src="img/icon/a3.ico" style="height: 30px;width: 30px"
+                        <li @click="tips()"><a href="#"><img src="/img/icon/a3.ico" style="height: 30px;width: 30px"
                                                              alt="">综艺</a>
                         </li>
-                        <li @click="tips()"><a href="#"><img src="img/icon/a4.ico" style="height: 30px;width: 30px"
+                        <li @click="tips()"><a href="#"><img src="/img/icon/a4.ico" style="height: 30px;width: 30px"
                                                              alt="">新闻</a>
                         </li>
-                        <li @click="tips()"><a href="#"><img src="img/icon/a5.ico" style="height: 30px;width: 30px"
+                        <li @click="tips()"><a href="#"><img src="/img/icon/a5.ico" style="height: 30px;width: 30px"
                                                              alt="">未知领域</a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="img/icon/a6.ico" style="height: 30px;width: 30px" alt="">榜单
+                                <img src="/img/icon/a6.ico" style="height: 30px;width: 30px" alt="">榜单
                                 <span class="badge">3</span><span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="">动漫榜单</a></li>
-                                <li><a href="">影视榜单</a></li>
-                                <li><a href="">TV榜单</a></li>
+                                <li><a href="#">动漫榜单</a></li>
+                                <li><a href="#">影视榜单 &times;</a></li>
+                                <li><a href="#">TV榜单 &times;</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="img/icon/a7.ico" style="height: 30px;width: 30px" alt="">更多
+                                <img src="/img/icon/a7.ico" style="height: 30px;width: 30px" alt="">更多
                                 <span class="badge">3</span><b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">鬼畜</a></li>
+                                <li><a href="#">鬼畜 &times;</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">生活</a></li>
-                                <li><a href="#">体育</a></li>
+                                <li><a href="#">生活 &times;</a></li>
+                                <li><a href="#">体育 &times;</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -289,8 +290,8 @@ background-size:100% ">
                 </div>
             </div>
             <div class="col-md-4" style="margin-top: -41px">
-                <h4 class="page-header">番剧排行榜
-                    <button class="btn btn-primary " type="button" style="margin-left: 290px">More &telrec;</button>
+                <h4 class="page-header">今日排行榜
+                    <button class="btn btn-primary " type="button" style="margin-left: 290px" @click="showRank()">More &telrec;</button>
                 </h4>
                 <ul class="list-group">
                     <li class="list-group-item" style="border: none" v-for="(item, index) in rankShow"><strong>{{index+1}}</strong>&nbsp;&nbsp;&nbsp;<a
@@ -332,8 +333,8 @@ background-size:100% ">
                 </div>
                 <div class="col-md-3 col-md-offset-4">
                     <h3 class="text-left text-muted"><strong>将小站分享给你的朋友 :</strong>
-                        <a href=""><img src="img/icon/PY.jpg" height="50" width="50"/></a>
-                        <a href=""><img src="img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
+                        <a href=""><img src="/img/icon/PY.jpg" height="50" width="50"/></a>
+                        <a href=""><img src="/img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
                 </div>
             </div>
             <div class="row">
@@ -440,8 +441,13 @@ background-size:100% ">
             });
         },
         methods: {
-            queyItem(key) {
-                window.location.href = "/search/detail?key=" + key;
+            queryItem(key) {
+                var ym = this;
+                if (ym.key == "") {
+                    layer.msg("请输入搜索内容!", {icon: 5})
+                } else {
+                    window.location.href = "/search/detail?key=" + key
+                }
             },
             pageTo(e) {
                 var ym = this
@@ -504,6 +510,9 @@ background-size:100% ">
             },
             play(id){
                 window.location.href="/portal/detail?key="+id;
+            },
+            showRank(){
+                window.location.href="/portal/rank"
             }
         },
 

@@ -1,5 +1,6 @@
 package com.ymm.ymmtvportal.dao;
 
+import com.ymm.ymmtvcommon.pojo.Anime;
 import com.ymm.ymmtvcommon.pojo.NormalShow;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -27,6 +28,6 @@ public interface NormalShowDao extends tk.mybatis.mapper.common.Mapper<NormalSho
 //    @Select("select * from tb_normal_show order by weight desc limit 12")
 //    List<NormalShow> selectAnimeTop12();
 
-    @Select("select * from tb_normal_show a join tb_collect_user b on a.anime_id = b.anime_id and login_account = #{loginAccount}")
-    List<NormalShow> selectCollectAnime(String loginAccount);
+    @Select("select * from tb_anime a join tb_collect_user b on a.id = b.anime_id and login_account = #{loginAccount}")
+    List<Anime> selectCollectAnime(String loginAccount);
 }

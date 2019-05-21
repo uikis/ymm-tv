@@ -74,16 +74,16 @@ public class UserService {
      * 获取收藏信息
      * @return
      */
-    public List<NormalShow> collectGet(HttpServletRequest request) {
+    public List<Anime> collectGet(HttpServletRequest request) {
         //1取得用户信息
         Userinfo userinfo = (Userinfo)request.getSession().getAttribute("userinfo");
         if (userinfo == null){
             throw new YmmException(ExceptionCode.USER_NULL);
         }
         String loginAccount = userinfo.getLoginAccount();
-        List<NormalShow> normalShows = normalShowDao.selectCollectAnime(loginAccount);
+        List<Anime> animes = normalShowDao.selectCollectAnime(loginAccount);
 
-        return normalShows;
+        return animes;
     }
 
     /**
@@ -103,12 +103,12 @@ public class UserService {
         int i = file.getOriginalFilename().lastIndexOf(".");
         String substring = file.getOriginalFilename().substring(i);
 
-        if (!(".jpg".equals(substring)) && !(".png".equals(substring))){
+        if (!(".jpg".equals(substring)) && !(".png".equals(substring)) && !(".jpeg".equals(substring))){
             throw new YmmException(ExceptionCode.IMG_ERROR);
         }
         File file1 = new File(path1 + "/static/img/himg/" + string + substring);
         file.transferTo(file1);
-        String newPath = "img/himg/"+ string + substring;
+        String newPath = "/img/himg/"+ string + substring;
         userinfo.setHeadImg(newPath);
         request.getSession().setAttribute("userinfo", userinfo);
         userinfoDao.updateByPrimaryKey(userinfo);
