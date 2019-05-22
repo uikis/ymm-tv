@@ -72,7 +72,7 @@ public class LoginService {
         Userinfo userinfo = new Userinfo();
         userinfo.setLoginAccount(userLogin.getLoginAccount());
         userinfo.setUserName("用户 "+loginAccount);
-        userinfo.setHeadImg("img/himg/tx.jpg");
+        userinfo.setHeadImg("/img/himg/tx.jpg");
         userinfo.setRole("0");
         userinfoDao.insert(userinfo);
         //4.执行存储
@@ -227,5 +227,17 @@ public class LoginService {
         userDao.updateByExample(userLogin, example);
 
         return true;
+    }
+
+    /**
+     * @param code
+     */
+    public void codeCheck(String code) {
+        UserLogin userLogin = new UserLogin();
+        userLogin.setToken(code);
+        List<UserLogin> select = userDao.select(userLogin);
+        if (select == null){
+            throw new YmmException(ExceptionCode.USER_NULL);
+        }
     }
 }

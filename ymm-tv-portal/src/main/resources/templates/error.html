@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>错误~</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="Shortcut Icon" href="/img/ooo.ico"/>
+</head>
+<body style="background-color: #f0fff0">
+<div id="app">
+    <img class="img-responsive" src="gif1.gif" alt="" style="width: 100px;height: 100px">
+    <h1 class="page-header text-center">出错啦~</h1>
+    <h3 class="text-center text-info">倒计时：&nbsp <span class="text-danger">{{num}}</span> 秒将返回到登录页面</h3>
+
+    <img src="/img/timg.gif" alt="" class="img-responsive center-block">
+    <br><br>
+    <button class="btn btn-info center-block" @click="returnl()">立刻返回</button>
+</div>
+<script src="/jquery/jquery-2.1.1.min.js"></script>
+<script src="/js/layer/layer.js"></script>
+<script src="/bootstrap/js/bootstrap.js"></script>
+<script src="/js/vue.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            num:4
+        },
+        methods: {
+            countTime(){
+                var ym = this
+                if (ym.num >= 1 ){
+                    var ym =this
+                    ym.num = ym.num - 1
+                    setTimeout(ym.countTime, 1000);
+                }
+                if (ym.num == 0){
+                    window.location.href="/login"
+                }
+            },
+            returnl(){
+                window.location.href="/login"
+            }
+        },
+        mounted(){
+            setTimeout(this.countTime, 1000);
+        }
+    })
+</script>
+</body>
+</html>

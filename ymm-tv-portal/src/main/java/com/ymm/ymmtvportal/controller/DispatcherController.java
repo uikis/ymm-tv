@@ -70,6 +70,12 @@ public class DispatcherController {
     public String rank(){
         return "rank";
     }
+
+    @GetMapping("errortip")
+    public String errortip(){
+        return "errortip";
+    }
+
 //    @RequestMapping("test")
 //    public ResponseEntity<String> test(){
 //        return ResponseEntity.ok("ok");

@@ -22,11 +22,10 @@ public class Email {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom("m13882055119@163.com");
             helper.setTo(user.getEmail());
-            helper.setSubject("标题：点击内容链接重置密码");
+            helper.setSubject("标题：您的重置code已经到了哟~");
             String tt = user.getPwdToken();
             StringBuffer sb = new StringBuffer();
-            sb.append("<a href = 'http://www.localhost:8080/resetPwd?token="
-                    + tt + "'>点击我重置密码哟~</a>");
+            sb.append("<strong>您的重置code是："+tt+" 请妥善保管！</strong>");
             helper.setText(sb.toString(), true);
         } catch (Exception e) {
             e.printStackTrace();

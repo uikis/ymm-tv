@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css"/>
+    <link rel="Shortcut Icon" href="/img/ooo.ico"/>
     <style>
     </style>
 
@@ -49,8 +50,9 @@
             </div>
             <div class="col-md-3 col-md-offset-4">
                 <h3 class="text-left text-muted"><strong>将小站分享给你的朋友 :</strong>
-                    <a href=""><img src="img/icon/PY.jpg" height="50" width="50"/></a>
-                    <a href=""><img src="img/icon/QQZ.jpg" height="50" width="50"/></a></h3>
+                    <!--<a href=""><img src="img/icon/PY.jpg" height="50" width="50"/></a>-->
+                    <!--<a href=""><img src="img/icon/QQZ.jpg" height="50" width="50"/></a>-->
+                </h3>
             </div>
         </div>
         <div class="row">
@@ -96,8 +98,25 @@
                     },
                     success: function (object) {
                         if (object) {
-                            layer.msg('已经向您的邮箱发送了重置链接请注意查收!', {icon: 1, time: 2000}, function () {
-                                layer.close(index)
+                            layer.close(index)
+                            layer.msg('已经向您的邮箱发送了重置验证码请注意查收!', {icon: 1, time: 2000}, function () {
+                                layer.prompt({title: '请输入重置验证码', formType: 1}, function(pass, index){
+                                    layer.close(index);
+                                    $.ajax({
+                                        url:"/codeCheck",
+                                        type:"post",
+                                        data:{
+                                            code:pass
+                                        },
+                                        success:function () {
+                                            layer.msg("验证成功！")
+                                            window.location.href="/resetPwd?token="+pass
+                                        },
+                                        error:function () {
+                                            layer.msg("验证码错误！")
+                                        }
+                                    })
+                                });
                             })
                         } else {
                             layer.alert("操作失败！", {icon: 2})

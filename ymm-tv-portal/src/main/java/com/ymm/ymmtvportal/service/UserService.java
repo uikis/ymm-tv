@@ -14,7 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.ListUtils;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.crypto.Data;
 import java.io.File;
@@ -195,7 +198,7 @@ public class UserService {
     /**
      * 退出登录
      */
-    public void loginOut(HttpServletRequest request) {
+    public void loginOut(HttpServletRequest request, HttpServletResponse response) {
         //更新最后登录的时间
         HttpSession session = request.getSession();
         Userinfo userinfo = (Userinfo)session.getAttribute("userinfo");
@@ -206,7 +209,19 @@ public class UserService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String format = sdf.format(date);
         user.setLastLogintime(format);
+        user.setToken(null);
         userDao.updateByPrimaryKey(user);
+        //需要response返回修改内容
+        Cookie[] cookies = request.getCookies();//获得cookies
+        if (cookies != null && cookies.length > 0) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    cookie.setMaxAge(0);
+                    cookie.setPath("/");
+                    response.addCookie(cookie);
+                }
+            }
+        }
         session.removeAttribute("userinfo");
     }
 

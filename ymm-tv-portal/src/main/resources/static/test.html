@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="yz/css/verify.css">
+
+    <!--引入JQUERY-->
+    <script type="text/javascript" src="yz/js/jquery.min.js"></script>
+
+    <!--引入JS-->
+    <script type="text/javascript" src="yz/js/verify.min.js"></script>
+
+</head>
+<body>
+<div id="mpanel1" >
+
+</div>
+
+<script>
+    $('#mpanel1').slideVerify({
+        //滑动验证码type=1，拼图验证码type=2
+        type : 1,
+
+
+        //验证成功以后的回调
+        success : function() {
+            alert('验证匹配！');
+        }
+
+    });
+
+</script>
+</body>
+</html>

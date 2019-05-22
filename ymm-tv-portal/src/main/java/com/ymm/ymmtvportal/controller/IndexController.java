@@ -1,5 +1,6 @@
 package com.ymm.ymmtvportal.controller;
 
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import com.ymm.ymmtvcommon.pojo.UserLogin;
 import com.ymm.ymmtvportal.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,12 @@ public class IndexController {
     @PostMapping("resetPwd")
     public ResponseEntity<Boolean> resetPwd(String token, String password){
         return ResponseEntity.ok(loginService.resetPwd(token, password));
+    }
+
+    //验证code
+    @PostMapping("codeCheck")
+    public ResponseEntity<Void> codeCheck(String code){
+        loginService.codeCheck(code);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
