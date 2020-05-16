@@ -2,11 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Title</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
     <link rel="Shortcut Icon" href="/img/ooo.ico"/>
     <style>
-
+        .nav > li {
+            float: left;
+        }
     </style>
 </head>
 <body style="overflow-x: hidden">
@@ -19,36 +22,31 @@ background-size:100% ">
             <div class="col-md-3">
                 <ul class="nav nav-pills">
                     <li><a href="/" class="lead"><span class="glyphicon glyphicon-film">首页</span></a></li>
-                    <li style="padding-left: 50px"><a href="#" class="lead"><span class="text-success">新产品
+                    <li><a href="#" class="lead"><span class="text-success">新产品
                         &trianglerighteq;</span>
                     </a></li>
+                    <li class="dropdown" th:if="${session.userinfo} != null"><a href="" class="dropdown-toggle"
+                                                                                data-toggle="dropdown">
+                        <img th:src="@{${session.userinfo.getHeadImg()}}"
+                             class="img-responsive img-circle" style="width: 30px; height: 30px;"/></a>
+                        <ul class="dropdown-menu">
+                            <li class="text-center"><span
+                                    class="text-primary ">[[${session.userinfo.getLoginAccount()}]]</span></li>
+                            <li class="divider"></li>
+                            <li><a href="/user"><span class="glyphicon glyphicon-home">个人中心</span></a></li>
+                            <li><a href="#" @click="loginOut()"><span class="glyphicon glyphicon-arrow-left">退出登录</span></a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li th:if="${session.userinfo} == null"><a href="/login" class="lead"><span
+                            class="glyphicon glyphicon-user"></span>登陆</a>
+                    </li>
+                    <li><a href="/regist" class="lead text-danger"><span
+                            class="glyphicon glyphicon-circle-arrow-right">注册</span></a>
+                    </li>
                 </ul>
             </div>
-            <div class="col-md-3 col-md-offset-4"></div>
-            <ul class="nav nav-pills">
-                <li class="dropdown" th:if="${session.userinfo} != null"><a href="" class="dropdown-toggle"
-                                                                            data-toggle="dropdown">
-                    <img th:src="@{${session.userinfo.getHeadImg()}}"
-                         class="img-responsive img-circle"
-                         height="40px"
-                         width="40px"/></a>
-                    <ul class="dropdown-menu">
-                        <li class="text-center"><span
-                                class="text-primary ">[[${session.userinfo.getLoginAccount()}]]</span></li>
-                        <li class="divider"></li>
-                        <li><a href="/user"><span class="glyphicon glyphicon-home">个人中心</span></a></li>
-                        <li><a href="#" @click="loginOut()"><span class="glyphicon glyphicon-arrow-left">退出登录</span></a>
-                        </li>
-                    </ul>
-
-                </li>
-                <li style="padding-right: 50px" th:if="${session.userinfo} == null"><a href="/login" class="lead"><span
-                        class="glyphicon glyphicon-user"></span>登陆</a>
-                </li>
-                <li><a href="/regist" class="lead text-danger"><span
-                        class="glyphicon glyphicon-circle-arrow-right">注册</span></a>
-                </li>
-            </ul>
         </div>
         <div style="height: 100px" class="row">
             <div class="col-md-3">

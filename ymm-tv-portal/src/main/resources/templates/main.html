@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Title</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -10,6 +11,10 @@
         a:hover {
             color: #238b68;
         }
+
+        .nav > li {
+            float: left;
+        }
     </style>
 </head>
 <body style="overflow-x: hidden">
@@ -17,41 +22,36 @@
 
     <!--第一导航-->
     <div class="container-fluid" style="background-color: #fff9ec ;opacity:0.9;background-image: url('/img/yemei3.png');
-background-size:100% ">
+background-size:100%">
         <div class="row">
             <div class="col-md-3">
                 <ul class="nav nav-pills">
                     <li><a href="/" class="lead"><span class="glyphicon glyphicon-film">首页</span></a></li>
-                    <li style="padding-left: 50px"><a href="#" class="lead"><span class="text-success">新产品
+                    <li><a href="#" class="lead"><span class="text-success">新产品
                         &trianglerighteq;</span>
                     </a></li>
+                    <li class="dropdown" th:if="${session.userinfo} != null"><a href="" class="dropdown-toggle"
+                                                                                data-toggle="dropdown">
+                        <img th:src="@{${session.userinfo.getHeadImg()}}"
+                             class="img-responsive img-circle" style="width: 30px; height: 30px;"/></a>
+                        <ul class="dropdown-menu">
+                            <li class="text-center"><span
+                                    class="text-primary ">[[${session.userinfo.getLoginAccount()}]]</span></li>
+                            <li class="divider"></li>
+                            <li><a href="/user"><span class="glyphicon glyphicon-home">个人中心</span></a></li>
+                            <li><a href="#" @click="loginOut()"><span class="glyphicon glyphicon-arrow-left">退出登录</span></a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li th:if="${session.userinfo} == null"><a href="/login" class="lead"><span
+                            class="glyphicon glyphicon-user"></span>登陆</a>
+                    </li>
+                    <li><a href="/regist" class="lead text-danger"><span
+                            class="glyphicon glyphicon-circle-arrow-right">注册</span></a>
+                    </li>
                 </ul>
             </div>
-            <div class="col-md-3 col-md-offset-4"></div>
-            <ul class="nav nav-pills">
-                <li class="dropdown" th:if="${session.userinfo} != null"><a href="" class="dropdown-toggle"
-                                                                            data-toggle="dropdown">
-                    <img th:src="@{${session.userinfo.getHeadImg()}}"
-                         class="img-responsive img-circle"
-                         height="40px"
-                         width="40px"/></a>
-                    <ul class="dropdown-menu">
-                        <li class="text-center"><span
-                                class="text-primary ">[[${session.userinfo.getLoginAccount()}]]</span></li>
-                        <li class="divider"></li>
-                        <li><a href="/user"><span class="glyphicon glyphicon-home">个人中心</span></a></li>
-                        <li><a href="#" @click="loginOut()"><span class="glyphicon glyphicon-arrow-left">退出登录</span></a>
-                        </li>
-                    </ul>
-
-                </li>
-                <li style="padding-right: 50px" th:if="${session.userinfo} == null"><a href="/login" class="lead"><span
-                        class="glyphicon glyphicon-user"></span>登陆</a>
-                </li>
-                <li><a href="/regist" class="lead text-danger"><span
-                        class="glyphicon glyphicon-circle-arrow-right">注册</span></a>
-                </li>
-            </ul>
         </div>
         <div style="height: 100px" class="row">
             <div class="col-md-3">
@@ -76,7 +76,7 @@ background-size:100% ">
                 <div class="navbar-header" style="padding-left: 80px">
                     <a class="navbar-brand" href="#"><p class="lead">个人站</p></a>
                 </div>
-                <div class="col-md-8 col-md-offset-2" style="padding-left: 50px">
+                <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2" style="padding-left: 50px">
                     <ul class="nav navbar-nav ">
                         <li><a href="/portal/anime"><img src="/img/icon/a8.ico" style="height: 30px;width: 30px"
                                                          alt="">动漫</a></li>

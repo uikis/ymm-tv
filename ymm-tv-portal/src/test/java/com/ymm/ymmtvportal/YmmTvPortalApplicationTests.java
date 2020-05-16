@@ -102,15 +102,17 @@ public class YmmTvPortalApplicationTests {
 //        list.add(13);
 //        List<NormalShow> list1 = normalShowDao.selectByIdList(list);
 //        System.out.println(list1);
-
-        String str = "2018-17";
-        String substring = str.substring(0, 4);
-        System.out.println(substring);
-
-        Example example = new Example(Comment.class);
-        example.setOrderByClause("comment_time desc");
-        example.createCriteria().andEqualTo("animeId", 11);
-        List<Comment> comments = commentDao.selectByExample(example);
-        System.out.println(comments);
+//
+//        String str = "2018-17";
+//        String substring = str.substring(0, 4);
+//        System.out.println(substring);
+//
+//        Example example = new Example(Comment.class);
+//        example.setOrderByClause("comment_time desc");
+//        example.createCriteria().andEqualTo("animeId", 11);
+//        List<Comment> comments = commentDao.selectByExample(example);
+//        System.out.println(comments);
+        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+        System.out.println(path);
     }
 }

@@ -1,6 +1,5 @@
 package com.ymm.ymmtvportal.controller;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import com.ymm.ymmtvcommon.pojo.UserLogin;
 import com.ymm.ymmtvportal.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 

@@ -11,6 +11,7 @@
     <artifactId>ymm-tv-portal</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ymm-tv-portal</name>
+    <packaging>war</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -43,6 +44,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+            <!--<scope>provided</scope>&lt;!&ndash; 打成war的时候打开注释，本地开发用内嵌tomcat时加上注释 &ndash;&gt;-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
